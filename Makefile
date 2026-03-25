@@ -7,9 +7,13 @@ CPPFLAGS = $(addprefix -I,$(INCLUDES))
 LIB_DIRS = $(PATH_LIBFT)/bin
 
 LIBFT := ./libs/libft/bin/libft.a
+MINILIBX := ./libs/minilibx/libmlx.a
+MINILIBX_LIN := ./libs/minilibx-linux/libmlx_Linux.a
+
 SRCS_LIBFT := ./libs/libft/build/
 
 PATH_LIBFT := ./libs/libft/
+PATH_MINILIBX := ./libs/minilibx-linux/
 PATH_BIN := ./
 PATH_OBJT := ./build/
 
@@ -49,7 +53,7 @@ NC      = \033[0m
 all: $(addprefix $(PATH_BIN),$(NAME))
 
 # $(NAME)
-$(addprefix $(PATH_BIN),$(NAME)): $(LIBFT) $(subst $(PATH_MANDATORY),$(PATH_OBJT),$(OBJTS))
+$(addprefix $(PATH_BIN),$(NAME)): $(LIBFT) $(MINILIBX) $(subst $(PATH_MANDATORY),$(PATH_OBJT),$(OBJTS))
 		@echo "$(YELLOW)+==========================================+"
 		@echo "          Build $(NAME)          "
 		@echo "+==========================================+$(NC)"
@@ -57,7 +61,6 @@ $(addprefix $(PATH_BIN),$(NAME)): $(LIBFT) $(subst $(PATH_MANDATORY),$(PATH_OBJT
 		@printf "$(L_GREEN)Build...$(NC) %-40s\n" $(NAME)
 		@sleep 0.01
 		@$(CC) $(CFLAGS) $(CPPFLAGS) $(subst $(PATH_MANDATORY),$(PATH_OBJT),$(OBJTS)) -o $(addprefix $(PATH_BIN),$(NAME)) $(LDLIBS) $(LDFLAGS)
-
 
 $(LIBFT): $(OBJTS_LIBFT)
 		@echo "$(MAGENTA)+==========================================+"
@@ -84,6 +87,10 @@ $(LIBFT): $(OBJTS_LIBFT)
 		@echo "Compilando código...\n"
 		@make -C $(PATH_LIBFT) NAME="libft.a" all
 
+$(MINILIBX):
+		@git submodule update --init --recursive
+		@make -C $(PATH_MINILIBX) NAME="libmlx.a" all
+
 $(PATH_OBJT)%.o: $(PATH_MANDATORY)/%.c
 		@mkdir -p build
 		@printf "$(L_GREEN)Compiling...$(NC) %-40s\n" $<
@@ -100,6 +107,8 @@ clean:
 
 fclean:
 		@make -C $(PATH_LIBFT) fclean
+		@printf "$(L_GREEN)Removing minilibx...$(NC)\n"
+		@make -C $(PATH_MINILIBX) clean
 		@printf "$(L_GREEN)Removing objects...$(NC)\n"
 		@rm -f $(subst $(PATH_MANDATORY),$(PATH_OBJT),$(OBJTS))
 		@rm -rf $(PATH_OBJT)
