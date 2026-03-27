@@ -7,17 +7,17 @@ CPPFLAGS = $(addprefix -I,$(INCLUDES))
 LIB_DIRS = $(PATH_LIBFT)/bin
 
 LIBFT := ./libs/libft/bin/libft.a
-MINILIBX := ./libs/minilibx/libmlx.a
+MINILIBX := ./libs/minilibx-linux/libmlx.a
 MINILIBX_LIN := ./libs/minilibx-linux/libmlx_Linux.a
 
 SRCS_LIBFT := ./libs/libft/build/
 
-PATH_LIBFT := ./libs/libft/
-PATH_MINILIBX := ./libs/minilibx-linux/
+PATH_LIBFT := ./libs/libft
+PATH_MINILIBX := ./libs/minilibx-linux
 PATH_BIN := ./
 PATH_OBJT := ./build/
 
-INCLUDES := include libs/libft/include
+INCLUDES := include libs/libft/include libs/minilibx-linux
 PATH_MANDATORY := ./srcs
 EXEC_SRC_DIR   := exec
 PARSER_SRC_DIR := parser
@@ -34,8 +34,8 @@ OBJTS             := $(OBJTS:.c=.o)
 OBJTS_LIBFT = $(shell $(MAKE) -s -C $(PATH_LIBFT) get_var)
 OBJTS_LIBFT := $(subst ./build/,$(SRCS_LIBFT),$(OBJTS_LIBFT))
 
-LDLIBS := -lmlx -lX11 -lXext
-LDFLAGS := $(addprefix -L, $(LIB_DIRS))
+LDLIBS := -lmlx -lXext -lX11 -lm
+LDFLAGS := $(addprefix -L, $(LIB_DIRS)) $(addprefix -L, $(PATH_MINILIBX))
 
 
 # Cores ANSI
@@ -60,7 +60,7 @@ $(addprefix $(PATH_BIN),$(NAME)): $(LIBFT) $(MINILIBX) $(subst $(PATH_MANDATORY)
 
 		@printf "$(L_GREEN)Build...$(NC) %-40s\n" $(NAME)
 		@sleep 0.01
-		@$(CC) $(CFLAGS) $(CPPFLAGS) $(subst $(PATH_MANDATORY),$(PATH_OBJT),$(OBJTS)) -o $(addprefix $(PATH_BIN),$(NAME)) $(LDLIBS) $(LDFLAGS)
+		$(CC) $(CFLAGS) $(CPPFLAGS) $(subst $(PATH_MANDATORY),$(PATH_OBJT),$(OBJTS)) -o $(addprefix $(PATH_BIN),$(NAME)) $(LDLIBS) $(LDFLAGS)
 
 $(LIBFT): $(OBJTS_LIBFT)
 		@echo "$(MAGENTA)+==========================================+"
