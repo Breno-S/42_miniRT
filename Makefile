@@ -1,7 +1,7 @@
 NAME := miniRT
 
-CC := cc
-CFLAGS := -Wall -Wextra -Werror
+CC := cc -g
+#CFLAGS := -Wall -Wextra -Werror
 CPPFLAGS = $(addprefix -I,$(INCLUDES))
 
 LIB_DIRS = $(PATH_LIBFT)/bin
@@ -25,10 +25,14 @@ PARSER_SRC_DIR := parser
 SRCS_MANDATORY_COMMON := \
 	main.c \
 
+SRCS_MANDATORY_PARSER := \
+	parser.c \
 
 SRCS_MANDATORY := $(addprefix $(PATH_MANDATORY)/,$(SRCS_MANDATORY_COMMON))
+SRCS_MANDATORY := $(SRCS_MANDATORY) $(addprefix $(PATH_MANDATORY)/$(PARSER_SRC_DIR)/,$(SRCS_MANDATORY_PARSER))
 
 OBJTS := $(addprefix $(PATH_OBJT),$(SRCS_MANDATORY_COMMON))
+OBJTS := $(OBJTS) $(addprefix $(PATH_OBJT),$(SRCS_MANDATORY_PARSER))
 
 OBJTS             := $(OBJTS:.c=.o)
 OBJTS_LIBFT = $(shell $(MAKE) -s -C $(PATH_LIBFT) get_var)
@@ -90,6 +94,12 @@ $(LIBFT): $(OBJTS_LIBFT)
 $(MINILIBX):
 		@git submodule update --init --recursive
 		@make -C $(PATH_MINILIBX) NAME="libmlx.a" all
+
+$(PATH_OBJT)%.o: $(PATH_MANDATORY)/$(PARSER_SRC_DIR)/%.c
+		@mkdir -p build
+		@printf "$(L_GREEN)Compiling...$(NC) %-40s\n" $<
+		@sleep 0.01
+		@$(CC) -c $(CFLAGS) $(CPPFLAGS) $< -o $(subst srcs/,build/,$@)
 
 $(PATH_OBJT)%.o: $(PATH_MANDATORY)/%.c
 		@mkdir -p build
