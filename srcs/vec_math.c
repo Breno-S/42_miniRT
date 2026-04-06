@@ -1,37 +1,35 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   vec_math.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/04/06 16:31:22 by brensant          #+#    #+#             */
+/*   Updated: 2026/04/06 16:50:06 by brensant         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "vec_math.h"
 
-t_vec4	vec3_negate(t_vec4 v)
+#include <math.h>
+
+float	vec3_length(t_vec3 v)
 {
-	return ((t_vec4){-v.x, -v.y, -v.z, -v.w});
+	return (sqrtf(v.x * v.x + v.y * v.y + v.z * v.z));
 }
 
-t_vec4	vec3_scale(t_vec4 v, float scalar)
+t_vec3	vec3_negate(t_vec3 v)
 {
-	return ((t_vec4){scalar * v.x, scalar * v.y, scalar * v.z, scalar * v.w});
+	return ((t_vec3){-v.x, -v.y, -v.z});
 }
 
-t_vec4	vec3_add(t_vec4 u, t_vec4 v)
+t_vec3	vec3_scale(t_vec3 v, float scalar)
 {
-	return ((t_vec4){u.x + v.x, u.y + v.y, u.z + v.z});
+	return ((t_vec3){scalar * v.x, scalar * v.y, scalar * v.z});
 }
 
-t_vec4	vec3_sub(t_vec4 u, t_vec4 v)
-{
-	return ((t_vec4){u.x - v.x, u.y - v.y, u.z - v.z});
-}
-
-float	vec3_dot(t_vec4 u, t_vec4 v)
-{
-	return (u.x * v.x + u.y * v.y + u.z * v.z);
-}
-
-t_vec4	vec3_cross(t_vec4 u, t_vec4 v)
-{
-	return ((t_vec4){u.y * v.z - v.y * u.z, u.z * v.x - v.z * u.x,
-		u.x * v.y - v.x * u.y});
-}
-
-t_vec4	vec3_transform(t_vec4 v, t_matrix m)
+t_vec3	vec3_transform(t_vec3 v, t_matrix m)
 {
 	float	x;
 	float	y;
@@ -42,5 +40,5 @@ t_vec4	vec3_transform(t_vec4 v, t_matrix m)
 	y = v.x * m.r1[0] + v.y * m.r1[1] + v.z * m.r1[2] + 1 * m.r1[3];
 	z = v.x * m.r2[0] + v.y * m.r2[1] + v.z * m.r2[2] + 1 * m.r2[3];
 	w = v.x * m.r3[0] + v.y * m.r3[1] + v.z * m.r3[2] + 1 * m.r3[3];
-	return ((t_vec4){x, y, z, w});
+	return ((t_vec3){x, y, z, w});
 }

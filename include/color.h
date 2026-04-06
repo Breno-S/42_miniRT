@@ -1,23 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   core.h                                             :+:      :+:    :+:   */
+/*   color.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/04/01 16:58:42 by brensant          #+#    #+#             */
-/*   Updated: 2026/04/06 16:30:50 by brensant         ###   ########.fr       */
+/*   Created: 2026/04/06 16:31:16 by brensant          #+#    #+#             */
+/*   Updated: 2026/04/06 16:46:30 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CORE_H
-# define CORE_H
+#ifndef COLOR_H
+# define COLOR_H
 
-typedef struct t_vec4 {
-	float	x;
-	float	y;
-	float	z;
-	float	w;
-}	t_vec4;
+# include "core.h"
 
-#endif
+# include <stdint.h>
+
+typedef t_vec4	t_color;
+
+uint32_t	color_to_integer(t_color color);
+uint32_t	color_from_integer(uint32_t integer);
+
+#endif // COLOR_H
