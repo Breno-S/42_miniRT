@@ -6,7 +6,7 @@
 /*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/06 14:42:52 by brensant          #+#    #+#             */
-/*   Updated: 2026/04/06 16:45:46 by brensant         ###   ########.fr       */
+/*   Updated: 2026/04/07 13:30:48 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ typedef struct s_matrix
 }	t_matrix;
 
 float	vec3_length(t_vec3 v);
+t_vec3	vec3_normalize(t_vec3 v);
 t_vec3	vec3_negate(t_vec3 v);
 t_vec3	vec3_scale(t_vec3 v, float scalar);
 t_vec3	vec3_add(t_vec3 u, t_vec3 v);

@@ -6,7 +6,7 @@
 /*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/06 16:31:22 by brensant          #+#    #+#             */
-/*   Updated: 2026/04/06 16:50:06 by brensant         ###   ########.fr       */
+/*   Updated: 2026/04/07 15:16:01 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,11 @@
 float	vec3_length(t_vec3 v)
 {
 	return (sqrtf(v.x * v.x + v.y * v.y + v.z * v.z));
+}
+
+t_vec3	vec3_normalize(t_vec3 v)
+{
+	return (vec3_scale(v, 1.0f / vec3_length(v)));
 }
 
 t_vec3	vec3_negate(t_vec3 v)

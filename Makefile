@@ -23,6 +23,7 @@ EXEC_SRC_DIR   := exec
 PARSER_SRC_DIR := parser
 
 SRCS_MANDATORY_COMMON := \
+	color.c \
 	main.c \
 	vec_math.c \
 	vec_math_vec.c
