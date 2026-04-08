@@ -6,7 +6,7 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/01 14:56:06 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/04/06 18:01:15 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/04/08 16:06:59 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,11 @@
 // ∗ cores R, G, B no intervalo [0,255]: 10, 0, 255
 
 int check_file(char *file);
+int read_file(int fd);
+int	verify_line(char *line, unsigned char *verify_ent);
+int verify_entity(char *line, int init, int size);
+int create_entity(char *entity, int type);
+int create_sphere(char *entity);
 
 int parser(int ac, char **av)
 {
@@ -73,6 +78,7 @@ int parser(int ac, char **av)
 	fd = check_file(av[1]);
 	if (fd == -1)
 		return(1);
+	read_file(fd);
 	close(fd);
 	return (0);
 }
@@ -92,23 +98,121 @@ int read_file(int fd)
 	}
 }
 
-int	verify_line(char *line, unsigned char verify_ent)
+int	verify_line(char *line, unsigned char *verify_ent)
+{
+	int i[2];
+	int type;
+
+	i[0] = 0;
+	i[1] = 0;
+	while(ft_isspace(line[i[0]]))
+		i[0]++;
+	while(line[i[0] + i[1]] && !ft_isspace(line[i[0] + i[1]]))
+			i[1]++;
+	type = verify_entity(line, i, i[1]);
+	if (type == tp_ambient)
+		verify_ent[0] |= ambient;
+	if (type == tp_camera)
+		verify_ent[0] |= camera;
+	if (type == tp_light)
+		verify_ent[0] |= light;
+	if (type)
+		create_entity(line[i[0] + i[1]], type);
+	return (0);
+}
+
+int create_entity(char *entity, int type)
+{
+	int rtn;
+
+	rtn = 1;
+	if (type == tp_ambient)
+		rtn = create_ambient(entity);
+	if (type == tp_camera)
+		rtn = create_camera(entity);
+	if (type == tp_light)
+		rtn = create_light(entity);
+	if (type == tp_sphere)
+		rtn = create_sphere(entity);
+	if (type == tp_plane)
+		rtn = create_plane(entity);
+	if (type == tp_cylinder)
+		rtn = create_cylinder(entity);
+	return(rtn);
+}
+
+int create_ambient(char *entity)
 {
 	int i;
 	int i2;
-	int state;
+	t_ambient amb;
 
 	i = 0;
-	i2 = 0;
-	while(ft_isspace(line[i]))
+	while (entity[i] && ft_isspace(entity[i]))
 		i++;
-	while(line[i])
-	{
-		while(!ft_isspace(line[i + i2]) && line[i + i2] != 0)
-			i2++;
-		verify_entity(line[i], i, i2);
-	}
-	return (0);
+	entity[i] = 0;
+	amb.i_rate = ft_atof(entity);
+	// ∗ identificador: A
+	// ∗ taxa de iluminação ambiente no intervalo [0.0,1.0]: 0.2
+	// ∗ cores R, G, B no intervalo [0-255]: 255, 255, 255
+	// NOT IMPLEMENTED
+	return(0);
+}
+
+int create_camera(char *entity)
+{
+	// NOT IMPLEMENTED
+	return(0);
+}
+
+int create_light(char *entity)
+{
+	// NOT IMPLEMENTED
+	return(0);
+}
+
+int create_sphere(char *entity)
+{
+	// NOT IMPLEMENTED
+	return(0);
+}
+
+int create_plane(char *entity)
+{
+	// NOT IMPLEMENTED
+	return(0);
+}
+
+int create_cylinder(char *entity)
+{
+	// NOT IMPLEMENTED
+	return(0);
+}
+
+int verify_entity(char *line, int init, int size)
+{
+	int flag;
+	int rtn;
+
+	rtn = -1;
+	if (line[init + size] == ' ')
+		flag = 1;
+	line[init + size] = 0;
+	if (!ft_strcmp(&line[init], "A"))
+		rtn = tp_ambient;
+	else if (!ft_strcmp(&line[init], "C"))
+		rtn = tp_camera;
+	else if (!ft_strcmp(&line[init], "L"))
+		rtn = tp_light;
+	else if (!ft_strcmp(&line[init], "sp"))
+		rtn = tp_sphere;
+	else if (!ft_strcmp(&line[init], "pl"))
+		rtn = tp_plane;
+	else if (!ft_strcmp(&line[init], "cy"))
+		rtn = tp_cylinder;
+	if (flag)
+		line[init + size] = ' ';
+	return (rtn);
 }
 
 int check_file(char *file)
@@ -141,10 +245,15 @@ int error_msg(int err_type)
 
 inline int verify_norm_point(double point)
 {
+	return(point > 0 && point < 1);
+}
+
+inline int verify_norm_point(double point)
+{
 	return(point > 1);
 }
 
-inline int verify_norm_color(int color)
+inline int verify_norm_color(float color)
 {
-	return(color > 255);
+	return(color > 0 && color < 255);
 }

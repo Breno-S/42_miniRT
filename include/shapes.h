@@ -6,7 +6,7 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/01 15:49:00 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/04/01 17:46:50 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/04/08 15:53:34 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,26 @@
 # define SHAPES_H
 
 # include "core.h"
+
+typedef struct s_ambient
+{
+	float	i_rate;
+	t_color	color;
+} t_ambient;
+
+typedef struct s_camera
+{
+	t_v3	viewport;
+	t_v3	normalize_3d;
+	int		fov;
+} t_camera;
+
+typedef struct s_light
+{
+	t_v3	center;
+	t_v3	brightness;
+	t_color	color;
+} t_light;
 
 typedef struct s_sphere
 {
@@ -24,8 +44,8 @@ typedef struct s_sphere
 
 typedef struct s_plane
 {
-	t_v3	point;
-	t_v3	normal;
+	t_v3	center;
+	t_v3	normalize_3d;
 	t_color	color;
 }	t_plane;
 

@@ -1,6 +1,6 @@
 NAME := miniRT
 
-CC := cc -g
+CC := cc -g3
 #CFLAGS := -Wall -Wextra -Werror
 CPPFLAGS = $(addprefix -I,$(INCLUDES))
 

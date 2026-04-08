@@ -5,11 +5,11 @@
       "name": "C/C++ Runner: Debug Session",
       "type": "cppdbg",
       "request": "launch",
-      "args": [],
+      "args": ["scenes/scene3.rt"],
       "stopAtEntry": false,
       "externalConsole": false,
       "cwd": "/home/rgomes-d/git_noreth/42_miniRT",
-      "program": "/home/rgomes-d/git_noreth/42_miniRT/build/Debug/outDebug",
+      "program": "/home/rgomes-d/git_noreth/42_miniRT/miniRT",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [
