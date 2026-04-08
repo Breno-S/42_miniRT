@@ -6,7 +6,7 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/01 15:49:00 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/04/08 15:53:34 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/04/08 19:06:08 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ typedef struct s_cilinder
 	t_v3	diameter;
 	float	height;
 	t_color	color;
-}	t_plane;
+}	t_cilinder;
 
 
 #endif

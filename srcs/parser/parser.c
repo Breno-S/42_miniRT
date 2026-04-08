@@ -6,7 +6,7 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/01 14:56:06 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/04/08 16:06:59 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/04/08 19:10:01 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,7 @@ int	verify_line(char *line, unsigned char *verify_ent)
 	if (type == tp_light)
 		verify_ent[0] |= light;
 	if (type)
-		create_entity(line[i[0] + i[1]], type);
+		create_entity(line, type);
 	return (0);
 }
 
@@ -143,15 +143,9 @@ int create_entity(char *entity, int type)
 
 int create_ambient(char *entity)
 {
-	int i;
-	int i2;
-	t_ambient amb;
+	char **s_ent;
 
-	i = 0;
-	while (entity[i] && ft_isspace(entity[i]))
-		i++;
-	entity[i] = 0;
-	amb.i_rate = ft_atof(entity);
+	s_ent = ft_split(entity, ' ');
 	// ∗ identificador: A
 	// ∗ taxa de iluminação ambiente no intervalo [0.0,1.0]: 0.2
 	// ∗ cores R, G, B no intervalo [0-255]: 255, 255, 255
