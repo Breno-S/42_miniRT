@@ -6,17 +6,17 @@
 /*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/25 16:39:03 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/04/07 15:41:19 by brensant         ###   ########.fr       */
+/*   Updated: 2026/04/08 14:09:09 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "color.h"
+#include "core.h"
 #include "vec_math.h"
 
 #include <stdio.h>
 #include <mlx.h>
 #include <libft.h>
-#include "core.h"
 #include <math.h>
 
 #define HEIGHT 1000
@@ -34,6 +34,12 @@ int color_dot_amb(t_vec3 color, double dot, double ambient);
 
 int main(int argc, char **argv)
 {
+	t_env *env;
+
+	ft_gc_init();
+
+	env = env_create(WIDTH, HEIGHT);
+
 	double ambient = 0.15;
 
 	t_vec3	light = (t_vec3){0, 1, 1};
@@ -46,9 +52,6 @@ int main(int argc, char **argv)
 
 	printf("\nit's our miniRT. %f %d", sphere.radius, argc);
 	fflush(stdout);
-
-	void *mlx = mlx_init();
-    void *win = mlx_new_window(mlx, WIDTH, HEIGHT , "miniRT");
 
 	t_vec3 act = (t_vec3){0};
 
@@ -79,7 +82,7 @@ int main(int argc, char **argv)
 				dot = vec3_dot(normal, norm_light);
 				if (dot < 0)
 					dot = 0;
-				mlx_pixel_put(mlx, win, x, y, color_dot_amb(sphere.color, dot, ambient));
+				mlx_pixel_put(env->mlx_ptr, env->win_ptr, x, y, color_dot_amb(sphere.color, dot, ambient));
 			}
 			else if ((powf(act.x - sphere2.center.x, 2) + powf(act.y - sphere2.center.y, 2)) <= powf(sphere2.radius, 2))
 			{
@@ -92,19 +95,21 @@ int main(int argc, char **argv)
 				dot = vec3_dot(normal, norm_light);
 				if (dot < 0)
 					dot = 0;
-				mlx_pixel_put(mlx, win, x, y, color_dot_amb(sphere2.color, dot, ambient));
+				mlx_pixel_put(env->mlx_ptr, env->win_ptr, x, y, color_dot_amb(sphere2.color, dot, ambient));
 			}
 			else if ((act.x - rec.x) > -0.2 && (act.x - rec.x) < 0.2 && (act.y - rec.x)  > -0.2 && (act.y - rec.x)  < 0.2)
 			{
 				d.y = act.y - sphere2.center.y;
 				d.x = act.x - sphere2.center.x;
-    			mlx_pixel_put(mlx, win, x, y, 0x00FF00);
+    			mlx_pixel_put(env->mlx_ptr, env->win_ptr, x, y, 0x00FF00);
 			}
 			else
-				mlx_pixel_put(mlx, win, x, y, color_dot_amb(color3, 0, 0));
+				mlx_pixel_put(env->mlx_ptr, env->win_ptr, x, y, color_dot_amb(color3, 0, 0));
 		}
 	}
-	mlx_loop(mlx);
+	mlx_loop(env->mlx_ptr);
+	env_destroy(env);
+	ft_gc_end();
     return (0);
 }
 
