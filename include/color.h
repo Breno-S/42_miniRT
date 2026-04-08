@@ -6,7 +6,7 @@
 /*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/06 16:31:16 by brensant          #+#    #+#             */
-/*   Updated: 2026/04/07 13:16:47 by brensant         ###   ########.fr       */
+/*   Updated: 2026/04/08 17:52:41 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,20 @@
 
 # include <stdint.h>
 
-typedef t_vec4	t_color;
+typedef union u_color
+{
+	uint64_t	hex;
+	struct
+	{
+		uint8_t	b;
+		uint8_t	g;
+		uint8_t	r;
+		uint8_t	a;
+	};
+}	t_color;
 
-uint32_t	color_to_rgb(t_color color);
-t_color		color_from_rgb(uint32_t rgb);
+t_vec4	color_to_vec(t_color color);
+t_color	color_from_vec(t_vec4 color);
+t_vec4	color_vec_clamp(t_vec4 color);
 
 #endif // COLOR_H

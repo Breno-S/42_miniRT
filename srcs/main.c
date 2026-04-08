@@ -6,7 +6,7 @@
 /*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/25 16:39:03 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/04/08 14:09:09 by brensant         ###   ########.fr       */
+/*   Updated: 2026/04/08 17:52:47 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,12 @@
 
 typedef struct s_sphere
 {
-	t_vec3 center;
-	double radius;
-	t_vec3 color;
+	t_vec3	center;
+	double	radius;
+	t_color	color;
 }	t_sphere;
 
-int color_dot (t_vec3 color, double dot);
-int color_dot_amb(t_vec3 color, double dot, double ambient);
+t_color	color_apply_shading(t_color color, double dot, double ambient);
 
 int main(int argc, char **argv)
 {
@@ -42,14 +41,10 @@ int main(int argc, char **argv)
 
 	double ambient = 0.15;
 
-	t_vec3	light = (t_vec3){0, 1, 1};
+	t_vec3	light = (t_vec3){0, -1, 1};
 
-	t_sphere sphere = {.center = {-0.75, 0, 0}, .radius = 0.2, .color = {255,150,25}};
-	t_sphere sphere2 = {.center = {0.75, 0, 0}, .radius = 0.2, .color = {150,25,255}};
-
-	t_vec3	rec = (t_vec3){0.2, 0.3, 1};
-	t_vec3	color3 = (t_vec3){255,255,255};
-
+	t_sphere sphere = {.center = {-0.5, 0, 0}, .radius = 0.25, .color.hex = 0x40ed5f};
+	t_sphere sphere2 = {.center = {0.5, 0, 0}, .radius = 0.25, .color.hex = 0xFF0000};
 	printf("\nit's our miniRT. %f %d", sphere.radius, argc);
 	fflush(stdout);
 
@@ -82,7 +77,7 @@ int main(int argc, char **argv)
 				dot = vec3_dot(normal, norm_light);
 				if (dot < 0)
 					dot = 0;
-				mlx_pixel_put(env->mlx_ptr, env->win_ptr, x, y, color_dot_amb(sphere.color, dot, ambient));
+				mlx_pixel_put(env->mlx_ptr, env->win_ptr, x, y, color_apply_shading(sphere.color, dot, ambient).hex);
 			}
 			else if ((powf(act.x - sphere2.center.x, 2) + powf(act.y - sphere2.center.y, 2)) <= powf(sphere2.radius, 2))
 			{
@@ -95,16 +90,8 @@ int main(int argc, char **argv)
 				dot = vec3_dot(normal, norm_light);
 				if (dot < 0)
 					dot = 0;
-				mlx_pixel_put(env->mlx_ptr, env->win_ptr, x, y, color_dot_amb(sphere2.color, dot, ambient));
+				mlx_pixel_put(env->mlx_ptr, env->win_ptr, x, y, color_apply_shading(sphere2.color, dot, ambient).hex);
 			}
-			else if ((act.x - rec.x) > -0.2 && (act.x - rec.x) < 0.2 && (act.y - rec.x)  > -0.2 && (act.y - rec.x)  < 0.2)
-			{
-				d.y = act.y - sphere2.center.y;
-				d.x = act.x - sphere2.center.x;
-    			mlx_pixel_put(env->mlx_ptr, env->win_ptr, x, y, 0x00FF00);
-			}
-			else
-				mlx_pixel_put(env->mlx_ptr, env->win_ptr, x, y, color_dot_amb(color3, 0, 0));
 		}
 	}
 	mlx_loop(env->mlx_ptr);
@@ -113,46 +100,12 @@ int main(int argc, char **argv)
     return (0);
 }
 
-
-int color_dot_union(t_vec3 color, double dot)
+t_color	color_apply_shading(t_color color, double dot, double ambient)
 {
-	t_vec3 new_color;
+	t_vec4	new_color;
 
-	new_color = vec3_scale(color, dot);
-	if (new_color.x > 255)
-		new_color.x = 255;
-	if (new_color.y > 255)
-		new_color.y = 255;
-	if (new_color.z > 255)
-		new_color.z = 255;
-	return (color_to_rgb(new_color));
-}
-
-int color_dot_amb(t_vec3 color, double dot, double ambient)
-{
-	t_vec3 new_color;
-
-	new_color = vec3_scale(color, (dot + ambient));
-	while (new_color.x > 255 || new_color.z > 255 || new_color.y > 255)
-	{
-		if (new_color.x > 255)
-		{
-			new_color.y += ((int)new_color.x % 255) /2;
-			new_color.z += ((int)new_color.x % 255) /2;
-			new_color.x = 255;
-		}
-		if (new_color.y > 255)
-		{
-			new_color.z += ((int)new_color.y % 255) /2;
-			new_color.x += ((int)new_color.y % 255) /2;
-			new_color.y = 255;
-		}
-		if (new_color.z > 255)
-		{
-			new_color.y += ((int)new_color.z % 255) /2;
-			new_color.x += ((int)new_color.z % 255) /2;
-			new_color.z = 255;
-		}
-	}
-	return (color_to_rgb(new_color));
+	new_color = color_to_vec(color);
+	new_color = vec3_scale(new_color, (dot + ambient));
+	new_color = color_vec_clamp(new_color);
+	return (color_from_vec(new_color));
 }
