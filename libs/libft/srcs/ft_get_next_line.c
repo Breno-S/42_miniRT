@@ -6,7 +6,7 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 12:47:47 by rgomes-d          #+#    #+#             */
-/*   Updated: 2025/09/29 11:17:48 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/04/06 16:45:11 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static int	ft_fillstock(int fd, t_ext_list **head);
 
 char	*get_next_line(int fd)
 {
-	static t_ext_list	*stock[FILE_DESCRIPTORS] = {0};
+	static t_ext_list	*stock = 0;
 	char				*rtn;
 	int					size_nl;
 
@@ -27,22 +27,22 @@ char	*get_next_line(int fd)
 	size_nl = 0;
 	if (fd < 0)
 	{
-		ft_cleanls(&stock[fd]);
-		stock[fd] = NULL;
+		ft_cleanls(&stock);
+		stock = NULL;
 		return (NULL);
 	}
 	while (size_nl == 0)
 	{
-		if (ft_fillstock(fd, &stock[fd]))
-			return (ft_cleanls(&stock[fd]));
-		size_nl = ft_verify_nlend(&stock[fd]->head);
+		if (ft_fillstock(fd, &stock))
+			return (ft_cleanls(&stock));
+		size_nl = ft_verify_nlend(&stock->head);
 	}
-	rtn = ft_fillnl(&stock[fd], size_nl);
+	rtn = ft_fillnl(&stock, size_nl);
 	if (!rtn)
-		return (ft_cleanls(&stock[fd]));
-	if (stock[fd] && (!stock[fd]->head || (stock[fd]->head
-				&& ((char *)stock[fd]->head->content)[0] == 0)))
-		ft_cleanls(&stock[fd]);
+		return (ft_cleanls(&stock));
+	if (stock && (!stock->head || (stock->head
+				&& ((char *)stock->head->content)[0] == 0)))
+		ft_cleanls(&stock);
 	return (rtn);
 }
 

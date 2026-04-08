@@ -38,7 +38,7 @@ OBJTS             := $(OBJTS:.c=.o)
 OBJTS_LIBFT = $(shell $(MAKE) -s -C $(PATH_LIBFT) get_var)
 OBJTS_LIBFT := $(subst ./build/,$(SRCS_LIBFT),$(OBJTS_LIBFT))
 
-LDLIBS := -lmlx -lXext -lX11 -lm
+LDLIBS := -lft -lmlx -lXext -lX11 -lm
 LDFLAGS := $(addprefix -L, $(LIB_DIRS)) $(addprefix -L, $(PATH_MINILIBX))
 
 

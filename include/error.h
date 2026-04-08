@@ -1,22 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main_3.c                                           :+:      :+:    :+:   */
+/*   error.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/04/01 13:53:38 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/04/01 19:28:59 by rgomes-d         ###   ########.fr       */
+/*   Created: 2026/04/06 13:34:32 by rgomes-d          #+#    #+#             */
+/*   Updated: 2026/04/06 14:32:24 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parser.h"
-#include "core.h"
+#ifndef ERROR_H
+# define ERROR_H
 
-int main(int ac, char **av)
+#define INVALID_ARG "miniRT: Invalid args\n"
+#define INVALID_EXT "miniRT: Invalid extension\n"
+
+typedef enum e_type_err
 {
-	t_color teste;
-	parser(ac, av);
+	invalid_arg,
+	invalid_extension,
+	open_err
+} t_type_erro;
 
-	return (0);
-}
+#endif
