@@ -6,7 +6,7 @@
 /*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/08 13:43:03 by brensant          #+#    #+#             */
-/*   Updated: 2026/04/08 14:24:57 by brensant         ###   ########.fr       */
+/*   Updated: 2026/04/10 02:20:06 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 #include <stdlib.h>
 
-t_env	*env_create(int width, int height)
+t_env	*env_create(int width, int height, const char *name)
 {
 	t_env	*env;
 
@@ -23,7 +23,7 @@ t_env	*env_create(int width, int height)
 	if (!env)
 		return ((void *)0);
 	env->mlx_ptr = mlx_init();
-	env->win_ptr = mlx_new_window(env->mlx_ptr, width, height, "miniRT");
+	env->win_ptr = mlx_new_window(env->mlx_ptr, width, height, (char *)name);
 	env->img_ptr = mlx_new_image(env->mlx_ptr, width, height);
 	env->img_addr = mlx_get_data_addr(env->img_ptr, &env->bpp, &env->line_len,
 			&env->endian);
@@ -32,6 +32,8 @@ t_env	*env_create(int width, int height)
 		env_destroy(env);
 		return ((void *)0);
 	}
+	env->width = width;
+	env->height = height;
 	return (env);
 }
 
