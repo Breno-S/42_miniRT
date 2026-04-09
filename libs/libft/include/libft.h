@@ -6,7 +6,7 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/14 09:57:31 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/04/08 12:56:31 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/04/09 16:51:34 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -172,5 +172,7 @@ t_list					*ft_gc_content_root(char *categ);
 void					*ft_realloc(void **mem, size_t nmemb, size_t size,
 							size_t current_size);
 double					ft_atof(const char *nptr);
+char 					**ft_split_spaces(char const *s);
+
 
 #endif

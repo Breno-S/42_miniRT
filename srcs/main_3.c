@@ -6,7 +6,7 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/25 16:39:03 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/04/08 16:17:39 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/04/09 17:48:11 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,9 +75,9 @@ int main(int ac, char **av)
 	norm_light.y =light.y / len_l;
 	norm_light.z =light.z / len_l;
 	color = (t_vec3){255,150,25};
-	color2 = (t_vec3){150,25,255};
+	color2 = (t_vec3){150,25,25};
 	color3 = (t_vec3){255,255,255};
-	ambient = 0.15;
+	ambient = 0.5;
 
     mlx = mlx_init();
     win = mlx_new_window(mlx, WIDTH, HEIGHT , "Minha Janela");
@@ -105,13 +105,13 @@ int main(int ac, char **av)
 						pd = d.x * d.x + d.y * d.y;
 						act.z = sqrt(sphere.r * sphere.r - pd);
 						normal.z = act.z /sphere.r;
-						norm_light.x = light.x - act.x;
-						norm_light.y = light.y - act.y;
-						norm_light.z = light.z - act.z;
-						len_l = sqrt(norm_light.x * norm_light.x + norm_light.y * norm_light.y + norm_light.z * norm_light.z);
-						norm_light.x = norm_light.x / len_l;
-						norm_light.y = norm_light.y / len_l;
-						norm_light.z = norm_light.z / len_l;
+						// norm_light.x = light.x - act.x;
+						// norm_light.y = light.y - act.y;
+						// norm_light.z = light.z - act.z;
+						// len_l = sqrt(norm_light.x * norm_light.x + norm_light.y * norm_light.y + norm_light.z * norm_light.z);
+						// norm_light.x = norm_light.x / len_l;
+						// norm_light.y = norm_light.y / len_l;
+						// norm_light.z = norm_light.z / len_l;
 						normal.x = d.x / sphere.r;
 						dot = (normal.x * norm_light.x) + (normal.y * norm_light.y) + (normal.z * norm_light.z);
 						if (dot < 0)
@@ -127,13 +127,13 @@ int main(int ac, char **av)
 						pd = d.x * d.x + d.y * d.y;
 						act.z = sqrt(sphere2.r * sphere2.r - pd);
 						normal.z = act.z /sphere2.r;
-						norm_light.x = light.x - act.x;
-						norm_light.y = light.y - act.y;
-						norm_light.z = light.z - act.z;
-						len_l = sqrt(norm_light.x * norm_light.x + norm_light.y * norm_light.y + norm_light.z * norm_light.z);
-						norm_light.x = norm_light.x / len_l;
-						norm_light.y = norm_light.y / len_l;
-						norm_light.z = norm_light.z / len_l;
+						// norm_light.x = light.x - act.x;
+						// norm_light.y = light.y - act.y;
+						// norm_light.z = light.z - act.z;
+						// len_l = sqrt(norm_light.x * norm_light.x + norm_light.y * norm_light.y + norm_light.z * norm_light.z);
+						// norm_light.x = norm_light.x / len_l;
+						// norm_light.y = norm_light.y / len_l;
+						// norm_light.z = norm_light.z / len_l;
 						normal.x = d.x / sphere2.r;
 						dot = (normal.x * norm_light.x) + (normal.y * norm_light.y) + (normal.z * norm_light.z);
 						if (dot < 0)

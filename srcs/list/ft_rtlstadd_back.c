@@ -1,30 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser.h                                           :+:      :+:    :+:   */
+/*   ft_rtlstadd_back.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/04/01 13:54:17 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/04/09 16:56:29 by rgomes-d         ###   ########.fr       */
+/*   Created: 2025/12/03 17:44:33 by brensant          #+#    #+#             */
+/*   Updated: 2026/04/09 14:58:43 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PARSER_H
-# define PARSER_H
+#include "parser.h"
 
-# include "error.h"
-# include "shapes.h"
-# include "libft.h"
-
-typedef enum e_ent_type
+void	ft_lstadd_back(t_rt_list **lst, t_rt_list *new)
 {
-	ambient	= 1,
-	camera = 2,
-	light = 4
-}	t_ent_type;
+	t_rt_list	*head;
 
-int	parser(int ac, char **av);
-int	error_msg(int err_type);
-
-#endif
+	if (!lst)
+		return ;
+	if (!*lst)
+		*lst = new;
+	else
+	{
+		head = *lst;
+		while (head->next)
+			head = head->next;
+		head->next = new;
+	}
+}
