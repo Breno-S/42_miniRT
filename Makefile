@@ -1,7 +1,7 @@
 NAME := miniRT
 
-CC := cc -g3
-#CFLAGS := -Wall -Wextra -Werror
+CC := cc -g
+CFLAGS := -Wall -Wextra -Werror
 CPPFLAGS = $(addprefix -I,$(INCLUDES))
 
 LIB_DIRS = $(PATH_LIBFT)/bin
@@ -27,6 +27,13 @@ SRCS_MANDATORY_COMMON := \
 
 SRCS_MANDATORY_PARSER := \
 	parser.c \
+	ft_rtlstadd_back.c \
+	error.c \
+	import_ent_i.c \
+	import_ent_ii.c \
+	import_ent_utils.c \
+	import_file.c \
+	verify_number.c
 
 SRCS_MANDATORY := $(addprefix $(PATH_MANDATORY)/,$(SRCS_MANDATORY_COMMON))
 SRCS_MANDATORY := $(SRCS_MANDATORY) $(addprefix $(PATH_MANDATORY)/$(PARSER_SRC_DIR)/,$(SRCS_MANDATORY_PARSER))

@@ -15,28 +15,26 @@
 double ft_atof(const char *nptr)
 {
 	int i;
-	double result[2];
-	double multiplier;
-	double divisor;
+	double result;
+	double utils[2];
 
 	i = 0;
-	result[0] = 0;
-	result[1] = 0;
-	multiplier = 1;
-	divisor = 10.0;
+	result = 0.0;
+	utils[0] = 1;
+	utils[1] = 1;
 	while (ft_isspace(nptr[i]))
 		i++;
 	if (nptr[i] == '-' || nptr[i] == '+')
 		if (nptr[i++] == '-')
-			multiplier *= -1;
+			utils[1] *= -1;
 	while (ft_isdigit(nptr[i]))
-		result[0] = (nptr[i++] - '0') + (result[0] * 10);
+		result = (nptr[i++] - '0') + (result * 10);
 	if (nptr[i] == '.')
 		i++;
 	while (ft_isdigit(nptr[i]))
 	{
-		result[1] += (nptr[i++] - '0') / divisor;
-		divisor *= 10.0;
+		result = (nptr[i++] - '0') + (result * 10);
+		utils[0] *= 10;
 	}
-	return ((result[0] + result[1]) * multiplier);
+	return ((result / utils[0]) * utils[1]);
 }

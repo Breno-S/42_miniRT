@@ -12,7 +12,7 @@
 
 #include "parser.h"
 
-void	ft_lstadd_back(t_rt_list **lst, t_rt_list *new)
+void	ft_rtlstadd_back(t_rt_list **lst, t_rt_list *new)
 {
 	t_rt_list	*head;
 
