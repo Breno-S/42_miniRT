@@ -1,7 +1,7 @@
 NAME := miniRT
 
-CC := cc
-CFLAGS := -g -Wall -Wextra #-Werror
+CC := cc -g
+# CFLAGS := -g -Wall -Wextra #-Werror
 CPPFLAGS = $(addprefix -I,$(INCLUDES))
 
 LIB_DIRS = $(PATH_LIBFT)/bin
@@ -38,17 +38,6 @@ SRCS_MANDATORY_PARSER := \
 SRCS_MANDATORY_VEC_MATH := \
 	color.c \
 	env.c \
-	renderer.c \
-	vec_math.c \
-	vec_math_vec.c
-
-SRCS_MANDATORY_PARSER := \
-	parser.c \
-
-SRCS_MANDATORY_VEC_MATH := \
-	color.c \
-	env.c \
-	renderer.c \
 	vec_math.c \
 	vec_math_vec.c
 

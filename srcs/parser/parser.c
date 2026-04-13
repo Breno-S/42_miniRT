@@ -6,7 +6,7 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/01 14:56:06 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/04/10 21:10:34 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/04/13 18:56:13 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int	verify_mandatory_ent(t_shpes_type type, unsigned char *verify_ent)
 	else if (type == tp_light && !(verify_ent[0] & light))
 		verify_ent[0] |= light;
 	else
-		return (1);
+		return (error_msg_ii(dup_ent));
 	return (0);
 }
 

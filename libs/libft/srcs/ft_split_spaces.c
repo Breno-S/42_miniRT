@@ -6,31 +6,32 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/18 10:33:15 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/04/09 17:05:38 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/04/13 16:44:32 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int ft_count_words(const char *s)
+static int	ft_count_words(const char *s)
 {
-	int quantity_words;
-	int i;
+	int	quantity_words;
+	int	i;
 
 	quantity_words = 0;
 	i = 0;
 	while (s[i] != 0)
 	{
-		if (((s[i] != 0 && !ft_isspace(s[i]))) && (ft_isspace(s[i + 1]) || s[i + 1] == 0))
+		if (((s[i] != 0 && !ft_isspace(s[i])))
+			&& (ft_isspace(s[i + 1]) || s[i + 1] == 0))
 			quantity_words++;
 		i++;
 	}
 	return (quantity_words);
 }
 
-static void *ft_free_array(void **s)
+static void	*ft_free_array(void **s)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (s[i] != ((void *)0))
@@ -42,12 +43,12 @@ static void *ft_free_array(void **s)
 	return (((void *)0));
 }
 
-char **ft_split_spaces(char const *s)
+char	**ft_split_spaces(char const *s)
 {
-	int begin;
-	int end;
-	char **set_words;
-	int i_arr;
+	int		begin;
+	int		end;
+	char	**set_words;
+	int		i_arr;
 
 	begin = 0;
 	i_arr = 0;

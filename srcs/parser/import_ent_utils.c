@@ -6,79 +6,83 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/10 20:52:50 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/04/10 21:23:58 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/04/13 18:34:41 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
 
-t_color	import_color(char *text)
+int	import_color(char *text, t_color *vec3)
 {
-	t_color	vec3;
 	char	**c_v3;
+	int		color[3];
 
-	vec3 = (t_color){0};
-	if (!text)
-		return ((t_color){-1,-1,-1,-1});
+	if (!text || !vec3)
+		return (1);
 	c_v3 = ft_split(text, ',');
 	ft_gcfct_arr_register((void **)c_v3, GC_DATA);
 	if (ft_size_chrarr(c_v3) != 3)
-		return ((t_color){-1,-1,-1,-1});
-	vec3.r = ft_atoi(c_v3[0]);
-	vec3.g = ft_atoi(c_v3[1]);
-	vec3.b = ft_atoi(c_v3[2]);
-	if (verify_atoi(c_v3[0], vec3.r) || verify_atoi(c_v3[1], vec3.g)
-		|| verify_atoi(c_v3[2], vec3.b))
-		return ((t_color){-1,-1,-1,-1});
-	if ((vec3.r > 255 || vec3.g > 255 || vec3.b > 255)
-		|| (vec3.r < 0 || vec3.g < 0 || vec3.b < 0))
+		return (error_msg(size_vec));
+	color[0] = ft_atoi(c_v3[0]);
+	color[1] = ft_atoi(c_v3[1]);
+	color[2] = ft_atoi(c_v3[2]);
+	if (verify_atoi(c_v3[0], color[0]) || verify_atoi(c_v3[1], color[1])
+		|| verify_atoi(c_v3[2], color[2]))
+		return (1);
+	if ((color[0] > 255 || color[1] > 255 || color[2] > 255)
+		|| (color[0] < 0 || color[1] < 0 || color[2] < 0))
 	{
 		error_msg(err_color);
-		return ((t_color){-1,-1,-1,-1});
+		return (1);
 	}
-	return (vec3);
+	vec3->r = color[0];
+	vec3->g = color[1];
+	vec3->b = color[2];
+	return (0);
 }
 
-t_v3	import_vec3_normalize(char *text)
+int	import_vec3_normalize(char *text, t_vec4 *vec3)
 {
-	t_v3	vec3;
 	char	**c_v3;
 
-	vec3 = (t_v3){0};
 	if (!text)
-		return ((t_v3){-2,-2,-2});
+		return (1);
 	c_v3 = ft_split(text, ',');
 	ft_gcfct_arr_register((void **)c_v3, GC_DATA);
 	if (ft_size_chrarr(c_v3) != 3)
-		return ((t_v3){-2,-2,-2});
-	vec3.x = ft_atof(c_v3[0]);
-	vec3.y = ft_atof(c_v3[1]);
-	vec3.z = ft_atof(c_v3[2]);
-	if ((vec3.x > 1.0 || vec3.y > 1.0 || vec3.z > 1.0)
-		|| (vec3.x < -1.0 || vec3.y < -1.0 || vec3.z < -1.0))
+		return (error_msg(size_vec));
+	vec3->x = ft_atof(c_v3[0]);
+	vec3->y = ft_atof(c_v3[1]);
+	vec3->z = ft_atof(c_v3[2]);
+	if (verify_atof(c_v3[0], vec3->x) || verify_atof(c_v3[1], vec3->y)
+		|| verify_atof(c_v3[2], vec3->z))
+		return (1);
+	if ((vec3->x > 1.0 || vec3->y > 1.0 || vec3->z > 1.0)
+		|| (vec3->x < -1.0 || vec3->y < -1.0 || vec3->z < -1.0))
 	{
 		error_msg(non_normalize);
-		return ((t_v3){-2,-2,-2});
+		return (1);
 	}
-	return (vec3);
+	return (0);
 }
 
-t_v3	import_vec3(char *text)
+int	import_vec3(char *text, t_vec4 *vec3)
 {
-	t_v3	vec3;
 	char	**c_v3;
 
-	vec3 = (t_v3){0};
 	if (!text)
-		return ((t_v3){-1,-1,-1});
+		return (1);
 	c_v3 = ft_split(text, ',');
 	ft_gcfct_arr_register((void **)c_v3, GC_DATA);
 	if (ft_size_chrarr(c_v3) != 3)
-		return ((t_v3){-1,-1,-1});
-	vec3.x = ft_atof(c_v3[0]);
-	vec3.y = ft_atof(c_v3[1]);
-	vec3.z = ft_atof(c_v3[2]);
-	return (vec3);
+		return (error_msg(size_vec));
+	vec3->x = ft_atof(c_v3[0]);
+	vec3->y = ft_atof(c_v3[1]);
+	vec3->z = ft_atof(c_v3[2]);
+	if (verify_atof(c_v3[0], vec3->x) || verify_atof(c_v3[1], vec3->y)
+		|| verify_atof(c_v3[2], vec3->z))
+		return (1);
+	return (0);
 }
 
 void	link_entity(t_rt_list *n_rt_list)

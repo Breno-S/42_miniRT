@@ -6,7 +6,7 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/01 15:49:00 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/04/10 21:18:22 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/04/13 11:20:07 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define SHAPES_H
 
 # include "core.h"
+# include "color.h"
 
 typedef enum e_shpes_type
 {
@@ -33,36 +34,36 @@ typedef struct s_ambient
 
 typedef struct s_camera
 {
-	t_v3	viewport;
-	t_v3	normalize_3d;
+	t_vec4	viewport;
+	t_vec4	normalize_3d;
 	int		fov;
 }	t_camera;
 
 typedef struct s_light
 {
-	t_v3	center;
+	t_vec4	center;
 	float	brightness;
 	t_color	color;
 }	t_light;
 
 typedef struct s_sphere
 {
-	t_v3	center;
+	t_vec4	center;
 	float	diameter;
 	t_color	color;
 }	t_sphere;
 
 typedef struct s_plane
 {
-	t_v3	center;
-	t_v3	normalize_3d;
+	t_vec4	center;
+	t_vec4	normalize_3d;
 	t_color	color;
 }	t_plane;
 
 typedef struct s_cylinder
 {
-	t_v3	center;
-	t_v3	axis;
+	t_vec4	center;
+	t_vec4	axis;
 	float	diameter;
 	float	height;
 	t_color	color;

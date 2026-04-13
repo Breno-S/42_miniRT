@@ -6,7 +6,7 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/10 20:56:10 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/04/10 21:04:58 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/04/13 18:54:47 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,22 @@ int	error_msg(int err_type)
 		write(2, ERR_FOV, ft_strlen(ERR_FOV));
 	else if (err_type == err_light)
 		write(2, ERR_LIGHT, ft_strlen(ERR_LIGHT));
+	else if (err_type == many_args)
+		write(2, MANY_ARG, ft_strlen(MANY_ARG));
+	else if (err_type == size_vec)
+		write(2, SIZE_VEC, ft_strlen(SIZE_VEC));
+	else
+		perror("miniRT");
+	return (1);
+}
+
+int	error_msg_ii(int err_type)
+{
+	write(2, "error\n", 6);
+	if (err_type == err_conv)
+		write(2, ERR_CONV, ft_strlen(ERR_CONV));
+	else if (err_type == dup_ent)
+		write(2, DUP_ENT, ft_strlen(DUP_ENT));
 	else
 		perror("miniRT");
 	return (1);
