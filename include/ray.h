@@ -1,36 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   color.h                                            :+:      :+:    :+:   */
+/*   ray.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/04/06 16:31:16 by brensant          #+#    #+#             */
-/*   Updated: 2026/04/08 17:52:41 by brensant         ###   ########.fr       */
+/*   Created: 2026/04/09 14:26:07 by brensant          #+#    #+#             */
+/*   Updated: 2026/04/09 14:31:46 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef COLOR_H
-# define COLOR_H
+#ifndef RAY_H
+# define RAY_H
 
-# include "core.h"
+# include "vec_math.h"
 
-# include <stdint.h>
-
-typedef union u_color
+typedef struct s_ray
 {
-	uint64_t	hex;
-	struct
-	{
-		uint8_t	b;
-		uint8_t	g;
-		uint8_t	r;
-		uint8_t	a;
-	};
-}	t_color;
+	t_vec3	orig;
+	t_vec3	dir;
+}	t_ray;
 
-t_vec4	color_to_vec(t_color color);
-t_color	color_from_vec(t_vec4 color);
-t_vec4	color_vec_clamp(t_vec4 color);
+t_ray	ray_new(t_vec3 origin, t_vec3 direction);
 
-#endif // COLOR_H
+#endif // RAY_H

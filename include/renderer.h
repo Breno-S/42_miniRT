@@ -1,36 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   color.h                                            :+:      :+:    :+:   */
+/*   renderer.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/04/06 16:31:16 by brensant          #+#    #+#             */
-/*   Updated: 2026/04/08 17:52:41 by brensant         ###   ########.fr       */
+/*   Created: 2026/04/10 02:09:15 by brensant          #+#    #+#             */
+/*   Updated: 2026/04/10 02:18:55 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef COLOR_H
-# define COLOR_H
+#ifndef RENDERER_H
+# define RENDERER_H
 
-# include "core.h"
+void	renderer_render(t_env *env);
 
-# include <stdint.h>
-
-typedef union u_color
-{
-	uint64_t	hex;
-	struct
-	{
-		uint8_t	b;
-		uint8_t	g;
-		uint8_t	r;
-		uint8_t	a;
-	};
-}	t_color;
-
-t_vec4	color_to_vec(t_color color);
-t_color	color_from_vec(t_vec4 color);
-t_vec4	color_vec_clamp(t_vec4 color);
-
-#endif // COLOR_H
+#endif // RENDERER_H

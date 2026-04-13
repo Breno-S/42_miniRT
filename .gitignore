@@ -56,3 +56,6 @@ dkms.conf
 
 #Executable
 miniRT
+
+# VSCode
+.vscode

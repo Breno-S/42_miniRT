@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_gc_malloc.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 13:09:14 by rgomes-d          #+#    #+#             */
-/*   Updated: 2025/09/09 16:30:14 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/04/08 13:27:10 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ t_gc_list	*ft_gc_malloc(size_t size, t_gc_type type)
 	lst = ft_gc_start();
 	if (!lst || size > 2147483647)
 		return (NULL);
-	new_gc = malloc(sizeof(t_list));
+	new_gc = malloc(sizeof(*new_gc));
 	if (!new_gc)
 		return (NULL);
 	new_gc->type = type;

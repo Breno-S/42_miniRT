@@ -1,7 +1,7 @@
 NAME := miniRT
 
-CC := cc -g
-# CFLAGS := -Wall -Wextra -Werror
+CC := cc
+CFLAGS := -g -Wall -Wextra #-Werror
 CPPFLAGS = $(addprefix -I,$(INCLUDES))
 
 LIB_DIRS = $(PATH_LIBFT)/bin
@@ -19,14 +19,11 @@ PATH_OBJT := ./build/
 
 INCLUDES := include libs/libft/include libs/minilibx-linux
 PATH_MANDATORY := ./srcs
-EXEC_SRC_DIR   := exec
+VEC_MATH_SRC_DIR := vec_math
 PARSER_SRC_DIR := parser
 
 SRCS_MANDATORY_COMMON := \
-	color.c \
-	main.c \
-	vec_math.c \
-	vec_math_vec.c
+	main.c
 
 SRCS_MANDATORY_PARSER := \
 	parser.c \
@@ -38,17 +35,36 @@ SRCS_MANDATORY_PARSER := \
 	import_file.c \
 	verify_number.c
 
+SRCS_MANDATORY_VEC_MATH := \
+	color.c \
+	env.c \
+	renderer.c \
+	vec_math.c \
+	vec_math_vec.c
+
+SRCS_MANDATORY_PARSER := \
+	parser.c \
+
+SRCS_MANDATORY_VEC_MATH := \
+	color.c \
+	env.c \
+	renderer.c \
+	vec_math.c \
+	vec_math_vec.c
+
 SRCS_MANDATORY := $(addprefix $(PATH_MANDATORY)/,$(SRCS_MANDATORY_COMMON))
 SRCS_MANDATORY := $(SRCS_MANDATORY) $(addprefix $(PATH_MANDATORY)/$(PARSER_SRC_DIR)/,$(SRCS_MANDATORY_PARSER))
+SRCS_MANDATORY := $(SRCS_MANDATORY) $(addprefix $(PATH_MANDATORY)/$(VEC_MATH_SRC_DIR)/,$(SRCS_MANDATORY_VEC_MATH))
 
 OBJTS := $(addprefix $(PATH_OBJT),$(SRCS_MANDATORY_COMMON))
 OBJTS := $(OBJTS) $(addprefix $(PATH_OBJT),$(SRCS_MANDATORY_PARSER))
+OBJTS := $(OBJTS) $(addprefix $(PATH_OBJT),$(SRCS_MANDATORY_VEC_MATH))
 
 OBJTS             := $(OBJTS:.c=.o)
 OBJTS_LIBFT = $(shell $(MAKE) -s -C $(PATH_LIBFT) get_var)
 OBJTS_LIBFT := $(subst ./build/,$(SRCS_LIBFT),$(OBJTS_LIBFT))
 
-LDLIBS := -lft -lmlx -lXext -lX11 -lm
+LDLIBS := -lmlx -lXext -lX11 -lm -lft
 LDFLAGS := $(addprefix -L, $(LIB_DIRS)) $(addprefix -L, $(PATH_MINILIBX))
 
 
@@ -106,6 +122,12 @@ $(MINILIBX):
 		@make -C $(PATH_MINILIBX) NAME="libmlx.a" all
 
 $(PATH_OBJT)%.o: $(PATH_MANDATORY)/$(PARSER_SRC_DIR)/%.c
+		@mkdir -p build
+		@printf "$(L_GREEN)Compiling...$(NC) %-40s\n" $<
+		@sleep 0.01
+		@$(CC) -c $(CFLAGS) $(CPPFLAGS) $< -o $(subst srcs/,build/,$@)
+
+$(PATH_OBJT)%.o: $(PATH_MANDATORY)/$(VEC_MATH_SRC_DIR)/%.c
 		@mkdir -p build
 		@printf "$(L_GREEN)Compiling...$(NC) %-40s\n" $<
 		@sleep 0.01
