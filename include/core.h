@@ -6,7 +6,7 @@
 /*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/01 16:58:42 by brensant          #+#    #+#             */
-/*   Updated: 2026/04/14 14:05:12 by brensant         ###   ########.fr       */
+/*   Updated: 2026/04/14 17:40:33 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@
 
 # define DEG2RAD (3.14159265358979323846f / 180.0f)
 # define RAD2DEG (180.0f / 3.14159265358979323846f)
+
+# define FOCAL_DISTANCE 1.0f
 
 typedef struct t_vec4
 {
