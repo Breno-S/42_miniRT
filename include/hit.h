@@ -1,27 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ray.h                                              :+:      :+:    :+:   */
+/*   hit.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/04/09 14:26:07 by brensant          #+#    #+#             */
-/*   Updated: 2026/04/16 13:35:33 by brensant         ###   ########.fr       */
+/*   Created: 2026/04/16 13:02:25 by brensant          #+#    #+#             */
+/*   Updated: 2026/04/16 14:31:37 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef RAY_H
-# define RAY_H
+#ifndef HIT_H
+# define HIT_H
 
-# include "vec_math.h"
+#include "ray.h"
+#include "shapes.h"
+#include "vec_math.h"
 
-typedef struct s_ray
+typedef struct s_hit
 {
-	t_vec3	orig;
-	t_vec3	dir;
-}	t_ray;
+	t_vec3	point;
+	float	distance;
+	bool	did_hit;
+}	t_hit;
 
-t_ray	ray_new(t_vec3 origin, t_vec3 direction);
-t_vec3	ray_at(t_ray *ray, float t);
+t_hit	hit_miss(void);
+t_hit	hit_sphere(t_ray *ray, t_sphere *sphere);
 
-#endif // RAY_H
+#endif // HIT_H

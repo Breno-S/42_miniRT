@@ -6,7 +6,7 @@
 /*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/09 14:18:38 by brensant          #+#    #+#             */
-/*   Updated: 2026/04/14 17:45:07 by brensant         ###   ########.fr       */
+/*   Updated: 2026/04/16 14:37:13 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,6 @@
 
 /****************************** FOR DEBUG ONLY ********************************/
 
-// typedef struct s_camera
-// {
-// 	t_vec3	pos;
-// 	t_vec3	dir;
-// 	int		fov;
-// }	t_camera;
-
 typedef struct s_sphere
 {
 	t_vec3	center;
@@ -36,9 +29,9 @@ typedef struct s_sphere
 	t_color	color;
 }	t_sphere;
 
-t_sphere sphere = {{0, 0, 4, 1}, 1, (t_color){.hex = 0xFF00FF}};
+t_sphere sphere = {{0, 0, 4, 1}, 1, (t_color){.hex = 0xFF0000}};
 
-t_camera camera = {{2, -1, -10, 1}, {0, 0, 1, 1}, 70};
+t_camera camera = {{0, 0, 0, 1}, {0, 0, 1, 1}, 70};
 
 // t_light	light = {{0,0,1,0},1.0,(t_color){.hex = 0xFFFFFF}}
 
@@ -64,7 +57,7 @@ static void	pixel_put(t_env *env, int x, int y, int color)
 	}
 }
 
-bool hit_sphere(t_vec3 center, float radius, t_ray ray)
+float hit_sphere(t_sphere *sphere, t_ray ray)
 {
 	t_vec3	oc;
 	float	a;
@@ -72,19 +65,36 @@ bool hit_sphere(t_vec3 center, float radius, t_ray ray)
 	float	c;
 	float	discriminant;
 
-	oc = vec3_sub(center, ray.orig);
+	oc = vec3_sub(sphere->center, ray.orig);
 	a = vec3_dot(ray.dir, ray.dir);
 	b = -2.0 * vec3_dot(ray.dir, oc);
-	c = vec3_dot(oc, oc) - radius * radius;
+	c = vec3_dot(oc, oc) - sphere->radius * sphere->radius;
 	discriminant = b * b -4 * a * c;
-	return (discriminant >= 0);
+	if (discriminant < 0)
+		return (-1.0);
+	return ((-b - sqrt(discriminant)) / 2.0 * a);
 }
 
-static t_color ray_color(t_sphere sphere, t_ray ray)
+static t_color ray_color(t_sphere *sphere, t_ray ray)
 {
-	if (hit_sphere(sphere.center, sphere.radius, ray))
-		return ((t_color){.hex = 0xFF0000});
-	return ((t_color){.hex = 0xFFFFFF});
+	float t = hit_sphere(sphere, ray);
+	if (t > 0.0) {
+		t_vec3 hit_point = vec3_add(ray.orig, vec3_scale(ray.dir, t));
+
+		// Vetor Normal
+		t_vec3 normal = vec3_normalize(vec3_sub(hit_point, sphere->center));
+
+		// Vetor da Luz (exemplo de luz direcional ou pontual)
+		t_vec3 light_dir = vec3_normalize(vec3_new(1, 1, -1)); // Luz vindo do canto
+
+		// Produto escalar para a intensidade (0.0 a 1.0)
+		float intensity = vec3_dot(normal, light_dir);
+		if (intensity < 0) intensity = 0; // Não iluminar o que está "atrás"
+
+		// Aplicar intensidade na cor (exemplo simples)
+		return (color_from_vec(vec3_scale(color_to_vec(sphere->color), intensity)));
+	}
+	return (t_color){.hex = 0x202020}; // Cor do background (cinza escuro)
 }
 
 static void	build_image(t_env *env)
@@ -157,7 +167,7 @@ void	renderer_render(t_env *env)
 			// Get closest collision
 			// Compute color at intersection point
 
-			t_color color = ray_color(sphere, ray);
+			t_color color = ray_color(&sphere, ray);
 
 			pixel_put(env, x, y, color.hex);
 
