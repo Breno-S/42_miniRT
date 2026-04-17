@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   renderer.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/10 02:09:15 by brensant          #+#    #+#             */
-/*   Updated: 2026/04/14 17:44:53 by brensant         ###   ########.fr       */
+/*   Updated: 2026/04/16 18:00:57 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define RENDERER_H
 
 # include "vec_math.h"
+# include "shapes.h"
 
 typedef struct s_ray_context
 {
@@ -25,14 +26,6 @@ typedef struct s_ray_context
 	t_vec3	vp_dx;
 	t_vec3	vp_dy;
 }	t_ray_context;
-
-/* REMOVER DPS*/
-typedef struct s_camera
-{
-	t_vec3	pos;
-	t_vec3	dir;
-	int		fov;
-}	t_camera;
 
 typedef struct s_renderer
 {

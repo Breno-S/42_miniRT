@@ -6,7 +6,7 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/01 13:54:17 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/04/13 18:40:22 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/04/16 17:59:12 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,9 @@ int		create_sphere(char *entity);
 int		create_plane(char *entity);
 int		create_cylinder(char *entity);
 void	link_entity(t_rt_list *n_rt_list);
-int		import_vec3_normalize(char *text, t_vec4 *vec3);
+int		import_vec3_normalize(char *text, t_vec3 *vec3);
 int		import_color(char *text, t_color *vec3);
-int		import_vec3(char *text, t_vec4 *vec3);
+int		import_vec3(char *text, t_vec3 *vec3);
 int		verify_mandatory_ent(t_shpes_type type, unsigned char *verify_ent);
 int		verify_atoi(char *nptr, int n_nbr);
 float	verify_atof(char *nptr, float n_nbr);

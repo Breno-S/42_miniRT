@@ -6,7 +6,7 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/10 20:51:26 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/04/13 18:58:43 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/04/16 18:55:01 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,9 @@ int	create_camera(char *entity)
 	ft_gcfct_arr_register((void **)s_ent, GC_DATA);
 	if (ft_size_chrarr(s_ent) != 4)
 		return (error_msg(many_args));
-	if (import_vec3(s_ent[1], &lst->ent.camera.viewport) == 1)
+	if (import_vec3(s_ent[1], &lst->ent.camera.pos) == 1)
 		return (1);
-	if (import_vec3_normalize(s_ent[2], &lst->ent.camera.normalize_3d) == 1)
-		return (1);
-	if (lst->ent.camera.normalize_3d.x == -2)
+	if (import_vec3_normalize(s_ent[2], &lst->ent.camera.dir) == 1)
 		return (1);
 	lst->ent.camera.fov = ft_atoi(s_ent[3]);
 	if (lst->ent.camera.fov > 180 || lst->ent.camera.fov < 0)
@@ -72,8 +70,8 @@ int	create_sphere(char *entity)
 		return (error_msg(many_args));
 	if (import_vec3(s_ent[1], &lst->ent.sphere.center) == 1)
 		return (1);
-	lst->ent.sphere.diameter = ft_atof(s_ent[2]);
-	if (verify_atof(s_ent[2], lst->ent.sphere.diameter))
+	lst->ent.sphere.radius = ft_atof(s_ent[2]);
+	if (verify_atof(s_ent[2], lst->ent.sphere.radius))
 		return (1);
 	if (import_color(s_ent[3], &lst->ent.sphere.color) == 1)
 		return (1);
@@ -94,7 +92,7 @@ int	create_plane(char *entity)
 		return (error_msg(many_args));
 	if (import_vec3(s_ent[1], &lst->ent.plane.center) == 1)
 		return (1);
-	if (import_vec3_normalize(s_ent[2], &lst->ent.plane.normalize_3d) == 1)
+	if (import_vec3_normalize(s_ent[2], &lst->ent.plane.normal) == 1)
 		return (1);
 	if (import_color(s_ent[3], &lst->ent.plane.color) == 1)
 		return (1);
