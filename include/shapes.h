@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shapes.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/01 15:49:00 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/04/13 11:20:07 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/04/17 18:44:07 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,8 @@ typedef struct s_ambient
 
 typedef struct s_camera
 {
-	t_vec4	viewport;
-	t_vec4	normalize_3d;
+	t_vec4	pos;
+	t_vec4	dir;
 	int		fov;
 }	t_camera;
 
@@ -49,7 +49,7 @@ typedef struct s_light
 typedef struct s_sphere
 {
 	t_vec4	center;
-	float	diameter;
+	float	radius;
 	t_color	color;
 }	t_sphere;
 

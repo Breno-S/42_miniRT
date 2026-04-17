@@ -6,7 +6,7 @@
 /*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/06 16:31:16 by brensant          #+#    #+#             */
-/*   Updated: 2026/04/08 17:52:41 by brensant         ###   ########.fr       */
+/*   Updated: 2026/04/17 18:59:14 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 
 typedef union u_color
 {
-	uint64_t	hex;
+	uint32_t	hex;
 	struct
 	{
 		uint8_t	b;

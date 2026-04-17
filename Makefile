@@ -38,6 +38,7 @@ SRCS_MANDATORY_PARSER := \
 SRCS_MANDATORY_VEC_MATH := \
 	color.c \
 	env.c \
+	hit.c \
 	ray.c \
 	renderer.c \
 	vec_math.c \
@@ -139,11 +140,11 @@ clean:
 		@rm -rf $(PATH_OBJT)
 
 fclean:
-		@make -C $(PATH_LIBFT) fclean
-		@printf "$(L_GREEN)Removing minilibx...$(NC)\n"
-		@make -C $(PATH_MINILIBX) clean
-		@printf "$(L_GREEN)Removing objects...$(NC)\n"
-		@rm -f $(subst $(PATH_MANDATORY),$(PATH_OBJT),$(OBJTS))
+# 		@make -C $(PATH_LIBFT) fclean
+# 		@printf "$(L_GREEN)Removing minilibx...$(NC)\n"
+# 		@make -C $(PATH_MINILIBX) clean
+# 		@printf "$(L_GREEN)Removing objects...$(NC)\n"
+# 		@rm -f $(subst $(PATH_MANDATORY),$(PATH_OBJT),$(OBJTS))
 		@rm -rf $(PATH_OBJT)
 		@printf "$(L_GREEN)Removing executable...$(NC)\n"
 		@rm -f $(addprefix $(PATH_BIN),$(NAME))
