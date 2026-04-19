@@ -6,7 +6,7 @@
 /*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/10 20:51:26 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/04/17 19:53:37 by brensant         ###   ########.fr       */
+/*   Updated: 2026/04/19 15:13:45 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ int	create_plane(char *entity)
 		return (error_msg(many_args));
 	if (import_vec3(s_ent[1], &lst->ent.plane.center) == 1)
 		return (1);
-	if (import_vec3_normalize(s_ent[2], &lst->ent.plane.normalize_3d) == 1)
+	if (import_vec3_normalize(s_ent[2], &lst->ent.plane.normal) == 1)
 		return (1);
 	if (import_color(s_ent[3], &lst->ent.plane.color) == 1)
 		return (1);

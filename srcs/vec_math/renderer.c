@@ -6,7 +6,7 @@
 /*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/09 14:18:38 by brensant          #+#    #+#             */
-/*   Updated: 2026/04/17 20:00:38 by brensant         ###   ########.fr       */
+/*   Updated: 2026/04/19 15:18:34 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 #include "ray.h"
 #include "renderer.h"
 #include "vec_math.h"
-// #include "shapes.h" /* INCLUIR DPS */
+#include "shapes.h"
 
 #include <math.h>
 
@@ -25,9 +25,19 @@
 
 t_sphere sphere = {{0, 0, 4, 1}, 1, (t_color){.hex = 0xFF0000}};
 
+// t_plane plane = {{5, 0, 0, 1}, {-1, 0, 0, 1}, (t_color){.hex = 0xffffff}};
+// t_plane plane2 = {{0, -1, 0, 1}, {0, 1, 0, 1}, (t_color){.hex = 0xFFff10}};
+// t_plane plane3 = {{-5, 0, 0, 1}, {-1, 0, 0, 1}, (t_color){.hex = 0xffffff}};
+
 t_camera camera = {{0, 0, 0, 1}, {0, 0, 1, 1}, 70};
 
-// t_light	light = {{0,0,1,0},1.0,(t_color){.hex = 0xFFFFFF}}
+t_light light = {{0,5,2,1}, 1.0, (t_color){.hex = 0xFFFFFF}};
+
+t_ambient ambient = {0.0, (t_color){.hex = 0xFFFFFF}};
+
+float	hit_plane(t_plane plane, t_ray ray, float *t);
+static t_color	ray_to_plane(float t, t_ray ray, t_plane *plane);
+static t_color	ray_to_sphere(float t, t_ray ray, t_sphere *sphere);
 
 /******************************************************************************/
 
