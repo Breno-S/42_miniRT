@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/01 14:56:06 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/04/13 18:56:13 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/04/20 17:02:44 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,15 +51,15 @@ int	verify_line(char *line, unsigned char *verify_ent)
 	return (0);
 }
 
-int	verify_mandatory_ent(t_shpes_type type, unsigned char *verify_ent)
+int	verify_mandatory_ent(t_shapes_type type, unsigned char *verify_ent)
 {
-	if (type != tp_ambient && type != tp_camera && type != tp_light)
+	if (type != AMBIENT && type != CAMERA && type != LIGHT)
 		return (0);
-	else if (type == tp_ambient && !(verify_ent[0] & ambient))
+	else if (type == AMBIENT && !(verify_ent[0] & ambient))
 		verify_ent[0] |= ambient;
-	else if (type == tp_camera && !(verify_ent[0] & camera))
+	else if (type == CAMERA && !(verify_ent[0] & camera))
 		verify_ent[0] |= camera;
-	else if (type == tp_light && !(verify_ent[0] & light))
+	else if (type == LIGHT && !(verify_ent[0] & light))
 		verify_ent[0] |= light;
 	else
 		return (error_msg_ii(dup_ent));
@@ -77,17 +77,17 @@ int	verify_entity(char *line, int init, int size)
 		flag = 1;
 	line[init + size] = 0;
 	if (!ft_strcmp(&line[init], "A"))
-		rtn = tp_ambient;
+		rtn = AMBIENT;
 	else if (!ft_strcmp(&line[init], "C"))
-		rtn = tp_camera;
+		rtn = CAMERA;
 	else if (!ft_strcmp(&line[init], "L"))
-		rtn = tp_light;
+		rtn = LIGHT;
 	else if (!ft_strcmp(&line[init], "sp"))
-		rtn = tp_sphere;
+		rtn = SPHERE;
 	else if (!ft_strcmp(&line[init], "pl"))
-		rtn = tp_plane;
+		rtn = PLANE;
 	else if (!ft_strcmp(&line[init], "cy"))
-		rtn = tp_cylinder;
+		rtn = CYLINDER;
 	if (flag == 1)
 		line[init + size] = ' ';
 	return (rtn);

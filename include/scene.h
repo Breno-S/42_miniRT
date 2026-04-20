@@ -1,38 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   hit.h                                              :+:      :+:    :+:   */
+/*   scene.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/04/16 13:02:25 by brensant          #+#    #+#             */
-/*   Updated: 2026/04/20 19:54:31 by brensant         ###   ########.fr       */
+/*   Created: 2026/04/20 17:01:48 by brensant          #+#    #+#             */
+/*   Updated: 2026/04/20 19:41:35 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef HIT_H
-# define HIT_H
+#ifndef SCENE_H
+# define SCENE_H
 
-# include "ray.h"
 # include "shapes.h"
-# include "scene.h"
-# include "vec_math.h"
 
-/**
- * TODO: Change sphere member to generic object (entity).
- */
-typedef struct s_hit
+typedef struct s_scene
 {
-	t_vec3		point;
-	// t_vec3		hit_in;
-	// t_vec3		hit_out;
+	t_camera	cam;
+	t_ambient	ambient;
+	t_light		*lights;
 	t_obj		*obj;
-	float		distance;
-	bool		did_hit;
-}	t_hit;
+	int			objs_num;
+	int			lights_num;
+}	t_scene;
 
-t_hit	hit_miss(void);
-t_hit	hit_sphere(t_ray *ray, t_obj *sphere);
-t_hit	hit_plane(t_ray *ray, t_obj *plane);
-
-#endif // HIT_H
+#endif // SCENE_H

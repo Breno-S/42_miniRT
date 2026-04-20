@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   import_ent_utils.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/10 20:52:50 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/04/16 17:59:28 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/04/20 16:51:13 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,17 +107,17 @@ int	create_entity(char *entity, int type)
 	int	rtn;
 
 	rtn = 1;
-	if (type == tp_ambient)
+	if (type == AMBIENT)
 		rtn = create_ambient(entity);
-	else if (type == tp_camera)
+	else if (type == CAMERA)
 		rtn = create_camera(entity);
-	else if (type == tp_light)
+	else if (type == LIGHT)
 		rtn = create_light(entity);
-	else if (type == tp_sphere)
+	else if (type == SPHERE)
 		rtn = create_sphere(entity);
-	else if (type == tp_plane)
+	else if (type == PLANE)
 		rtn = create_plane(entity);
-	else if (type == tp_cylinder)
+	else if (type == CYLINDER)
 		rtn = create_cylinder(entity);
 	return (rtn);
 }

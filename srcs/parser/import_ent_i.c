@@ -6,7 +6,7 @@
 /*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/10 20:51:26 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/04/19 22:36:10 by brensant         ###   ########.fr       */
+/*   Updated: 2026/04/20 18:44:02 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,21 +18,21 @@ int	create_camera(char *entity)
 	t_rt_list	*lst;
 
 	lst = ft_gc_calloc_root(1, sizeof(*lst), "ent");
-	lst->type = tp_camera;
+	lst->camera.type = CAMERA;
 	s_ent = ft_split_spaces(entity);
 	ft_gcfct_arr_register((void **)s_ent, GC_DATA);
 	if (ft_size_chrarr(s_ent) != 4)
 		return (error_msg(many_args));
-	if (import_vec3(s_ent[1], &lst->ent.camera.pos) == 1)
+	if (import_vec3(s_ent[1], &lst->camera.pos) == 1)
 		return (1);
-	if (import_vec3_normalize(s_ent[2], &lst->ent.camera.dir) == 1)
+	if (import_vec3_normalize(s_ent[2], &lst->camera.dir) == 1)
 		return (1);
-	if (lst->ent.camera.dir.x == -2)
+	if (lst->camera.dir.x == -2)
 		return (1);
-	lst->ent.camera.fov = ft_atoi(s_ent[3]);
-	if (lst->ent.camera.fov > 180 || lst->ent.camera.fov < 0)
+	lst->camera.fov = ft_atoi(s_ent[3]);
+	if (lst->camera.fov > 180 || lst->camera.fov < 0)
 		return (error_msg(err_fov));
-	if (verify_atoi(s_ent[3], lst->ent.camera.fov))
+	if (verify_atoi(s_ent[3], lst->camera.fov))
 		return (1);
 	link_entity(lst);
 	return (0);
@@ -44,16 +44,16 @@ int	create_light(char *entity)
 	t_rt_list	*lst;
 
 	lst = ft_gc_calloc_root(1, sizeof(*lst), "ent");
-	lst->type = tp_light;
+	lst->light.type = LIGHT;
 	s_ent = ft_split_spaces(entity);
 	ft_gcfct_arr_register((void **)s_ent, GC_DATA);
 	if (ft_size_chrarr(s_ent) != 4 && ft_size_chrarr(s_ent) != 3)
 		return (error_msg(many_args));
-	if (import_vec3(s_ent[1], &lst->ent.light.pos) == 1)
+	if (import_vec3(s_ent[1], &lst->light.pos) == 1)
 		return (1);
-	lst->ent.light.brightness = ft_atof(s_ent[2]);
-	if (verify_atof(s_ent[2], lst->ent.light.brightness)
-		|| lst->ent.light.brightness > 1.0 || lst->ent.light.brightness < 0.0)
+	lst->light.brightness = ft_atof(s_ent[2]);
+	if (verify_atof(s_ent[2], lst->light.brightness)
+		|| lst->light.brightness > 1.0 || lst->light.brightness < 0.0)
 		return (error_msg(err_light));
 	link_entity(lst);
 	return (0);
@@ -66,18 +66,18 @@ int	create_sphere(char *entity)
 	float		diameter;
 
 	lst = ft_gc_calloc_root(1, sizeof(*lst), "ent");
-	lst->type = tp_sphere;
+	lst->obj.type = SPHERE;
 	s_ent = ft_split_spaces(entity);
 	ft_gcfct_arr_register((void **)s_ent, GC_DATA);
 	if (ft_size_chrarr(s_ent) != 4)
 		return (error_msg(many_args));
-	if (import_vec3(s_ent[1], &lst->ent.sphere.center) == 1)
+	if (import_vec3(s_ent[1], &lst->obj.pos) == 1)
 		return (1);
 	diameter = ft_atof(s_ent[2]);
 	if (verify_atof(s_ent[2], diameter))
 		return (1);
-	lst->ent.sphere.radius = diameter / 2.0;
-	if (import_color(s_ent[3], &lst->ent.sphere.color) == 1)
+	lst->obj.sphere.radius = diameter / 2.0;
+	if (import_color(s_ent[3], &lst->obj.color) == 1)
 		return (1);
 	link_entity(lst);
 	return (0);
@@ -89,16 +89,16 @@ int	create_plane(char *entity)
 	t_rt_list	*lst;
 
 	lst = ft_gc_calloc_root(1, sizeof(*lst), "ent");
-	lst->type = tp_plane;
+	lst->obj.type = PLANE;
 	s_ent = ft_split_spaces(entity);
 	ft_gcfct_arr_register((void **)s_ent, GC_DATA);
 	if (ft_size_chrarr(s_ent) != 4)
 		return (error_msg(many_args));
-	if (import_vec3(s_ent[1], &lst->ent.plane.point) == 1)
+	if (import_vec3(s_ent[1], &lst->obj.pos) == 1)
 		return (1);
-	if (import_vec3_normalize(s_ent[2], &lst->ent.plane.normal) == 1)
+	if (import_vec3_normalize(s_ent[2], &lst->obj.plane.normal) == 1)
 		return (1);
-	if (import_color(s_ent[3], &lst->ent.plane.color) == 1)
+	if (import_color(s_ent[3], &lst->obj.color) == 1)
 		return (1);
 	link_entity(lst);
 	return (0);
@@ -108,23 +108,25 @@ int	create_cylinder(char *entity)
 {
 	char		**s_ent;
 	t_rt_list	*lst;
+	float		diameter;
 
 	lst = ft_gc_calloc_root(1, sizeof(*lst), "ent");
-	lst->type = tp_cylinder;
+	lst->obj.type = CYLINDER;
 	s_ent = ft_split_spaces(entity);
 	ft_gcfct_arr_register((void **)s_ent, GC_DATA);
 	if (ft_size_chrarr(s_ent) != 6)
 		return (error_msg(many_args));
-	if (import_vec3(s_ent[1], &lst->ent.cylinder.center) == 1)
+	if (import_vec3(s_ent[1], &lst->obj.pos) == 1)
 		return (1);
-	if (import_vec3_normalize(s_ent[2], &lst->ent.cylinder.axis) == 1)
+	if (import_vec3_normalize(s_ent[2], &lst->obj.cylinder.axis) == 1)
 		return (1);
-	lst->ent.cylinder.diameter = ft_atof(s_ent[3]);
-	lst->ent.cylinder.height = ft_atof(s_ent[4]);
-	if (verify_atof(s_ent[3], lst->ent.cylinder.diameter)
-		|| verify_atof(s_ent[4], lst->ent.cylinder.height))
+	diameter = ft_atof(s_ent[3]);
+	lst->obj.cylinder.height = ft_atof(s_ent[4]);
+	if (verify_atof(s_ent[3], diameter)
+		|| verify_atof(s_ent[4], lst->obj.cylinder.height))
 		return (1);
-	if (import_color(s_ent[5], &lst->ent.cylinder.color) == 1)
+	lst->obj.cylinder.radius = diameter / 2.0;
+	if (import_color(s_ent[5], &lst->obj.color) == 1)
 		return (1);
 	link_entity(lst);
 	return (0);
