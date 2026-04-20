@@ -6,7 +6,7 @@
 /*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/01 16:58:42 by brensant          #+#    #+#             */
-/*   Updated: 2026/04/14 17:40:33 by brensant         ###   ########.fr       */
+/*   Updated: 2026/04/19 17:44:12 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,12 @@
 
 # define PI 3.14159265358979323846f
 
-# define DEG2RAD (3.14159265358979323846f / 180.0f)
-# define RAD2DEG (180.0f / 3.14159265358979323846f)
+# define DEG2RAD 0.017453292519943295769f
+# define RAD2DEG 57.29577951308232087680f
 
 # define FOCAL_DISTANCE 1.0f
+
+# define BACKGROURD_COLOR 0x202020
 
 typedef struct t_vec4
 {

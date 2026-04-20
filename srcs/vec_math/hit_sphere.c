@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   hit.c                                              :+:      :+:    :+:   */
+/*   hit_sphere.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/04/16 13:01:56 by brensant          #+#    #+#             */
-/*   Updated: 2026/04/19 23:12:18 by brensant         ###   ########.fr       */
+/*   Created: 2026/04/19 18:12:44 by brensant          #+#    #+#             */
+/*   Updated: 2026/04/19 18:13:12 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,9 +53,4 @@ t_hit	hit_sphere(t_ray *ray, t_sphere *sphere)
 	hit.sphere = sphere;
 	set_hit(&hit, ray, b, discriminant);
 	return (hit);
-}
-
-t_hit	hit_miss(void)
-{
-	return ((t_hit){.did_hit = false, .distance = INFINITY});
 }

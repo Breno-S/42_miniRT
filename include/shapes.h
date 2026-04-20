@@ -6,7 +6,7 @@
 /*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/01 15:49:00 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/04/19 15:11:17 by brensant         ###   ########.fr       */
+/*   Updated: 2026/04/19 22:36:26 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ typedef struct s_camera
 
 typedef struct s_light
 {
-	t_vec3	center;
+	t_vec3	pos;
 	float	brightness;
 	t_color	color;
 }	t_light;
@@ -56,7 +56,7 @@ typedef struct s_sphere
 
 typedef struct s_plane
 {
-	t_vec3	center;
+	t_vec3	point;
 	t_vec3	normal;
 	t_color	color;
 }	t_plane;

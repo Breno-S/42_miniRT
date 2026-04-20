@@ -6,7 +6,7 @@
 /*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/10 02:09:15 by brensant          #+#    #+#             */
-/*   Updated: 2026/04/19 15:09:59 by brensant         ###   ########.fr       */
+/*   Updated: 2026/04/19 16:33:01 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@
 
 typedef struct s_ray_context
 {
+	t_vec3	orig;
+
 	t_vec3	vp_w_vec;
 	t_vec3	vp_h_vec;
 	t_vec3	vp_fd_vec;

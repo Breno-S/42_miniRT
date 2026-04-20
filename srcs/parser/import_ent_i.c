@@ -6,7 +6,7 @@
 /*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/10 20:51:26 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/04/19 15:13:45 by brensant         ###   ########.fr       */
+/*   Updated: 2026/04/19 22:36:10 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int	create_light(char *entity)
 	ft_gcfct_arr_register((void **)s_ent, GC_DATA);
 	if (ft_size_chrarr(s_ent) != 4 && ft_size_chrarr(s_ent) != 3)
 		return (error_msg(many_args));
-	if (import_vec3(s_ent[1], &lst->ent.light.center) == 1)
+	if (import_vec3(s_ent[1], &lst->ent.light.pos) == 1)
 		return (1);
 	lst->ent.light.brightness = ft_atof(s_ent[2]);
 	if (verify_atof(s_ent[2], lst->ent.light.brightness)
@@ -94,7 +94,7 @@ int	create_plane(char *entity)
 	ft_gcfct_arr_register((void **)s_ent, GC_DATA);
 	if (ft_size_chrarr(s_ent) != 4)
 		return (error_msg(many_args));
-	if (import_vec3(s_ent[1], &lst->ent.plane.center) == 1)
+	if (import_vec3(s_ent[1], &lst->ent.plane.point) == 1)
 		return (1);
 	if (import_vec3_normalize(s_ent[2], &lst->ent.plane.normal) == 1)
 		return (1);
