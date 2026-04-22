@@ -6,7 +6,7 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/09 14:18:38 by brensant          #+#    #+#             */
-/*   Updated: 2026/04/22 16:39:54 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/04/22 20:03:30 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,14 +63,14 @@ static void	pixel_put(t_env *env, int x, int y, int color)
 /**
  * TODO: add ambient light.
  */
-static t_color	ray_color(t_hit *hit)
+static t_color	ray_color(t_hit *hit, t_scene scene)
 {
 	//t_vec3	normal;
 	float	intensity;
 
 	if (hit->did_hit)
 	{
-		intensity = vec3_dot(hit->normal, vec3_normalize(vec3_sub(g_light.pos,
+		intensity = vec3_dot(hit->normal, vec3_normalize(vec3_sub(scene.lights[0].pos,
 						hit->point)));
 		if (intensity < 0)
 			intensity = 0;
@@ -104,7 +104,7 @@ t_hit	get_closest_collision(t_ray *ray, t_obj *list, int list_size)
 	return (closest);
 }
 
-static void	build_image(t_env *env, t_ray_context rc)
+static void	build_image(t_env *env, t_ray_context rc, t_scene scene)
 {
 	t_ray	ray;
 	int		x;
@@ -122,8 +122,8 @@ static void	build_image(t_env *env, t_ray_context rc)
 			pixel_v = vec3_add(rc.vp_start, vec3_scale(rc.vp_dx, x));
 			pixel_v = vec3_add(pixel_v, vec3_scale(rc.vp_dy, y));
 			ray = ray_new(rc.orig, vec3_normalize(vec3_sub(pixel_v, rc.orig)));
-			closest_hit = get_closest_collision(&ray, g_objs, 6);
-			color = ray_color(&closest_hit);
+			closest_hit = get_closest_collision(&ray, scene.obj, scene.objs_num);
+			color = ray_color(&closest_hit, scene);
 			pixel_put(env, x, y, color.hex);
 			x++;
 		}
@@ -153,11 +153,11 @@ t_ray_context	get_ray_context(t_env *env, t_camera *camera)
 	return (rc);
 }
 
-void	renderer_render(t_env *env)
+void	renderer_render(t_env *env, t_scene scene)
 {
 	t_ray_context	rc;
 
-	rc = get_ray_context(env, &g_camera);
-	build_image(env, rc);
+	rc = get_ray_context(env, &scene.cam);
+	build_image(env, rc, scene);
 	mlx_put_image_to_window(env->mlx_ptr, env->win_ptr, env->img_ptr, 0, 0);
 }
