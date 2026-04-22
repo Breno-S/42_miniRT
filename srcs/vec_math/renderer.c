@@ -6,7 +6,7 @@
 /*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/09 14:18:38 by brensant          #+#    #+#             */
-/*   Updated: 2026/04/20 19:59:13 by brensant         ###   ########.fr       */
+/*   Updated: 2026/04/21 23:56:14 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,27 +23,20 @@
 
 /****************************** FOR DEBUG ONLY ********************************/
 
-t_obj		g_objs[5] = {
-{SPHERE, {1.5, 0, 4, 1},  (t_color){.hex = 0xFF0000}, .sphere.radius = 1,},
-{SPHERE, {-1.5, 0, 4, 1}, (t_color){.hex = 0x008800}, .sphere.radius = 1,},
-{SPHERE, {0, 1.5, 4, 1},  (t_color){.hex = 0x0000FF}, .sphere.radius = 1,},
-{SPHERE, {0, -1.5, 4, 1}, (t_color){.hex = 0xFFFF00}, .sphere.radius = 1,},
-{PLANE,  {0, 0, 10, 1}, (t_color){.hex = 0xFFFF00}, .plane.normal = {0, 0, 1, 1}}
+t_obj		g_objs[6] = {
+{SPHERE, {4.5, 0, 4, 1}, (t_color){.hex = 0xFF0000}, .sphere.radius = 2,},
+{SPHERE, {-4.5, 0, 4, 1}, (t_color){.hex = 0x008800}, .sphere.radius = 2,},
+{SPHERE, {0, 4.5, 4, 1}, (t_color){.hex = 0x0000FF}, .sphere.radius = 2,},
+{SPHERE, {0, -4.5, 4, 1}, (t_color){.hex = 0xFFFF00}, .sphere.radius = 2,},
+{PLANE, {0, 0, 10, 1}, (t_color){.hex = 0xA1A1A1}, .plane.normal = {-1, 0, 1, 1}},
+{PLANE, {0, 0, 10, 1}, (t_color){.hex = 0xA1A1A1}, .plane.normal = {1, 0, 1, 1}}
 };
 
-// t_plane plane = {{5, 0, 0, 1}, {-1, 0, 0, 1}, (t_color){.hex = 0xffffff}};
-// t_plane plane2 = {{0, -1, 0, 1}, {0, 1, 0, 1}, (t_color){.hex = 0xFFff10}};
-// t_plane plane3 = {{-5, 0, 0, 1}, {-1, 0, 0, 1}, (t_color){.hex = 0xffffff}};
-
-t_camera	g_camera = {CAMERA, {0, 0, 0, 1}, {0, 0, 1, 1}, 70};
+t_camera	g_camera = {CAMERA, {0, 0, -10, 1}, {0, 0, 1, 1}, 70};
 
 t_light		g_light = {LIGHT, {0, 0, 0, 1}, 1.0, (t_color){.hex = 0xFFFFFF}};
 
 // t_ambient g_ambient = {0.0, (t_color){.hex = 0xFFFFFF}};
-
-// float	hit_plane(t_plane plane, t_ray ray, float *t);
-// static t_color	ray_to_plane(float t, t_ray ray, t_plane *plane);
-// static t_color	ray_to_sphere(float t, t_ray ray, t_sphere *sphere);
 
 /******************************************************************************/
 
@@ -67,6 +60,9 @@ static void	pixel_put(t_env *env, int x, int y, int color)
 	}
 }
 
+/**
+ * TODO: add ambient light.
+ */
 static t_color	ray_color(t_hit *hit)
 {
 	t_vec3	normal;
@@ -74,19 +70,18 @@ static t_color	ray_color(t_hit *hit)
 
 	if (hit->did_hit)
 	{
-		normal = vec3_normalize(vec3_sub(hit->point, hit->obj->pos));
-		intensity = fabs(vec3_dot(normal, vec3_normalize(vec3_sub(g_light.pos,
-						hit->point))));
+		intensity = vec3_dot(hit->normal, vec3_normalize(vec3_sub(g_light.pos,
+						hit->point)));
 		if (intensity < 0)
 			intensity = 0;
-		return (color_from_vec(vec3_scale(color_to_vec(hit->obj->color),
-					intensity)));
+		return (color_from_vec(color_vec_clamp(vec3_scale(
+						color_to_vec(hit->obj->color), intensity))));
 	}
 	return ((t_color){.hex = BACKGROURD_COLOR});
 }
 
 /**
- * TODO: change list of spheres to list of objects (entities).
+ * TODO: call generic `hit_obj()` function in t_obj struct.
  */
 t_hit	get_closest_collision(t_ray *ray, t_obj *list, int list_size)
 {
@@ -127,7 +122,7 @@ static void	build_image(t_env *env, t_ray_context rc)
 			pixel_v = vec3_add(rc.vp_start, vec3_scale(rc.vp_dx, x));
 			pixel_v = vec3_add(pixel_v, vec3_scale(rc.vp_dy, y));
 			ray = ray_new(rc.orig, vec3_normalize(vec3_sub(pixel_v, rc.orig)));
-			closest_hit = get_closest_collision(&ray, g_objs, 5);
+			closest_hit = get_closest_collision(&ray, g_objs, 6);
 			color = ray_color(&closest_hit);
 			pixel_put(env, x, y, color.hex);
 			x++;

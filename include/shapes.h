@@ -6,7 +6,7 @@
 /*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/01 15:49:00 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/04/20 19:51:10 by brensant         ###   ########.fr       */
+/*   Updated: 2026/04/21 23:52:34 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ typedef struct s_obj
 		t_plane		plane;
 		t_cylinder	cylinder;
 	};
+	// t_hit			(*hit)(t_ray *, t_obj *);
 }	t_obj;
 
 typedef struct s_rt_list

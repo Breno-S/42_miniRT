@@ -6,7 +6,7 @@
 /*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/19 18:12:44 by brensant          #+#    #+#             */
-/*   Updated: 2026/04/19 18:13:12 by brensant         ###   ########.fr       */
+/*   Updated: 2026/04/21 22:42:56 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 #include "vec_math.h"
 
 #include <math.h>
+#include <float.h>
 
 static void	set_hit(t_hit *hit, t_ray *ray, float b, float discriminant)
 {
@@ -29,13 +30,14 @@ static void	set_hit(t_hit *hit, t_ray *ray, float b, float discriminant)
 	hit->point = ray_at(ray, closest_hit_scalar);
 	// hit->hit_in = ray_at(ray, closest_hit_scalar);
 	// hit->hit_out = ray_at(ray, farthest_hit_scalar);
-	hit->distance = vec3_length(vec3_sub(hit->point, ray->orig));
+	hit->distance = closest_hit_scalar;
+	hit->normal = vec3_normalize(vec3_sub(hit->point, hit->obj->pos));
 }
 
 /**
  * `a = 1` porque `a = dot(ray->dir, ray->dir)` e `|| ray->dir || = 1`
  */
-t_hit	hit_sphere(t_ray *ray, t_sphere *sphere)
+t_hit	hit_sphere(t_ray *ray, t_obj *sphere)
 {
 	t_hit	hit;
 	t_vec3	oc;
@@ -43,14 +45,19 @@ t_hit	hit_sphere(t_ray *ray, t_sphere *sphere)
 	float	c;
 	float	discriminant;
 
-	oc = vec3_sub(sphere->center, ray->orig);
+	oc = vec3_sub(sphere->pos, ray->orig);
 	b = -2.0 * vec3_dot(ray->dir, oc);
-	c = vec3_dot(oc, oc) - sphere->radius * sphere->radius;
+	c = vec3_dot(oc, oc) - sphere->sphere.radius * sphere->sphere.radius;
 	discriminant = b * b - 4 * c;
-	if (discriminant < 0)
+	if (discriminant < FLT_EPSILON)
 		return (hit_miss());
 	hit.did_hit = true;
-	hit.sphere = sphere;
+	hit.obj = sphere;
 	set_hit(&hit, ray, b, discriminant);
 	return (hit);
+}
+
+t_hit	hit_miss(void)
+{
+	return ((t_hit){.did_hit = false, .distance = INFINITY});
 }

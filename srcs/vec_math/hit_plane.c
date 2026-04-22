@@ -6,7 +6,7 @@
 /*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/19 18:16:17 by brensant          #+#    #+#             */
-/*   Updated: 2026/04/20 19:46:01 by brensant         ###   ########.fr       */
+/*   Updated: 2026/04/21 23:44:29 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,10 @@ t_hit	hit_plane(t_ray *ray, t_obj *plane)
 		if (t >= FLT_EPSILON)
 		{
 			hit.did_hit = true;
+			if (vec3_dot(ray->dir, plane->plane.normal) > 0)
+				hit.normal = vec3_negate(plane->plane.normal);
+			else
+				hit.normal = plane->plane.normal;
 			hit.point = ray_at(ray, t);
 			hit.distance = t;
 			hit.obj = plane;
