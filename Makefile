@@ -1,7 +1,7 @@
 NAME := miniRT
 
-CC := cc -g
-# CFLAGS := -g -Wall -Wextra #-Werror
+CC := cc
+CFLAGS := -Wall -Wextra -Werror
 CPPFLAGS = $(addprefix -I,$(INCLUDES))
 
 LIB_DIRS = $(PATH_LIBFT)/bin
@@ -33,7 +33,8 @@ SRCS_MANDATORY_PARSER := \
 	import_ent_ii.c \
 	import_ent_utils.c \
 	import_file.c \
-	verify_number.c
+	verify_number.c \
+	create_scene.c
 
 SRCS_MANDATORY_VEC_MATH := \
 	color.c \
@@ -132,7 +133,11 @@ $(PATH_OBJT)%.o: $(PATH_MANDATORY)/%.c
 		@sleep 0.01
 		@$(CC) -c $(CFLAGS) $(CPPFLAGS) $< -o $(subst srcs/,build/,$@)
 
-.PHONY: clean fclean re all bonus $(OBJTS_LIBFT)
+.PHONY: clean fclean re all bonus $(OBJTS_LIBFT) debug
+
+debug: fclean
+debug: CFLAGS = -g
+debug: all
 
 clean:
 		@make -C $(PATH_LIBFT) clean

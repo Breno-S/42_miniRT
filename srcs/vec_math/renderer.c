@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   renderer.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/09 14:18:38 by brensant          #+#    #+#             */
-/*   Updated: 2026/04/21 23:56:14 by brensant         ###   ########.fr       */
+/*   Updated: 2026/04/22 16:39:54 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ static void	pixel_put(t_env *env, int x, int y, int color)
  */
 static t_color	ray_color(t_hit *hit)
 {
-	t_vec3	normal;
+	//t_vec3	normal;
 	float	intensity;
 
 	if (hit->did_hit)
