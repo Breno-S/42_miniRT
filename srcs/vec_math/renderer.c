@@ -6,7 +6,7 @@
 /*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/09 14:18:38 by brensant          #+#    #+#             */
-/*   Updated: 2026/04/23 01:20:34 by brensant         ###   ########.fr       */
+/*   Updated: 2026/04/23 16:06:21 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,11 @@
 /****************************** FOR DEBUG ONLY ********************************/
 
 t_obj		g_objs[5] = {
-{SPHERE, {4.5, 0, 4, 1}, (t_color){.hex = 0x424242}, .sphere.radius = 2,},
-{SPHERE, {-4.5, 0, 4, 1}, (t_color){.hex = 0x424242}, .sphere.radius = 2,},
+{SPHERE, {4.5, 0, 4, 1}, (t_color){.hex = 0xFF0000}, .sphere.radius = 2,},
+{SPHERE, {-4.5, 0, 4, 1}, (t_color){.hex = 0xFF0000}, .sphere.radius = 2,},
 // {SPHERE, {0, 4.5, 4, 1}, (t_color){.hex = 0x0000FF}, .sphere.radius = 2,},
 // {SPHERE, {0, -4.5, 4, 1}, (t_color){.hex = 0xFFFF00}, .sphere.radius = 2,},
-{CYLINDER, {0, -8, 4, 1}, (t_color){.hex = 0xFF0000}, .cylinder.axis = {0, 1, 0, 0}, .cylinder.radius = 2, .cylinder.height = 10},
+{CYLINDER, {0, 0, 4, 1}, (t_color){.hex = 0xFF0000}, .cylinder.axis = {0, 1, 0, 0}, .cylinder.radius = 2, .cylinder.height = 8},
 {PLANE, {0, 0, 10, 1}, (t_color){.hex = 0xA1A1A1}, .plane.normal = {-1, 0, 1, 1}},
 {PLANE, {0, 0, 10, 1}, (t_color){.hex = 0xA1A1A1}, .plane.normal = {1, 0, 1, 1}}
 };
@@ -98,7 +98,7 @@ t_hit	get_closest_collision(t_ray *ray, t_obj *list, int list_size)
 			hit = hit_sphere(ray, &list[i]);
 		else if (list[i].type == CYLINDER)
 			hit = hit_cylinder(ray, &list[i]);
-		else
+		else if (list[i].type == PLANE)
 			hit = hit_plane(ray, &list[i]);
 		if (hit.did_hit && hit.distance < closest.distance)
 			closest = hit;
@@ -125,7 +125,7 @@ static void	build_image(t_env *env, t_ray_context rc)
 			pixel_v = vec3_add(rc.vp_start, vec3_scale(rc.vp_dx, x));
 			pixel_v = vec3_add(pixel_v, vec3_scale(rc.vp_dy, y));
 			ray = ray_new(rc.orig, vec3_normalize(vec3_sub(pixel_v, rc.orig)));
-			closest_hit = get_closest_collision(&ray, g_objs, 6);
+			closest_hit = get_closest_collision(&ray, g_objs, 5);
 			color = ray_color(&closest_hit);
 			pixel_put(env, x, y, color.hex);
 			x++;

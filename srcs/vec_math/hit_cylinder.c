@@ -6,7 +6,7 @@
 /*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/22 15:13:13 by brensant          #+#    #+#             */
-/*   Updated: 2026/04/23 02:26:03 by brensant         ###   ########.fr       */
+/*   Updated: 2026/04/23 15:33:52 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,33 +18,38 @@
 #include <math.h>
 #include <float.h>
 
-static bool	check_height(t_hit *hit, t_ray *ray, float t)
+static float	get_visible_scalar(t_hit *hit, t_ray *ray, float t0, float t1)
 {
-	if (t < FLT_EPSILON)
-		return (false);
-	hit->point = ray_at(ray, t);
-	if (hit->point.y < hit->obj->pos.y - hit->obj->cylinder.height / 2
-		|| hit->point.y > hit->obj->pos.y + hit->obj->cylinder.height / 2)
-	{
-		hit->distance = t;
-		return (false);
-	}
-	return (true);
+	float	y_close;
+	float	y_far;
+
+	y_close = ray->orig.y + ray->dir.y * t0;
+	y_far = ray->orig.y + ray->dir.y * t1;
+	if (y_close < hit->obj->pos.y + hit->obj->cylinder.height / 2
+		&& y_close > hit->obj->pos.y - hit->obj->cylinder.height / 2)
+		return (t0);
+	else if (y_far < hit->obj->pos.y + hit->obj->cylinder.height / 2
+		&& y_far > hit->obj->pos.y - hit->obj->cylinder.height / 2)
+		return (t1);
+	return (-1);
 }
 
 static void	set_hit(t_hit *hit, t_ray *ray, t_vec4 *coeff)
 {
 	float	closest_hit_scalar;
 	float	farthest_hit_scalar;
+	float	t;
 
 	closest_hit_scalar = (-coeff->y - coeff->w) / (2.0 * coeff->x);
 	farthest_hit_scalar = (-coeff->y + coeff->w) / 2.0 * coeff->x;
 	// hit->hit_in = ray_at(ray, closest_hit_scalar);
 	// hit->hit_out = ray_at(ray, farthest_hit_scalar);
-	if (check_height(hit, ray, closest_hit_scalar)
-		|| check_height(hit, ray, farthest_hit_scalar))
+	t = get_visible_scalar(hit, ray, closest_hit_scalar, farthest_hit_scalar);
+	if (t >= 0)
 	{
 		hit->did_hit = true;
+		hit->distance = t;
+		hit->point = ray_at(ray, t);
 		hit->normal = vec3_normalize((t_vec3){hit->point.x
 				- hit->obj->pos.x, 0, hit->point.z - hit->obj->pos.z});
 		if (vec3_dot(ray->dir, hit->normal) > 0)
