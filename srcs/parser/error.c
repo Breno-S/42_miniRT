@@ -6,13 +6,13 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/10 20:56:10 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/04/22 19:31:21 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/04/23 00:24:53 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
 
-int	error_msg(int err_type)
+bool	error_msg(int err_type)
 {
 	write(2, "error\n", 6);
 	if (err_type == INVALID_ARG)
@@ -38,7 +38,7 @@ int	error_msg(int err_type)
 	return (1);
 }
 
-int	error_msg_ii(int err_type)
+bool	error_msg_ii(int err_type)
 {
 	write(2, "error\n", 6);
 	if (err_type == ERR_CONV)

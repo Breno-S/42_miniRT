@@ -6,7 +6,7 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/01 13:54:17 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/04/22 19:12:00 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/04/23 00:24:57 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,8 @@ bool	verify_atof(char *nptr, float n_nbr);
 
 // ERRORS
 
-int		error_msg(int err_type);
-int		error_msg_ii(int err_type);
+bool	error_msg(int err_type);
+bool	error_msg_ii(int err_type);
 
 // CREATE SCENE
 
