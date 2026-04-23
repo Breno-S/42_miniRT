@@ -6,7 +6,7 @@
 /*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/06 14:42:52 by brensant          #+#    #+#             */
-/*   Updated: 2026/04/09 14:09:20 by brensant         ###   ########.fr       */
+/*   Updated: 2026/04/23 01:39:53 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,13 @@ float	vec3_length(t_vec3 v);
 t_vec3	vec3_normalize(t_vec3 v);
 t_vec3	vec3_negate(t_vec3 v);
 t_vec3	vec3_scale(t_vec3 v, float scalar);
+
 t_vec3	vec3_add(t_vec3 u, t_vec3 v);
 t_vec3	vec3_sub(t_vec3 u, t_vec3 v);
 float	vec3_dot(t_vec3 u, t_vec3 v);
 t_vec3	vec3_cross(t_vec3 u, t_vec3 v);
+float	vec3_distance(t_vec3 u, t_vec3 v);
+
 t_vec3	vec3_transform(t_vec3 v, t_matrix m);
 
 #endif // VEC_MATH_H
