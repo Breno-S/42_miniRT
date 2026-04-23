@@ -6,7 +6,7 @@
 /*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/01 16:58:42 by brensant          #+#    #+#             */
-/*   Updated: 2026/04/19 17:44:12 by brensant         ###   ########.fr       */
+/*   Updated: 2026/04/23 14:36:44 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 
 # include <stdbool.h>
 
-# define HEIGHT 400
-# define WIDTH 400
+# define HEIGHT 1000
+# define WIDTH 1000
 
 # define PI 3.14159265358979323846f
 
