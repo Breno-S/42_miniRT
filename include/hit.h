@@ -6,7 +6,7 @@
 /*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/16 13:02:25 by brensant          #+#    #+#             */
-/*   Updated: 2026/04/21 18:27:46 by brensant         ###   ########.fr       */
+/*   Updated: 2026/04/23 00:58:12 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,5 +32,6 @@ typedef struct s_hit
 t_hit	hit_miss(void);
 t_hit	hit_sphere(t_ray *ray, t_obj *sphere);
 t_hit	hit_plane(t_ray *ray, t_obj *plane);
+t_hit	hit_cylinder(t_ray *ray, t_obj *cylinder);
 
 #endif // HIT_H

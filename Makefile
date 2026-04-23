@@ -40,6 +40,7 @@ SRCS_MANDATORY_VEC_MATH := \
 	env.c \
 	hit_plane.c \
 	hit_sphere.c \
+	hit_cylinder.c \
 	ray.c \
 	renderer.c \
 	vec_math.c \
