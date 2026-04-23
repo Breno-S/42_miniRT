@@ -3,35 +3,33 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/01 14:56:06 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/04/20 17:02:44 by brensant         ###   ########.fr       */
+/*   Updated: 2026/04/22 19:32:40 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
-#include "stdio.h"
 
-int	parser(int ac, char **av)
+t_scene	parser(int argc, char **argv)
 {
-	int	fd;
+	t_scene	scene;
 
-	if (ac > 2 || ac < 2)
-		return (error_msg(invalid_arg));
-	fd = check_file(av[1]);
-	if (fd == -1)
-		return (1);
-	if (read_file(fd))
+	scene = (t_scene){0};
+	if (argc != 2)
 	{
-		close(fd);
-		return (1);
+		error_msg(INVALID_ARG);
+		return ((t_scene){0});
 	}
-	close(fd);
-	return (0);
+	if (check_file(argv[1], &scene))
+		return ((t_scene){0});
+	if (create_scene(&scene))
+		return ((t_scene){0});
+	return (scene);
 }
 
-int	verify_line(char *line, unsigned char *verify_ent)
+bool	verify_line(char *line, unsigned char *verify_ent, t_scene *scene)
 {
 	int	i[2];
 	int	type;
@@ -44,25 +42,34 @@ int	verify_line(char *line, unsigned char *verify_ent)
 	while (line[i[0] + i[1]] && !ft_isspace(line[i[0] + i[1]]))
 		i[1]++;
 	type = verify_entity(line, i[0], i[1]);
-	if (!type || verify_mandatory_ent(type, verify_ent))
+	if (!type || verify_mandatory_ent(type, verify_ent, scene))
 		return (1);
-	if (create_entity(line, type))
+	if (type != -1 && create_entity(line, type))
 		return (1);
 	return (0);
 }
 
-int	verify_mandatory_ent(t_shapes_type type, unsigned char *verify_ent)
+bool	verify_mandatory_ent(t_shapes_type type, unsigned char *verify_ent,
+	t_scene *scene)
 {
-	if (type != AMBIENT && type != CAMERA && type != LIGHT)
+	if ((int)type == -1)
 		return (0);
+	else if (type != AMBIENT && type != CAMERA && type != LIGHT)
+	{
+		scene->objs_num++;
+		return (0);
+	}
 	else if (type == AMBIENT && !(verify_ent[0] & ambient))
 		verify_ent[0] |= ambient;
 	else if (type == CAMERA && !(verify_ent[0] & camera))
 		verify_ent[0] |= camera;
 	else if (type == LIGHT && !(verify_ent[0] & light))
+	{
+		scene->lights_num++;
 		verify_ent[0] |= light;
+	}
 	else
-		return (error_msg_ii(dup_ent));
+		return (error_msg_ii(DUP_ENT));
 	return (0);
 }
 

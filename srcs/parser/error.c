@@ -6,48 +6,45 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/10 20:56:10 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/04/13 18:54:47 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/04/23 00:24:53 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
 
-int	error_msg(int err_type)
+bool	error_msg(int err_type)
 {
 	write(2, "error\n", 6);
-	if (err_type == invalid_arg)
-		write(2, INVALID_ARG, ft_strlen(INVALID_ARG));
-	else if (err_type == invalid_extension)
-	{
-		write(2, INVALID_EXT, ft_strlen(INVALID_EXT));
-		return (-1);
-	}
-	else if (err_type == miss_ent)
-		write(2, MISS_ENT, ft_strlen(MISS_ENT));
-	else if (err_type == non_normalize)
-		write(2, NON_NORMALIZE, ft_strlen(NON_NORMALIZE));
-	else if (err_type == err_color)
-		write(2, ERR_COLOR, ft_strlen(ERR_COLOR));
-	else if (err_type == err_fov)
-		write(2, ERR_FOV, ft_strlen(ERR_FOV));
-	else if (err_type == err_light)
-		write(2, ERR_LIGHT, ft_strlen(ERR_LIGHT));
-	else if (err_type == many_args)
-		write(2, MANY_ARG, ft_strlen(MANY_ARG));
-	else if (err_type == size_vec)
-		write(2, SIZE_VEC, ft_strlen(SIZE_VEC));
+	if (err_type == INVALID_ARG)
+		write(2, M_INVALID_ARG, ft_strlen(M_INVALID_ARG));
+	else if (err_type == INVALID_EXTENSION)
+		write(2, M_INVALID_EXT, ft_strlen(M_INVALID_EXT));
+	else if (err_type == MISS_ENT)
+		write(2, M_MISS_ENT, ft_strlen(M_MISS_ENT));
+	else if (err_type == NON_NORMALIZE)
+		write(2, M_NON_NORMALIZE, ft_strlen(M_NON_NORMALIZE));
+	else if (err_type == ERR_COLOR)
+		write(2, M_ERR_COLOR, ft_strlen(M_ERR_COLOR));
+	else if (err_type == ERR_FOV)
+		write(2, M_ERR_FOV, ft_strlen(M_ERR_FOV));
+	else if (err_type == ERR_LIGHT)
+		write(2, M_ERR_LIGHT, ft_strlen(M_ERR_LIGHT));
+	else if (err_type == MANY_ARGS)
+		write(2, M_MANY_ARG, ft_strlen(M_MANY_ARG));
+	else if (err_type == SIZE_VEC)
+		write(2, M_SIZE_VEC, ft_strlen(M_SIZE_VEC));
 	else
 		perror("miniRT");
 	return (1);
 }
 
-int	error_msg_ii(int err_type)
+bool	error_msg_ii(int err_type)
 {
 	write(2, "error\n", 6);
-	if (err_type == err_conv)
-		write(2, ERR_CONV, ft_strlen(ERR_CONV));
-	else if (err_type == dup_ent)
-		write(2, DUP_ENT, ft_strlen(DUP_ENT));
+	if (err_type == ERR_CONV)
+		write(2, M_ERR_CONV, ft_strlen(M_ERR_CONV));
+	else if (err_type == DUP_ENT)
+		write(2, M_DUP_ENT, ft_strlen(M_DUP_ENT));
 	else
 		perror("miniRT");
 	return (1);

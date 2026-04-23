@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   import_ent_i.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/10 20:51:26 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/04/20 18:44:02 by brensant         ###   ########.fr       */
+/*   Updated: 2026/04/22 19:31:05 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
 
-int	create_camera(char *entity)
+bool	create_camera(char *entity)
 {
 	char		**s_ent;
 	t_rt_list	*lst;
@@ -22,7 +22,7 @@ int	create_camera(char *entity)
 	s_ent = ft_split_spaces(entity);
 	ft_gcfct_arr_register((void **)s_ent, GC_DATA);
 	if (ft_size_chrarr(s_ent) != 4)
-		return (error_msg(many_args));
+		return (error_msg(MANY_ARGS));
 	if (import_vec3(s_ent[1], &lst->camera.pos) == 1)
 		return (1);
 	if (import_vec3_normalize(s_ent[2], &lst->camera.dir) == 1)
@@ -31,14 +31,14 @@ int	create_camera(char *entity)
 		return (1);
 	lst->camera.fov = ft_atoi(s_ent[3]);
 	if (lst->camera.fov > 180 || lst->camera.fov < 0)
-		return (error_msg(err_fov));
+		return (error_msg(ERR_FOV));
 	if (verify_atoi(s_ent[3], lst->camera.fov))
 		return (1);
 	link_entity(lst);
 	return (0);
 }
 
-int	create_light(char *entity)
+bool	create_light(char *entity)
 {
 	char		**s_ent;
 	t_rt_list	*lst;
@@ -48,18 +48,18 @@ int	create_light(char *entity)
 	s_ent = ft_split_spaces(entity);
 	ft_gcfct_arr_register((void **)s_ent, GC_DATA);
 	if (ft_size_chrarr(s_ent) != 4 && ft_size_chrarr(s_ent) != 3)
-		return (error_msg(many_args));
+		return (error_msg(MANY_ARGS));
 	if (import_vec3(s_ent[1], &lst->light.pos) == 1)
 		return (1);
 	lst->light.brightness = ft_atof(s_ent[2]);
 	if (verify_atof(s_ent[2], lst->light.brightness)
 		|| lst->light.brightness > 1.0 || lst->light.brightness < 0.0)
-		return (error_msg(err_light));
+		return (error_msg(ERR_LIGHT));
 	link_entity(lst);
 	return (0);
 }
 
-int	create_sphere(char *entity)
+bool	create_sphere(char *entity)
 {
 	char		**s_ent;
 	t_rt_list	*lst;
@@ -70,7 +70,7 @@ int	create_sphere(char *entity)
 	s_ent = ft_split_spaces(entity);
 	ft_gcfct_arr_register((void **)s_ent, GC_DATA);
 	if (ft_size_chrarr(s_ent) != 4)
-		return (error_msg(many_args));
+		return (error_msg(MANY_ARGS));
 	if (import_vec3(s_ent[1], &lst->obj.pos) == 1)
 		return (1);
 	diameter = ft_atof(s_ent[2]);
@@ -83,7 +83,7 @@ int	create_sphere(char *entity)
 	return (0);
 }
 
-int	create_plane(char *entity)
+bool	create_plane(char *entity)
 {
 	char		**s_ent;
 	t_rt_list	*lst;
@@ -93,7 +93,7 @@ int	create_plane(char *entity)
 	s_ent = ft_split_spaces(entity);
 	ft_gcfct_arr_register((void **)s_ent, GC_DATA);
 	if (ft_size_chrarr(s_ent) != 4)
-		return (error_msg(many_args));
+		return (error_msg(MANY_ARGS));
 	if (import_vec3(s_ent[1], &lst->obj.pos) == 1)
 		return (1);
 	if (import_vec3_normalize(s_ent[2], &lst->obj.plane.normal) == 1)
@@ -104,7 +104,7 @@ int	create_plane(char *entity)
 	return (0);
 }
 
-int	create_cylinder(char *entity)
+bool	create_cylinder(char *entity)
 {
 	char		**s_ent;
 	t_rt_list	*lst;
@@ -115,7 +115,7 @@ int	create_cylinder(char *entity)
 	s_ent = ft_split_spaces(entity);
 	ft_gcfct_arr_register((void **)s_ent, GC_DATA);
 	if (ft_size_chrarr(s_ent) != 6)
-		return (error_msg(many_args));
+		return (error_msg(MANY_ARGS));
 	if (import_vec3(s_ent[1], &lst->obj.pos) == 1)
 		return (1);
 	if (import_vec3_normalize(s_ent[2], &lst->obj.cylinder.axis) == 1)
