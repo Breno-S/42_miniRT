@@ -6,7 +6,7 @@
 /*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/09 14:18:38 by brensant          #+#    #+#             */
-/*   Updated: 2026/04/23 16:07:44 by brensant         ###   ########.fr       */
+/*   Updated: 2026/04/27 16:08:52 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,12 +94,7 @@ t_hit	get_closest_collision(t_ray *ray, t_obj *list, int list_size)
 	i = 0;
 	while (i < list_size)
 	{
-		if (list[i].type == SPHERE)
-			hit = hit_sphere(ray, &list[i]);
-		else if (list[i].type == CYLINDER)
-			hit = hit_cylinder(ray, &list[i]);
-		else if (list[i].type == PLANE)
-			hit = hit_plane(ray, &list[i]);
+		hit = list[i].intersect(ray, &list[i]);
 		if (hit.did_hit && hit.distance < closest.distance)
 			closest = hit;
 		i++;

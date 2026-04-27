@@ -6,7 +6,7 @@
 /*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/16 13:02:25 by brensant          #+#    #+#             */
-/*   Updated: 2026/04/23 00:58:12 by brensant         ###   ########.fr       */
+/*   Updated: 2026/04/27 16:11:58 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 # define HIT_H
 
 # include "ray.h"
-# include "shapes.h"
-# include "scene.h"
 # include "vec_math.h"
+
+typedef struct s_obj	t_obj;
 
 typedef struct s_hit
 {

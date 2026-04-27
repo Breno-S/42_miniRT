@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   import_ent_i.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/10 20:51:26 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/04/22 19:31:05 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/04/27 16:08:52 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
+#include "hit.h"
 
 bool	create_camera(char *entity)
 {
@@ -79,6 +80,7 @@ bool	create_sphere(char *entity)
 	lst->obj.sphere.radius = diameter / 2.0;
 	if (import_color(s_ent[3], &lst->obj.color) == 1)
 		return (1);
+	lst->obj.intersect = hit_sphere;
 	link_entity(lst);
 	return (0);
 }
@@ -100,6 +102,7 @@ bool	create_plane(char *entity)
 		return (1);
 	if (import_color(s_ent[3], &lst->obj.color) == 1)
 		return (1);
+	lst->obj.intersect = hit_plane;
 	link_entity(lst);
 	return (0);
 }
@@ -128,6 +131,7 @@ bool	create_cylinder(char *entity)
 	lst->obj.cylinder.radius = diameter / 2.0;
 	if (import_color(s_ent[5], &lst->obj.color) == 1)
 		return (1);
+	lst->obj.intersect = hit_cylinder;
 	link_entity(lst);
 	return (0);
 }

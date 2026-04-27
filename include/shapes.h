@@ -6,7 +6,7 @@
 /*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/01 15:49:00 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/04/21 23:52:34 by brensant         ###   ########.fr       */
+/*   Updated: 2026/04/27 16:12:56 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include "core.h"
 # include "color.h"
+# include "hit.h"
 # include "vec_math.h"
 
 typedef enum e_shapes_type
@@ -78,7 +79,7 @@ typedef struct s_obj
 		t_plane		plane;
 		t_cylinder	cylinder;
 	};
-	// t_hit			(*hit)(t_ray *, t_obj *);
+	t_hit			(*intersect)(t_ray *, struct s_obj *);
 }	t_obj;
 
 typedef struct s_rt_list
@@ -93,4 +94,4 @@ typedef struct s_rt_list
 	struct s_rt_list	*next;
 }	t_rt_list;
 
-#endif
+#endif // SHAPES_H
