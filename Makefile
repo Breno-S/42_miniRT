@@ -38,10 +38,11 @@ SRCS_MANDATORY_PARSER := \
 
 SRCS_MANDATORY_VEC_MATH := \
 	color.c \
-	env.c \
+	hit_cylinder.c \
 	hit_plane.c \
 	hit_sphere.c \
-	hit_cylinder.c \
+	hooks.c \
+	mlx_env.c \
 	ray.c \
 	renderer.c \
 	vec_math.c \

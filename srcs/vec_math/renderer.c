@@ -6,7 +6,7 @@
 /*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/09 14:18:38 by brensant          #+#    #+#             */
-/*   Updated: 2026/04/27 16:08:52 by brensant         ###   ########.fr       */
+/*   Updated: 2026/04/28 02:14:48 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ t_light		g_light = {LIGHT, {0, 0, 0, 1}, 1.0, (t_color){.hex = 0xFFFFFF}};
 
 /******************************************************************************/
 
-static void	pixel_put(t_env *env, int x, int y, int color)
+static void	pixel_put(t_mlx_env *env, int x, int y, int color)
 {
 	char	*addr;
 	int		i;
@@ -66,7 +66,6 @@ static void	pixel_put(t_env *env, int x, int y, int color)
  */
 static t_color	ray_color(t_hit *hit, t_scene scene)
 {
-	//t_vec3	normal;
 	float	intensity;
 
 	if (hit->did_hit)
@@ -81,9 +80,6 @@ static t_color	ray_color(t_hit *hit, t_scene scene)
 	return ((t_color){.hex = BACKGROURD_COLOR});
 }
 
-/**
- * TODO: call generic `hit_obj()` function in t_obj struct.
- */
 t_hit	get_closest_collision(t_ray *ray, t_obj *list, int list_size)
 {
 	t_hit	hit;
@@ -102,7 +98,7 @@ t_hit	get_closest_collision(t_ray *ray, t_obj *list, int list_size)
 	return (closest);
 }
 
-static void	build_image(t_env *env, t_ray_context rc, t_scene scene)
+static void	build_image(t_mlx_env *env, t_ray_context rc, t_scene scene)
 {
 	t_ray	ray;
 	int		x;
@@ -112,10 +108,10 @@ static void	build_image(t_env *env, t_ray_context rc, t_scene scene)
 	t_hit	closest_hit;
 
 	y = 0;
-	while (y < HEIGHT)
+	while (y < env->height)
 	{
 		x = 0;
-		while (x < WIDTH)
+		while (x < env->width)
 		{
 			pixel_v = vec3_add(rc.vp_start, vec3_scale(rc.vp_dx, x));
 			pixel_v = vec3_add(pixel_v, vec3_scale(rc.vp_dy, y));
@@ -129,7 +125,7 @@ static void	build_image(t_env *env, t_ray_context rc, t_scene scene)
 	}
 }
 
-t_ray_context	get_ray_context(t_env *env, t_camera *camera)
+t_ray_context	get_ray_context(t_mlx_env *mlx, t_camera *camera)
 {
 	t_ray_context	rc;
 	float			vp_width;
@@ -137,12 +133,12 @@ t_ray_context	get_ray_context(t_env *env, t_camera *camera)
 
 	rc.orig = camera->pos;
 	vp_width = 2 * tanf(camera->fov * DEG2RAD / 2.0);
-	vp_height = vp_width * ((float)env->height / env->width);
+	vp_height = vp_width * ((float)mlx->height / mlx->width);
 	rc.vp_w_vec = vec3_new(vp_width, 0, 0);
 	rc.vp_h_vec = vec3_new(0, -vp_height, 0);
 	rc.vp_fd_vec = vec3_new(0, 0, FOCAL_DISTANCE);
-	rc.vp_dx = vec3_scale(rc.vp_w_vec, 1.0 / env->width);
-	rc.vp_dy = vec3_scale(rc.vp_h_vec, 1.0 / env->height);
+	rc.vp_dx = vec3_scale(rc.vp_w_vec, 1.0 / mlx->width);
+	rc.vp_dy = vec3_scale(rc.vp_h_vec, 1.0 / mlx->height);
 	rc.vp_start = vec3_add(camera->pos, rc.vp_fd_vec);
 	rc.vp_start = vec3_add(rc.vp_start, vec3_negate(vec3_scale(rc.vp_w_vec,
 					0.5)));
@@ -151,7 +147,7 @@ t_ray_context	get_ray_context(t_env *env, t_camera *camera)
 	return (rc);
 }
 
-void	renderer_render(t_env *env, t_scene scene)
+void	renderer_render(t_mlx_env *env, t_scene scene)
 {
 	t_ray_context	rc;
 

@@ -1,38 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   core.h                                             :+:      :+:    :+:   */
+/*   rt.h                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/04/01 16:58:42 by brensant          #+#    #+#             */
-/*   Updated: 2026/04/27 16:42:59 by brensant         ###   ########.fr       */
+/*   Created: 2026/04/27 16:33:22 by brensant          #+#    #+#             */
+/*   Updated: 2026/04/28 02:11:04 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CORE_H
-# define CORE_H
+#ifndef RT_H
+# define RT_H
+
+# include "mlx_env.h"
+# include "scene.h"
 
 # include <stdbool.h>
 
-# define HEIGHT 1000
-# define WIDTH 1000
-
-# define PI 3.14159265358979323846f
-
-# define DEG2RAD 0.017453292519943295769f
-# define RAD2DEG 57.29577951308232087680f
-
-# define FOCAL_DISTANCE 1.0f
-
-# define BACKGROURD_COLOR 0x202020
-
-typedef struct t_vec4
+typedef struct s_rt
 {
-	float	x;
-	float	y;
-	float	z;
-	float	w;
-}	t_vec4;
+	t_mlx_env	mlx_env;
+	t_scene		scene;
+}	t_rt;
 
-#endif
+bool	rt_parse_args(t_rt *rt, int argc, char **argv);
+
+bool	rt_mlx_env_setup(t_rt *rt, int width, int height, const char *name);
+void	rt_mlx_env_destroy(t_rt *rt);
+
+bool	rt_mlx_env_setup_hooks(t_rt *rt);
+
+#endif // RT_H
