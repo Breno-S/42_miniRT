@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/01 13:53:38 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/04/28 02:15:42 by brensant         ###   ########.fr       */
+/*   Updated: 2026/04/29 12:53:26 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ int	main(int argc, char **argv)
 	t_rt	rt;
 
 	ft_gc_init();
+	rt = (t_rt){0};
 	if (!rt_parse_args(&rt, argc, argv))
 		return (finish_program(1));
 	if (!rt.scene.lights)
