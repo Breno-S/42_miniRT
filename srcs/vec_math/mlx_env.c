@@ -6,7 +6,7 @@
 /*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/08 13:43:03 by brensant          #+#    #+#             */
-/*   Updated: 2026/04/28 02:13:46 by brensant         ###   ########.fr       */
+/*   Updated: 2026/04/29 15:58:46 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,13 @@
 
 #include <stdlib.h>
 
-void	rt_mlx_env_destroy(t_rt *rt)
+void	rt_mlx_destroy(t_rt *rt)
 {
 	t_mlx_env	*mlx;
 
 	if (!rt)
 		return ;
-	mlx = &rt->mlx_env;
+	mlx = &rt->mlx;
 	if (mlx->img_addr)
 		free(mlx->img_addr);
 	if (mlx->img_ptr)
@@ -34,13 +34,13 @@ void	rt_mlx_env_destroy(t_rt *rt)
 	free(mlx);
 }
 
-bool	rt_mlx_env_setup(t_rt *rt, int width, int height, const char *name)
+bool	rt_mlx_setup(t_rt *rt, int width, int height, const char *name)
 {
 	t_mlx_env	*mlx;
 
 	if (!rt)
 		return (false);
-	mlx = &rt->mlx_env;
+	mlx = &rt->mlx;
 	mlx->mlx_ptr = mlx_init();
 	mlx->win_ptr = mlx_new_window(mlx->mlx_ptr, width, height, (char *)name);
 	mlx->img_ptr = mlx_new_image(mlx->mlx_ptr, width, height);
@@ -49,7 +49,7 @@ bool	rt_mlx_env_setup(t_rt *rt, int width, int height, const char *name)
 	if (!mlx->mlx_ptr || !mlx->win_ptr || !mlx->img_ptr || !mlx->img_addr
 		|| !rt_mlx_env_setup_hooks(rt))
 	{
-		rt_mlx_env_destroy(rt);
+		rt_mlx_destroy(rt);
 		return (false);
 	}
 	mlx->width = width;

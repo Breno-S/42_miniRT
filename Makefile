@@ -21,6 +21,7 @@ INCLUDES := include libs/libft/include libs/minilibx-linux
 PATH_MANDATORY := ./srcs
 VEC_MATH_SRC_DIR := vec_math
 PARSER_SRC_DIR := parser
+RENDERER_SRC_DIR := renderer
 
 SRCS_MANDATORY_COMMON := \
 	main.c
@@ -44,17 +45,22 @@ SRCS_MANDATORY_VEC_MATH := \
 	hooks.c \
 	mlx_env.c \
 	ray.c \
-	renderer.c \
 	vec_math.c \
 	vec_math_vec.c
+
+SRCS_MANDATORY_RENDERER := \
+	build_image.c \
+	renderer.c
 
 SRCS_MANDATORY := $(addprefix $(PATH_MANDATORY)/,$(SRCS_MANDATORY_COMMON))
 SRCS_MANDATORY := $(SRCS_MANDATORY) $(addprefix $(PATH_MANDATORY)/$(PARSER_SRC_DIR)/,$(SRCS_MANDATORY_PARSER))
 SRCS_MANDATORY := $(SRCS_MANDATORY) $(addprefix $(PATH_MANDATORY)/$(VEC_MATH_SRC_DIR)/,$(SRCS_MANDATORY_VEC_MATH))
+SRCS_MANDATORY := $(SRCS_MANDATORY) $(addprefix $(PATH_MANDATORY)/$(RENDERER_SRC_DIR)/,$(SRCS_MANDATORY_RENDERER))
 
 OBJTS := $(addprefix $(PATH_OBJT),$(SRCS_MANDATORY_COMMON))
 OBJTS := $(OBJTS) $(addprefix $(PATH_OBJT),$(SRCS_MANDATORY_PARSER))
 OBJTS := $(OBJTS) $(addprefix $(PATH_OBJT),$(SRCS_MANDATORY_VEC_MATH))
+OBJTS := $(OBJTS) $(addprefix $(PATH_OBJT),$(SRCS_MANDATORY_RENDERER))
 
 OBJTS             := $(OBJTS:.c=.o)
 OBJTS_LIBFT = $(shell $(MAKE) -s -C $(PATH_LIBFT) get_var)
@@ -124,6 +130,12 @@ $(PATH_OBJT)%.o: $(PATH_MANDATORY)/$(PARSER_SRC_DIR)/%.c
 		@$(CC) -c $(CFLAGS) $(CPPFLAGS) $< -o $(subst srcs/,build/,$@)
 
 $(PATH_OBJT)%.o: $(PATH_MANDATORY)/$(VEC_MATH_SRC_DIR)/%.c
+		@mkdir -p build
+		@printf "$(L_GREEN)Compiling...$(NC) %-40s\n" $<
+		@sleep 0.01
+		@$(CC) -c $(CFLAGS) $(CPPFLAGS) $< -o $(subst srcs/,build/,$@)
+
+$(PATH_OBJT)%.o: $(PATH_MANDATORY)/$(RENDERER_SRC_DIR)/%.c
 		@mkdir -p build
 		@printf "$(L_GREEN)Compiling...$(NC) %-40s\n" $<
 		@sleep 0.01

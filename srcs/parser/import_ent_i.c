@@ -6,7 +6,7 @@
 /*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/10 20:51:26 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/04/27 16:08:52 by brensant         ###   ########.fr       */
+/*   Updated: 2026/04/29 17:22:30 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ bool	create_camera(char *entity)
 		return (1);
 	if (import_vec3_normalize(s_ent[2], &lst->camera.dir) == 1)
 		return (1);
+	lst->camera.dir = vec3_normalize(lst->camera.dir);
 	if (lst->camera.dir.x == -2)
 		return (1);
 	lst->camera.fov = ft_atoi(s_ent[3]);

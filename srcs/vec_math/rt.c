@@ -1,28 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   scene.h                                            :+:      :+:    :+:   */
+/*   rt.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/04/20 17:01:48 by brensant          #+#    #+#             */
-/*   Updated: 2026/04/29 15:58:45 by brensant         ###   ########.fr       */
+/*   Created: 2026/04/29 13:22:23 by brensant          #+#    #+#             */
+/*   Updated: 2026/04/29 17:15:42 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SCENE_H
-# define SCENE_H
+#include "rt.h"
 
-# include "shapes.h"
-
-typedef struct s_scene
+void	rt_run(t_rt *rt)
 {
-	t_camera	cam;
-	t_ambient	ambient;
-	t_light		*lights;
-	t_obj		*obj;
-	int			objs_num;
-	int			lights_num;
-}	t_scene;
-
-#endif // SCENE_H
+}

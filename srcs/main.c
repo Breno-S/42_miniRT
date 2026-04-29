@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/01 13:53:38 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/04/29 12:53:26 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/04/29 18:14:03 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "libft.h"
 #include "mlx.h"
 #include "parser.h"
-#include "renderer.h"
+#include "ray_context.h"
 #include "rt.h"
 #include "vec_math.h"
 
@@ -38,10 +38,11 @@ int	main(int argc, char **argv)
 		return (finish_program(1));
 	if (!rt.scene.lights)
 		return (finish_program(1));
-	if (!rt_mlx_env_setup(&rt, WIDTH, HEIGHT, "Ray Sniffer"))
+	if (!rt_mlx_setup(&rt, WIDTH, HEIGHT, "Ray Sniffer"))
 		return (finish_program(1));
-	renderer_render(&rt.mlx_env, rt.scene);
-	mlx_loop(rt.mlx_env.mlx_ptr);
-	rt_mlx_env_destroy(&rt);
+	rt_ray_context_setup(&rt);
+	rt_renderer_render(&rt);
+	mlx_loop(rt.mlx.mlx_ptr);
+	rt_mlx_destroy(&rt);
 	return (finish_program(0));
 }

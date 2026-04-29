@@ -1,41 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   renderer.h                                         :+:      :+:    :+:   */
+/*   ray_context.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/10 02:09:15 by brensant          #+#    #+#             */
-/*   Updated: 2026/04/28 02:00:43 by brensant         ###   ########.fr       */
+/*   Updated: 2026/04/29 18:14:03 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef RENDERER_H
-# define RENDERER_H
+#ifndef RAY_CONTEXT_H
+# define RAY_CONTEXT_H
 
 # include "vec_math.h"
 # include "shapes.h"
 # include "scene.h"
-# include "rt.h"
+# include "mlx_env.h"
 
 typedef struct s_ray_context
 {
 	t_vec3	orig;
 
-	t_vec3	vp_w_vec;
-	t_vec3	vp_h_vec;
-	t_vec3	vp_fd_vec;
+	t_vec3	start;
+	t_vec3	dx;
+	t_vec3	dy;
 
-	t_vec3	vp_start;
-	t_vec3	vp_dx;
-	t_vec3	vp_dy;
+	t_vec3	px;
+	t_color	color;
+	t_hit	closest_hit;
+
 }	t_ray_context;
-
-typedef struct s_renderer
-{
-}	t_renderer;
 
 void			renderer_render(t_mlx_env *mlx, t_scene scene);
 t_ray_context	get_ray_context(t_mlx_env *mlx, t_camera *camera);
 
-#endif // RENDERER_H
+#endif // RAY_CONTEXT_H
