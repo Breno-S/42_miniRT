@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   build_image.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/29 14:13:32 by brensant          #+#    #+#             */
-/*   Updated: 2026/04/29 18:14:03 by brensant         ###   ########.fr       */
+/*   Updated: 2026/04/29 19:42:59 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,8 @@ static t_color	ray_color(t_hit *hit, t_scene scene)
 
 	if (hit->did_hit)
 	{
-		intensity = vec3_dot(hit->normal, vec3_normalize(vec3_sub(scene.lights[0].pos,
-						hit->point)));
+		intensity = vec3_dot(hit->normal,
+				vec3_normalize(vec3_sub(scene.lights[0].pos, hit->point)));
 		if (intensity < 0)
 			intensity = 0;
 		return (color_from_vec(color_vec_clamp(vec3_scale(
@@ -58,6 +58,7 @@ t_hit	get_closest_collision(t_ray *ray, t_obj *list, int list_size)
 	t_hit	hit;
 	t_hit	closest;
 	int		i;
+
 	closest = hit_miss();
 	i = 0;
 	while (i < list_size)
@@ -89,8 +90,10 @@ void	rt_build_image(t_rt *rt)
 		{
 			px_v = vec3_add(rt->rc.start, vec3_scale(rt->rc.dx, x));
 			px_v = vec3_add(px_v, vec3_scale(rt->rc.dy, y));
-			ray = ray_new(rt->rc.orig, vec3_normalize(vec3_sub(px_v, rt->rc.orig)));
-			closest_hit = get_closest_collision(&ray, rt->scene.obj, rt->scene.objs_num);
+			ray = ray_new(rt->rc.orig, vec3_normalize(vec3_sub(px_v,
+							rt->rc.orig)));
+			closest_hit = get_closest_collision(&ray, rt->scene.obj,
+					rt->scene.objs_num);
 			color = ray_color(&closest_hit, rt->scene);
 			pixel_put(&rt->mlx, x, y, color.hex);
 			x++;

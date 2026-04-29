@@ -153,6 +153,9 @@ debug: fclean
 debug: CFLAGS = -g
 debug: all
 
+valgrind:
+	valgrind --leak-check=full --show-leak-kinds=all ./miniRT "scenes/scene3.rt"
+
 clean:
 		@make -C $(PATH_LIBFT) clean
 		@printf "$(L_GREEN)Removing objects...$(NC)\n"

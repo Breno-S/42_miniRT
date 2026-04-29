@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   renderer.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/09 14:18:38 by brensant          #+#    #+#             */
-/*   Updated: 2026/04/29 18:11:14 by brensant         ###   ########.fr       */
+/*   Updated: 2026/04/29 19:43:59 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,10 @@
 void	rt_renderer_render(t_rt *rt)
 {
 	t_ray_context	rc;
+
 	rt_build_image(rt);
-	mlx_put_image_to_window(rt->mlx.mlx_ptr, rt->mlx.win_ptr, rt->mlx.img_ptr, 0, 0);
+	mlx_put_image_to_window(rt->mlx.mlx_ptr, rt->mlx.win_ptr,
+		rt->mlx.img_ptr, 0, 0);
 }
 
 void	rt_ray_context_setup(t_rt *rt)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/01 13:53:38 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/04/29 18:14:03 by brensant         ###   ########.fr       */
+/*   Updated: 2026/04/29 19:22:38 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	main(int argc, char **argv)
 		return (finish_program(1));
 	rt_ray_context_setup(&rt);
 	rt_renderer_render(&rt);
-	mlx_loop(rt.mlx.mlx_ptr);
-	rt_mlx_destroy(&rt);
+	if (rt.mlx.mlx_ptr)
+		mlx_loop(rt.mlx.mlx_ptr);
 	return (finish_program(0));
 }

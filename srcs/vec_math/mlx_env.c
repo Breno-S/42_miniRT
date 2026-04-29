@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mlx_env.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/08 13:43:03 by brensant          #+#    #+#             */
-/*   Updated: 2026/04/29 15:58:46 by brensant         ###   ########.fr       */
+/*   Updated: 2026/04/29 19:44:44 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,15 +23,11 @@ void	rt_mlx_destroy(t_rt *rt)
 	if (!rt)
 		return ;
 	mlx = &rt->mlx;
-	if (mlx->img_addr)
-		free(mlx->img_addr);
-	if (mlx->img_ptr)
-		free(mlx->img_ptr);
-	if (mlx->win_ptr)
-		free(mlx->win_ptr);
-	if (mlx->mlx_ptr)
-		free(mlx->mlx_ptr);
-	free(mlx);
+	mlx_destroy_window(mlx->mlx_ptr, mlx->win_ptr);
+	mlx_destroy_image(mlx->mlx_ptr, mlx->img_ptr);
+	mlx_destroy_display(mlx->mlx_ptr);
+	free(mlx->mlx_ptr);
+	mlx->mlx_ptr = 0;
 }
 
 bool	rt_mlx_setup(t_rt *rt, int width, int height, const char *name)
