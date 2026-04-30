@@ -6,7 +6,7 @@
 /*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/16 13:02:25 by brensant          #+#    #+#             */
-/*   Updated: 2026/04/27 16:11:58 by brensant         ###   ########.fr       */
+/*   Updated: 2026/04/30 19:11:26 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ typedef struct s_hit
 {
 	t_vec3		point;
 	t_vec3		normal;
+	t_vec3		reflected;
 	// t_vec3		hit_in;
 	// t_vec3		hit_out;
 	t_obj		*obj;

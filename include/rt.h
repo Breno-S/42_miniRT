@@ -6,7 +6,7 @@
 /*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/27 16:33:22 by brensant          #+#    #+#             */
-/*   Updated: 2026/04/29 18:14:03 by brensant         ###   ########.fr       */
+/*   Updated: 2026/04/30 14:07:23 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	rt_ray_context_setup(t_rt *rt);
 
 void	rt_build_image(t_rt *rt);
 
-void	rt_renderer_render(t_rt *rt);
+void	rt_render(t_rt *rt);
 
 void	rt_run(t_rt *rt);
 

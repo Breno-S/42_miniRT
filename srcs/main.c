@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/01 13:53:38 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/04/29 19:22:38 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/04/30 14:07:23 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	main(int argc, char **argv)
 	if (!rt_mlx_setup(&rt, WIDTH, HEIGHT, "Ray Sniffer"))
 		return (finish_program(1));
 	rt_ray_context_setup(&rt);
-	rt_renderer_render(&rt);
+	rt_render(&rt);
 	if (rt.mlx.mlx_ptr)
 		mlx_loop(rt.mlx.mlx_ptr);
 	return (finish_program(0));

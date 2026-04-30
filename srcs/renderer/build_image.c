@@ -3,15 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   build_image.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/29 14:13:32 by brensant          #+#    #+#             */
-/*   Updated: 2026/04/29 19:42:59 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/04/30 20:23:24 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "hit.h"
 #include "rt.h"
+
+#include <float.h>
+#include <math.h>
 
 static void	pixel_put(t_mlx_env *env, int x, int y, int color)
 {
@@ -36,18 +39,28 @@ static void	pixel_put(t_mlx_env *env, int x, int y, int color)
 /**
  * TODO: add ambient light.
  */
-static t_color	ray_color(t_hit *hit, t_scene scene)
+static t_color	ray_color(t_hit *hit, t_scene scene, t_ray *ray)
 {
-	float	intensity;
+	float	i_final;
+	float	diffuse;
+	float	specular;
+	float	specular_strenth;
+	t_vec3	reflected;
+	t_vec3	ligth_dir;
 
+	ligth_dir = vec3_normalize(vec3_sub(scene.lights[0].pos, hit->point));
 	if (hit->did_hit)
 	{
-		intensity = vec3_dot(hit->normal,
-				vec3_normalize(vec3_sub(scene.lights[0].pos, hit->point)));
-		if (intensity < 0)
-			intensity = 0;
+		diffuse = vec3_dot(hit->normal, ligth_dir);
+		if (diffuse < FLT_EPSILON)
+			diffuse = 0;
+		reflected = vec3_sub(vec3_scale(hit->normal, vec3_dot(vec3_negate(ligth_dir), hit->normal) * 2), ligth_dir);
+		specular = pow(fmax(vec3_dot(reflected, vec3_negate(ray->dir)), 0.0), 255);
+		if (specular < FLT_EPSILON)
+			specular = 0;
+		i_final = scene.ambient.i_rate + diffuse + specular;
 		return (color_from_vec(color_vec_clamp(vec3_scale(
-						color_to_vec(hit->obj->color), intensity))));
+						color_to_vec(hit->obj->color), i_final))));
 	}
 	return ((t_color){.hex = BACKGROURD_COLOR});
 }
@@ -73,31 +86,24 @@ t_hit	get_closest_collision(t_ray *ray, t_obj *list, int list_size)
 
 void	rt_build_image(t_rt *rt)
 {
-	t_ray	ray;
-	int		x;
-	int		y;
-	t_vec3	px_v;
-	t_color	color;
-	t_hit	closest_hit;
+	int	xy[2];
 
-	if (!rt)
-		return ;
-	y = 0;
-	while (y < rt->mlx.height)
+	xy[1] = 0;
+	while (xy[1] < rt->mlx.height)
 	{
-		x = 0;
-		while (x < rt->mlx.width)
+		xy[0] = 0;
+		while (xy[0] < rt->mlx.width)
 		{
-			px_v = vec3_add(rt->rc.start, vec3_scale(rt->rc.dx, x));
-			px_v = vec3_add(px_v, vec3_scale(rt->rc.dy, y));
-			ray = ray_new(rt->rc.orig, vec3_normalize(vec3_sub(px_v,
+			rt->rc.px = vec3_add(rt->rc.start, vec3_scale(rt->rc.dx, xy[0]));
+			rt->rc.px = vec3_add(rt->rc.px, vec3_scale(rt->rc.dy, xy[1]));
+			rt->rc.ray = ray_new(rt->rc.orig, vec3_normalize(vec3_sub(rt->rc.px,
 							rt->rc.orig)));
-			closest_hit = get_closest_collision(&ray, rt->scene.obj,
+			rt->rc.closest_hit = get_closest_collision(&rt->rc.ray, rt->scene.obj,
 					rt->scene.objs_num);
-			color = ray_color(&closest_hit, rt->scene);
-			pixel_put(&rt->mlx, x, y, color.hex);
-			x++;
+			rt->rc.color = ray_color(&rt->rc.closest_hit, rt->scene, &rt->rc.ray);
+			pixel_put(&rt->mlx, xy[0], xy[1], rt->rc.color.hex);
+			xy[0]++;
 		}
-		y++;
+		xy[1]++;
 	}
 }

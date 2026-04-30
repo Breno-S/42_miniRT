@@ -6,7 +6,7 @@
 /*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/10 02:09:15 by brensant          #+#    #+#             */
-/*   Updated: 2026/04/29 18:14:03 by brensant         ###   ########.fr       */
+/*   Updated: 2026/04/30 14:21:57 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include "vec_math.h"
 # include "shapes.h"
 # include "scene.h"
+# include "ray.h"
 # include "mlx_env.h"
 
 typedef struct s_ray_context
@@ -26,6 +27,7 @@ typedef struct s_ray_context
 	t_vec3	dx;
 	t_vec3	dy;
 
+	t_ray	ray;
 	t_vec3	px;
 	t_color	color;
 	t_hit	closest_hit;
