@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   color.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/07 13:04:04 by brensant          #+#    #+#             */
-/*   Updated: 2026/04/19 15:47:16 by brensant         ###   ########.fr       */
+/*   Updated: 2026/05/11 15:45:26 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,9 @@ t_vec4	color_vec_clamp(t_vec4 color_vec)
 
 t_vec4	color_to_vec(t_color color)
 {
-	return ((t_vec4){.x = color.r / 255.0f, .y = color.g / 255.0f,
-		.z = color.b / 255.0f, .w = 1.0f});
+	return ((t_vec4){.x = (float) color.r / 255.0f,
+		.y = (float) color.g / 255.0f,
+		.z = (float) color.b / 255.0f, .w = 1.0f});
 }
 
 t_color	color_from_vec(t_vec4 color)

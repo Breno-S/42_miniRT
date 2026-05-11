@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   vec_math_vec.c                                     :+:      :+:    :+:   */
+/*   vec_math_i.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/06 16:31:22 by brensant          #+#    #+#             */
-/*   Updated: 2026/04/23 01:46:44 by brensant         ###   ########.fr       */
+/*   Updated: 2026/05/11 16:45:31 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,14 @@ t_vec3	vec3_cross(t_vec3 u, t_vec3 v)
 		.z = u.x * v.y - v.x * u.y, .w = 1});
 }
 
+t_vec3	vec3_mult(t_vec3 u, t_vec3 v)
+{
+	return ((t_vec3){.x = u.x * v.x, .y = u.y * v.y, .z = u.z * v.z, .w = 1});
+}
+
 float	vec3_distance(t_vec3 u, t_vec3 v)
 {
 	return (sqrt((v.x - u.x) * (v.x - u.x) + (v.y - u.y) * (v.y - u.y)
 			+ (v.z - u.z) * (v.z - u.z)));
 }
+

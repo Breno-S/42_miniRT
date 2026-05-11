@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   color.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/06 16:31:16 by brensant          #+#    #+#             */
-/*   Updated: 2026/04/17 18:59:14 by brensant         ###   ########.fr       */
+/*   Updated: 2026/05/11 19:47:46 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,9 @@
 # include "core.h"
 
 # include <stdint.h>
+
+# define SPECULAR_STRENGTH 1.0f
+# define SPECULAR_HIGHLIGHT 128.0f
 
 typedef union u_color
 {

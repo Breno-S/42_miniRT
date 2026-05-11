@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hit_sphere.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/19 18:12:44 by brensant          #+#    #+#             */
-/*   Updated: 2026/04/21 22:42:56 by brensant         ###   ########.fr       */
+/*   Updated: 2026/05/11 15:45:26 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,16 +22,17 @@ static void	set_hit(t_hit *hit, t_ray *ray, float b, float discriminant)
 {
 	float	disc_sqrt;
 	float	closest_hit_scalar;
-	// float	farthest_hit_scalar;
 
 	disc_sqrt = sqrt(discriminant);
 	closest_hit_scalar = (-b - disc_sqrt) / 2.0;
-	// farthest_hit_scalar = (-b + disc_sqrt) / 2.0;
-	hit->point = ray_at(ray, closest_hit_scalar);
-	// hit->hit_in = ray_at(ray, closest_hit_scalar);
-	// hit->hit_out = ray_at(ray, farthest_hit_scalar);
-	hit->distance = closest_hit_scalar;
-	hit->normal = vec3_normalize(vec3_sub(hit->point, hit->obj->pos));
+	if (closest_hit_scalar >= FLT_EPSILON)
+	{
+		hit->point = ray_at(ray, closest_hit_scalar);
+		hit->distance = closest_hit_scalar;
+		hit->normal = vec3_normalize(vec3_sub(hit->point, hit->obj->pos));
+	}
+	else
+		*hit = hit_miss();
 }
 
 /**

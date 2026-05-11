@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   renderer.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/09 14:18:38 by brensant          #+#    #+#             */
-/*   Updated: 2026/04/30 14:07:34 by brensant         ###   ########.fr       */
+/*   Updated: 2026/05/11 15:45:27 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,10 @@ void	rt_render(t_rt *rt)
 
 void	rt_ray_context_setup(t_rt *rt)
 {
-	float		vp_width;
-	float		vp_height;
-	t_vec3		basis[3];
-	t_vec3		xyz[3];
+	float	vp_width;
+	float	vp_height;
+	t_vec3	basis[3];
+	t_vec3	xyz[3];
 
 	rt->rc.orig = rt->scene.cam.pos;
 	basis[0] = vec3_new(0, 1, 0);

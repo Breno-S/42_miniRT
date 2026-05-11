@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vec_math.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/06 14:42:52 by brensant          #+#    #+#             */
-/*   Updated: 2026/04/23 01:39:53 by brensant         ###   ########.fr       */
+/*   Updated: 2026/05/11 15:45:24 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ t_vec3	vec3_add(t_vec3 u, t_vec3 v);
 t_vec3	vec3_sub(t_vec3 u, t_vec3 v);
 float	vec3_dot(t_vec3 u, t_vec3 v);
 t_vec3	vec3_cross(t_vec3 u, t_vec3 v);
+t_vec3	vec3_mult(t_vec3 u, t_vec3 v);
 float	vec3_distance(t_vec3 u, t_vec3 v);
 
 t_vec3	vec3_transform(t_vec3 v, t_matrix m);

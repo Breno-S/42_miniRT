@@ -45,8 +45,9 @@ SRCS_MANDATORY_VEC_MATH := \
 	hooks.c \
 	mlx_env.c \
 	ray.c \
-	vec_math.c \
-	vec_math_vec.c
+	vec_math_binary.c \
+	vec_math_extra.c \
+	vec_math_unary.c
 
 SRCS_MANDATORY_RENDERER := \
 	build_image.c \

@@ -6,7 +6,7 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/10 20:58:39 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/04/22 19:31:05 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/05/11 19:34:37 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,9 @@ bool	create_ambient(char *entity)
 		return (error_msg(ERR_LIGHT));
 	if (import_color(s_ent[2], &lst->ambient.color) == 1)
 		return (1);
+	lst->ambient.vec_color = color_to_vec(lst->ambient.color);
+	lst->ambient.vec_color = vec3_scale(lst->ambient.vec_color,
+		lst->ambient.i_rate);
 	link_entity(lst);
 	return (0);
 }
