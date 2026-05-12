@@ -155,7 +155,7 @@ debug: CFLAGS = -g
 debug: all
 
 valgrind:
-	valgrind --leak-check=full --show-leak-kinds=all ./miniRT "scenes/scene3.rt"
+	valgrind --leak-check=full --show-leak-kinds=all ./miniRT "scenes/basic_cylinder.rt"
 
 clean:
 		@make -C $(PATH_LIBFT) clean
