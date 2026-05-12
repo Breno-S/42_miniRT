@@ -6,7 +6,7 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/06 16:31:16 by brensant          #+#    #+#             */
-/*   Updated: 2026/05/11 19:47:46 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/05/12 15:01:02 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,9 @@
 # include <stdint.h>
 
 # define SPECULAR_STRENGTH 1.0f
-# define SPECULAR_HIGHLIGHT 128.0f
+# define AMBIENT_STRENGTH 0.5f
+# define DIFFUSE_STRENGTH 1.0f
+# define SPECULAR_HIGHLIGHT 32.0f
 
 typedef union u_color
 {

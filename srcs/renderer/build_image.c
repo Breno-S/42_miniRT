@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   build_image.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/29 14:13:32 by brensant          #+#    #+#             */
-/*   Updated: 2026/05/11 19:48:41 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/05/12 17:27:22 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ static t_color	ray_color(t_hit *hit, t_scene scene, t_ray *ray)
 	if (hit->did_hit)
 	{
 		color = color_to_vec(hit->obj->color);
-		color_final = vec3_mult(color_to_vec(hit->obj->color),
+		color_final =  vec3_mult(color_to_vec(hit->obj->color),
 			scene.ambient.vec_color);
 		color_final = vec3_add(get_color_light(scene.lights[0], hit[0], ray[0]),
 			color_final);
@@ -86,9 +86,7 @@ static t_vec3	get_color_light(t_light light, t_hit hit, t_ray ray)
 	diffuse = 0;
 	specular = 0;
 	light_dir = vec3_normalize(vec3_sub(light.pos, hit.point));
-	diffuse = fmax(vec3_dot(hit.normal, light_dir), 0.0);
-	if (diffuse <= FLT_EPSILON)
-		diffuse = 0;
+	diffuse = fmax(vec3_dot(hit.normal, light_dir), 0.0) * DIFFUSE_STRENGTH;
 	if (diffuse > 0)
 	{
 		reflected = vec3_normalize(vec3_reflect(vec3_negate(light_dir),
@@ -96,8 +94,8 @@ static t_vec3	get_color_light(t_light light, t_hit hit, t_ray ray)
 		specular = pow(fmax(vec3_dot(vec3_negate(vec3_normalize(ray.dir)),
 			reflected), 0.0), SPECULAR_HIGHLIGHT) * SPECULAR_STRENGTH;
 	}
-	color_final = vec3_scale(color_to_vec(hit.obj->color),
-		light.brightness * diffuse);
+	color_final = vec3_mult(color_to_vec(hit.obj->color),
+		vec3_scale(vec3_new(1, 1, 1), light.brightness * diffuse));
 	color_final = vec3_add(color_final, vec3_scale(vec3_new(1, 1, 1),
 		specular));
 	return (color_final);
@@ -125,6 +123,10 @@ t_hit	get_closest_collision(t_ray *ray, t_obj *list, int list_size)
 void	rt_build_image(t_rt *rt)
 {
 	int	xy[2];
+	t_ray	secondary_ray;
+	t_hit	secondary_hit;
+	t_vec3	to_light;
+	t_vec3	hit_att;
 
 	xy[1] = 0;
 	while (xy[1] < rt->mlx.height)
@@ -139,16 +141,19 @@ void	rt_build_image(t_rt *rt)
 			rt->rc.closest_hit = get_closest_collision(&rt->rc.ray, rt->scene.obj,
 					rt->scene.objs_num);
 			// Create secondary ray
-			// if (rt->rc.closest_hit.did_hit)
-			// {
-			// 	t_ray	secondary_ray = ray_new(rt->rc.closest_hit.point, vec3_sub(rt->scene.lights[0].pos, rt->rc.closest_hit.point));
-			// 	t_hit	secondary_hit = get_closest_collision(&secondary_ray, rt->scene.obj, rt->scene.objs_num);
-			// 	rt->rc.closest_hit = get_closest_collision(&rt->rc.ray, rt->scene.obj,
-			// 		rt->scene.objs_num);
-			// 	rt->rc.color = ray_color(&secondary_hit, rt->scene, &secondary_ray);
-			// }
-			// else
-				rt->rc.color = ray_color(&rt->rc.closest_hit, rt->scene, &rt->rc.ray);
+			rt->rc.color = (t_color){.hex = BACKGROURD_COLOR};
+			if (rt->rc.closest_hit.did_hit)
+			{
+				hit_att = vec3_add(rt->rc.closest_hit.point, vec3_scale(rt->rc.closest_hit.normal, 0.001));
+				to_light = vec3_sub(rt->scene.lights[0].pos, rt->rc.closest_hit.point);
+				secondary_ray = ray_new(hit_att, to_light);
+				secondary_hit = get_closest_collision(&secondary_ray, rt->scene.obj, rt->scene.objs_num);
+				if (!(secondary_hit.did_hit && secondary_hit.distance <= vec3_length(to_light)))
+					rt->rc.color = ray_color(&rt->rc.closest_hit, rt->scene, &rt->rc.ray);
+				else
+					rt->rc.color =	color_from_vec(vec3_mult(color_to_vec(rt->rc.closest_hit.obj->color),
+						rt->scene.ambient.vec_color));
+			}
 			pixel_put(&rt->mlx, xy[0], xy[1], rt->rc.color.hex);
 			xy[0]++;
 		}
