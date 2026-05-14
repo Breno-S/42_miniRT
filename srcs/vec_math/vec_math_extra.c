@@ -3,26 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   vec_math_extra.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/23 01:33:38 by brensant          #+#    #+#             */
-/*   Updated: 2026/05/11 16:45:31 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/05/14 16:34:11 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vec_math.h"
 
-t_vec3	vec3_transform(t_vec3 v, t_matrix m)
+t_vec3	vec3_transform(t_vec3 v, t_matrix mat)
 {
 	float	x;
 	float	y;
 	float	z;
 	float	w;
+	float	**m;
 
-	x = v.x * m.r0[0] + v.y * m.r0[1] + v.z * m.r0[2] + 1 * m.r0[3];
-	y = v.x * m.r1[0] + v.y * m.r1[1] + v.z * m.r1[2] + 1 * m.r1[3];
-	z = v.x * m.r2[0] + v.y * m.r2[1] + v.z * m.r2[2] + 1 * m.r2[3];
-	w = v.x * m.r3[0] + v.y * m.r3[1] + v.z * m.r3[2] + 1 * m.r3[3];
+	m = mat.m;
+	x = v.x * m[0][0] + v.y * m[0][1] + v.z * m[0][2] + 1 * m[0][3];
+	y = v.x * m[1][0] + v.y * m[1][1] + v.z * m[1][2] + 1 * m[1][3];
+	z = v.x * m[2][0] + v.y * m[2][1] + v.z * m[2][2] + 1 * m[2][3];
+	w = v.x * m[3][0] + v.y * m[3][1] + v.z * m[3][2] + 1 * m[3][3];
 	return ((t_vec3){.x = x, .y = y, .z = z, .w = w});
 }
 
@@ -30,4 +32,36 @@ float	vec3_distance(t_vec3 u, t_vec3 v)
 {
 	return (sqrt((v.x - u.x) * (v.x - u.x) + (v.y - u.y) * (v.y - u.y)
 			+ (v.z - u.z) * (v.z - u.z)));
+}
+
+t_matrix	matrix_identity(void)
+{
+	return (t_matrix){.m[0][0] = 1, .m[1][1] = 1, .m[2][2] = 1, .m[3][3] = 1};
+}
+
+t_matrix	matrix_mult(t_matrix *left, t_matrix *right)
+{
+	t_matrix	result;
+	int 		i;
+	int 		j;
+	int 		k;
+
+	i = 0;
+	while (i < 4)
+	{
+		j = 0;
+		while (j < 4)
+		{
+			result.m[i][j] = 0;
+			k = 0;
+			while (k < 4)
+			{
+				result.m[i][j] += left->m[i][k] * right->m[k][j];
+				k++;
+			}
+			j++;
+		}
+		i++;
+	}
+	return (result);
 }

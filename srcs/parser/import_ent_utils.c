@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   import_ent_utils.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/10 20:52:50 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/04/22 19:31:10 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/05/14 16:59:28 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ bool	import_vec3_normalize(char *text, t_vec3 *vec3)
 		error_msg(NON_NORMALIZE);
 		return (1);
 	}
+	*vec3 =	vec3_normalize(*vec3);
 	return (0);
 }
 
