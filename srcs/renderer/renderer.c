@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   renderer.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/09 14:18:38 by brensant          #+#    #+#             */
-/*   Updated: 2026/05/11 15:45:27 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/05/19 14:24:34 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,20 +36,24 @@ void	rt_ray_context_setup(t_rt *rt)
 {
 	float	vp_width;
 	float	vp_height;
+	t_vec3	dummy_up;
 	t_vec3	basis[3];
 	t_vec3	xyz[3];
 
 	rt->rc.orig = rt->scene.cam.pos;
-	basis[0] = vec3_new(0, 1, 0);
-	if (fabs(rt->scene.cam.dir.y) > FLT_EPSILON)
-		basis[0] = vec3_new(0, 0, 1);
-	basis[1] = vec3_normalize(vec3_cross(rt->scene.cam.dir, basis[0]));
-	basis[2] = vec3_cross(basis[1], rt->scene.cam.dir);
+	dummy_up = vec3_new(0, 1, 0);
+	if (rt->scene.cam.dir.y == 1)
+		dummy_up = vec3_new(0, 0, 1);
+	if (rt->scene.cam.dir.y == -1)
+		dummy_up = vec3_new(0, 0, -1);
+	basis[0] = vec3_normalize(vec3_cross(rt->scene.cam.dir, dummy_up));
+	basis[1] = vec3_normalize(vec3_cross(rt->scene.cam.dir, vec3_negate(basis[0])));
+	basis[2] = rt->scene.cam.dir;
 	vp_width = 2 * tanf(rt->scene.cam.fov * DEG2RAD / 2.0);
 	vp_height = vp_width * ((float)rt->mlx.height / rt->mlx.width);
-	xyz[0] = vec3_scale(basis[1], vp_width);
-	xyz[1] = vec3_scale(basis[2], -vp_height);
-	xyz[2] = vec3_scale(rt->scene.cam.dir, FOCAL_DISTANCE);
+	xyz[0] = vec3_scale(basis[0], vp_width);
+	xyz[1] = vec3_scale(basis[1], -vp_height);
+	xyz[2] = vec3_scale(basis[2], FOCAL_DISTANCE);
 	rt->rc.dx = vec3_scale(xyz[0], 1.0 / rt->mlx.width);
 	rt->rc.dy = vec3_scale(xyz[1], 1.0 / rt->mlx.height);
 	rt->rc.start = vec3_add(rt->scene.cam.pos, xyz[2]);
