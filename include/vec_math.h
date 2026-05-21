@@ -6,7 +6,7 @@
 /*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/06 14:42:52 by brensant          #+#    #+#             */
-/*   Updated: 2026/05/14 16:34:36 by brensant         ###   ########.fr       */
+/*   Updated: 2026/05/21 16:41:12 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ t_vec3		vec3_cross(t_vec3 u, t_vec3 v);
 t_vec3		vec3_mult(t_vec3 u, t_vec3 v);
 float		vec3_distance(t_vec3 u, t_vec3 v);
 
-t_vec3		vec3_transform(t_vec3 v, t_matrix mat);
+t_vec3		vec3_transform(t_vec3 v, void *mat);
 
 t_matrix	matrix_identity(void);
 t_matrix	matrix_mult(t_matrix *left, t_matrix *right);

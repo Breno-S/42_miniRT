@@ -6,7 +6,7 @@
 /*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/01 15:49:00 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/05/14 17:11:49 by brensant         ###   ########.fr       */
+/*   Updated: 2026/05/21 15:36:53 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ typedef struct s_camera
 	t_vec3			pos;
 	t_vec3			dir;
 	int				fov;
+	t_matrix		matrix;
 }	t_camera;
 
 typedef struct s_light

@@ -6,13 +6,15 @@
 /*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/23 01:33:38 by brensant          #+#    #+#             */
-/*   Updated: 2026/05/14 16:34:11 by brensant         ###   ########.fr       */
+/*   Updated: 2026/05/21 16:43:31 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vec_math.h"
 
-t_vec3	vec3_transform(t_vec3 v, t_matrix mat)
+#include <math.h>
+
+t_vec3	vec3_transform(t_vec3 v, void *mat)
 {
 	float	x;
 	float	y;
@@ -20,7 +22,7 @@ t_vec3	vec3_transform(t_vec3 v, t_matrix mat)
 	float	w;
 	float	**m;
 
-	m = mat.m;
+	m = (float **)((t_matrix *)mat)->m;
 	x = v.x * m[0][0] + v.y * m[0][1] + v.z * m[0][2] + 1 * m[0][3];
 	y = v.x * m[1][0] + v.y * m[1][1] + v.z * m[1][2] + 1 * m[1][3];
 	z = v.x * m[2][0] + v.y * m[2][1] + v.z * m[2][2] + 1 * m[2][3];
