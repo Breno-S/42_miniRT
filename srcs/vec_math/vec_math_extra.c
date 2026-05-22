@@ -6,7 +6,7 @@
 /*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/23 01:33:38 by brensant          #+#    #+#             */
-/*   Updated: 2026/05/21 16:43:31 by brensant         ###   ########.fr       */
+/*   Updated: 2026/05/22 18:26:45 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,17 @@
 
 #include <math.h>
 
-t_vec3	vec3_transform(t_vec3 v, void *mat)
+t_vec3	vec3_transform(t_vec3 v, t_matrix *m)
 {
-	float	x;
-	float	y;
-	float	z;
-	float	w;
-	float	**m;
+	float		x;
+	float		y;
+	float		z;
+	float		w;
 
-	m = (float **)((t_matrix *)mat)->m;
-	x = v.x * m[0][0] + v.y * m[0][1] + v.z * m[0][2] + 1 * m[0][3];
-	y = v.x * m[1][0] + v.y * m[1][1] + v.z * m[1][2] + 1 * m[1][3];
-	z = v.x * m[2][0] + v.y * m[2][1] + v.z * m[2][2] + 1 * m[2][3];
-	w = v.x * m[3][0] + v.y * m[3][1] + v.z * m[3][2] + 1 * m[3][3];
+	x = v.x * m->m[0][0] + v.y * m->m[0][1] + v.z * m->m[0][2] + 1 * m->m[0][3];
+	y = v.x * m->m[1][0] + v.y * m->m[1][1] + v.z * m->m[1][2] + 1 * m->m[1][3];
+	z = v.x * m->m[2][0] + v.y * m->m[2][1] + v.z * m->m[2][2] + 1 * m->m[2][3];
+	w = v.x * m->m[3][0] + v.y * m->m[3][1] + v.z * m->m[3][2] + 1 * m->m[3][3];
 	return ((t_vec3){.x = x, .y = y, .z = z, .w = w});
 }
 

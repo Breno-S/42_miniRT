@@ -6,7 +6,7 @@
 /*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/10 20:51:26 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/05/14 17:00:14 by brensant         ###   ########.fr       */
+/*   Updated: 2026/05/22 17:01:24 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ bool	create_camera(char *entity)
 
 	lst = ft_gc_calloc_root(1, sizeof(*lst), "ent");
 	lst->camera.type = CAMERA;
+	lst->camera.matrix = matrix_identity();
 	s_ent = ft_split_spaces(entity);
 	ft_gcfct_arr_register((void **)s_ent, GC_DATA);
 	if (ft_size_chrarr(s_ent) != 4)
