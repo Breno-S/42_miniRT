@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   renderer.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/09 14:18:38 by brensant          #+#    #+#             */
-/*   Updated: 2026/05/22 18:21:42 by brensant         ###   ########.fr       */
+/*   Updated: 2026/05/22 19:11:01 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,7 +147,8 @@ void	rt_ray_context_setup(t_rt *rt)
 
 	setup_camera_matrix(&rt->scene.cam);
 	rt->rc.orig = rt->scene.cam.pos;
-	basis[0] = vec3_transform((t_vec3){1, 0, 0}, (void *)&rt->scene.cam.matrix);
+	dummy_up = vec3_new(0, 1, 0);
+	basis[0] = vec3_negate(vec3_transform((t_vec3){1, 0, 0}, (void *)&rt->scene.cam.matrix));
 	basis[1] = vec3_transform((t_vec3){0, 1, 0}, (void *)&rt->scene.cam.matrix);
 	basis[2] = vec3_transform((t_vec3){0, 0, 1}, (void *)&rt->scene.cam.matrix);
 	vp_width = 2 * tanf(rt->scene.cam.fov * DEG2RAD / 2.0);
