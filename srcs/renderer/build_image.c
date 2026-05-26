@@ -6,74 +6,16 @@
 /*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/29 14:13:32 by brensant          #+#    #+#             */
-/*   Updated: 2026/05/12 17:27:22 by brensant         ###   ########.fr       */
+/*   Updated: 2026/05/26 17:56:22 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "hit.h"
 #include "rt.h"
+#include "utils.h"
 
 #include <float.h>
 #include <math.h>
-
-static t_vec3	get_color_light(t_light light, t_hit hit, t_ray ray);
-t_vec3	vec3_reflect(t_vec3 incident, t_vec3 normal);
-
-static void	pixel_put(t_mlx_env *env, int x, int y, int color)
-{
-	char	*addr;
-	int		i;
-
-	if (x > WIDTH || y > HEIGHT || x < 0 || y < 0)
-		return ;
-	addr = env->img_addr + (y * env->line_len + x * env->bpp / 8);
-	i = env->bpp - 8;
-	while (i >= 0)
-	{
-		if (env->endian != 0)
-			*addr = (color >> i) & 0xFF;
-		else
-			*addr = (color >> (env->bpp - 8 - i)) & 0xFF;
-		addr++;
-		i -= 8;
-	}
-}
-
-t_vec3	vec3_reflect(t_vec3 incident, t_vec3 normal)
-{
-	return (
-		vec3_sub(
-			incident,
-			vec3_scale(
-				normal,
-				2.0 * vec3_dot(incident, normal)
-			)
-		)
-	);
-}
-
-/**
- * TODO: add ambient light.
- */
-static t_color	ray_color(t_hit *hit, t_scene scene, t_ray *ray)
-{
-	t_vec3	color_final;
-	t_vec3	color;
-
-	if (hit->did_hit)
-	{
-		color = color_to_vec(hit->obj->color);
-		color_final =  vec3_mult(color_to_vec(hit->obj->color),
-			scene.ambient.vec_color);
-		color_final = vec3_add(get_color_light(scene.lights[0], hit[0], ray[0]),
-			color_final);
-		color.x = sqrt(color.x);
-		color.y = sqrt(color.y);
-		color.z = sqrt(color.z);
-		return (color_from_vec(color_vec_clamp(color_final)));
-	}
-	return ((t_color){.hex = BACKGROURD_COLOR});
-}
 
 static t_vec3	get_color_light(t_light light, t_hit hit, t_ray ray)
 {
@@ -90,15 +32,38 @@ static t_vec3	get_color_light(t_light light, t_hit hit, t_ray ray)
 	if (diffuse > 0)
 	{
 		reflected = vec3_normalize(vec3_reflect(vec3_negate(light_dir),
-			hit.normal));
-		specular = pow(fmax(vec3_dot(vec3_negate(vec3_normalize(ray.dir)),
-			reflected), 0.0), SPECULAR_HIGHLIGHT) * SPECULAR_STRENGTH;
+					hit.normal));
+		specular = pow(fmax(vec3_dot(vec3_negate(ray.dir), reflected), 0.0),
+				SPECULAR_HIGHLIGHT) * SPECULAR_STRENGTH;
 	}
 	color_final = vec3_mult(color_to_vec(hit.obj->color),
-		vec3_scale(vec3_new(1, 1, 1), light.brightness * diffuse));
+			vec3_scale(vec3_new(1, 1, 1), light.brightness * diffuse));
 	color_final = vec3_add(color_final, vec3_scale(vec3_new(1, 1, 1),
-		specular));
+				specular));
 	return (color_final);
+}
+
+/**
+ * TODO: add ambient light.
+ */
+static t_color	ray_color(t_hit *hit, t_scene scene, t_ray *ray)
+{
+	t_vec3	color_final;
+	t_vec3	color;
+
+	if (hit->did_hit)
+	{
+		color = color_to_vec(hit->obj->color);
+		color_final = vec3_mult(color_to_vec(hit->obj->color),
+				scene.ambient.vec_color);
+		color_final = vec3_add(get_color_light(scene.lights[0], hit[0], ray[0]),
+				color_final);
+		color.x = sqrt(color.x);
+		color.y = sqrt(color.y);
+		color.z = sqrt(color.z);
+		return (color_from_vec(color_vec_clamp(color_final)));
+	}
+	return ((t_color){.hex = BACKGROURD_COLOR});
 }
 
 // TODO: STATIC
@@ -120,9 +85,28 @@ t_hit	get_closest_collision(t_ray *ray, t_obj *list, int list_size)
 	return (closest);
 }
 
+// set_color
+// static void secondary_ray(t_rt *rt, )
+// {
+// 	rt->rc.color = (t_color){.hex = BACKGROURD_COLOR};
+// 	// Create secondary ray // Sets the color
+// 	if (rt->rc.closest_hit.did_hit)
+// 	{
+// 		hit_att = vec3_add(rt->rc.closest_hit.point, vec3_scale(rt->rc.closest_hit.normal, 0.001));
+// 		to_light = vec3_sub(rt->scene.lights[0].pos, rt->rc.closest_hit.point);
+// 		secondary_ray = ray_new(hit_att, to_light);
+// 		secondary_hit = get_closest_collision(&secondary_ray, rt->scene.obj, rt->scene.objs_num);
+// 		if (!(secondary_hit.did_hit && secondary_hit.distance <= vec3_length(to_light)))
+// 			rt->rc.color = ray_color(&rt->rc.closest_hit, rt->scene, &rt->rc.ray);
+// 		else
+// 			rt->rc.color =	color_from_vec(vec3_mult(color_to_vec(rt->rc.closest_hit.obj->color),
+// 				rt->scene.ambient.vec_color));
+// 	}
+// }
+
 void	rt_build_image(t_rt *rt)
 {
-	int	xy[2];
+	int		xy[2];
 	t_ray	secondary_ray;
 	t_hit	secondary_hit;
 	t_vec3	to_light;
@@ -134,14 +118,15 @@ void	rt_build_image(t_rt *rt)
 		xy[0] = 0;
 		while (xy[0] < rt->mlx.width)
 		{
+			// Primary ray
 			rt->rc.px = vec3_add(rt->rc.start, vec3_scale(rt->rc.dx, xy[0]));
 			rt->rc.px = vec3_add(rt->rc.px, vec3_scale(rt->rc.dy, xy[1]));
 			rt->rc.ray = ray_new(rt->rc.orig, (vec3_sub(rt->rc.px,
 							rt->rc.orig)));
-			rt->rc.closest_hit = get_closest_collision(&rt->rc.ray, rt->scene.obj,
-					rt->scene.objs_num);
-			// Create secondary ray
+			rt->rc.closest_hit = get_closest_collision(&rt->rc.ray,
+					rt->scene.obj, rt->scene.objs_num);
 			rt->rc.color = (t_color){.hex = BACKGROURD_COLOR};
+			// Create secondary ray // Sets the color
 			if (rt->rc.closest_hit.did_hit)
 			{
 				hit_att = vec3_add(rt->rc.closest_hit.point, vec3_scale(rt->rc.closest_hit.normal, 0.001));

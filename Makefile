@@ -24,7 +24,8 @@ PARSER_SRC_DIR := parser
 RENDERER_SRC_DIR := renderer
 
 SRCS_MANDATORY_COMMON := \
-	main.c
+	main.c \
+	utils.c
 
 SRCS_MANDATORY_PARSER := \
 	parser.c \
@@ -51,7 +52,8 @@ SRCS_MANDATORY_VEC_MATH := \
 
 SRCS_MANDATORY_RENDERER := \
 	build_image.c \
-	renderer.c
+	renderer.c \
+	ray_context.c
 
 SRCS_MANDATORY := $(addprefix $(PATH_MANDATORY)/,$(SRCS_MANDATORY_COMMON))
 SRCS_MANDATORY := $(SRCS_MANDATORY) $(addprefix $(PATH_MANDATORY)/$(PARSER_SRC_DIR)/,$(SRCS_MANDATORY_PARSER))

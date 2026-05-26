@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hit.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/16 13:02:25 by brensant          #+#    #+#             */
-/*   Updated: 2026/05/12 14:26:08 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/05/26 15:19:29 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,6 @@ typedef struct s_hit
 	t_vec3		point;
 	t_vec3		normal;
 	t_vec3		reflected;
-	// t_vec3		hit_in;
-	// t_vec3		hit_out;
 	t_obj		*obj;
 	float		distance;
 	bool		did_hit;

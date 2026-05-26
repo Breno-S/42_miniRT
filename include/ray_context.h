@@ -6,7 +6,7 @@
 /*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/10 02:09:15 by brensant          #+#    #+#             */
-/*   Updated: 2026/04/30 14:21:57 by brensant         ###   ########.fr       */
+/*   Updated: 2026/05/26 17:57:12 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,5 @@ typedef struct s_ray_context
 	t_hit	closest_hit;
 
 }	t_ray_context;
-
-void			renderer_render(t_mlx_env *mlx, t_scene scene);
-t_ray_context	get_ray_context(t_mlx_env *mlx, t_camera *camera);
 
 #endif // RAY_CONTEXT_H

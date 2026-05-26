@@ -6,7 +6,7 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/01 15:49:00 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/05/26 17:14:00 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/05/26 18:48:44 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,6 @@ typedef struct s_obj
 	t_shapes_type	type;
 	t_vec3			pos;
 	t_color			color;
-	t_matrix		matrix;
 	union
 	{
 		t_sphere	sphere;
@@ -93,7 +92,6 @@ typedef struct s_obj
 	};
 	t_material		*phong_spec;
 	t_hit			(*intersect)(t_ray *, struct s_obj *);
-	void			(*set_matrix)(struct s_obj *);
 }	t_obj;
 
 typedef struct s_rt_list
