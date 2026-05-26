@@ -6,7 +6,7 @@
 /*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/06 14:42:52 by brensant          #+#    #+#             */
-/*   Updated: 2026/05/22 18:27:08 by brensant         ###   ########.fr       */
+/*   Updated: 2026/05/26 17:32:48 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ float		vec3_dot(t_vec3 u, t_vec3 v);
 t_vec3		vec3_cross(t_vec3 u, t_vec3 v);
 t_vec3		vec3_mult(t_vec3 u, t_vec3 v);
 float		vec3_distance(t_vec3 u, t_vec3 v);
+t_vec3		vec3_reflect(t_vec3 v, t_vec3 mirror_normal);
 
 t_vec3		vec3_transform(t_vec3 v, t_matrix *m);
 

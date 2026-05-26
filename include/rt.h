@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rt.h                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/27 16:33:22 by brensant          #+#    #+#             */
-/*   Updated: 2026/05/11 14:32:29 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/05/26 17:15:20 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 # define RT_H
 
 # include "mlx_env.h"
-# include "scene.h"
 # include "ray_context.h"
+# include "scene.h"
 
 # include <stdbool.h>
 

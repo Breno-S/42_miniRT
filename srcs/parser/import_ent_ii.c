@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   import_ent_ii.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/10 20:58:39 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/05/12 13:01:58 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/05/26 15:21:57 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ bool	create_ambient(char *entity)
 		return (1);
 	lst->ambient.vec_color = color_to_vec(lst->ambient.color);
 	lst->ambient.vec_color = vec3_scale(lst->ambient.vec_color,
-		lst->ambient.i_rate);
+			lst->ambient.i_rate);
 	link_entity(lst);
 	return (0);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   verify_number.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/10 20:55:32 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/04/22 19:31:16 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/05/26 15:24:09 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ bool	verify_atoi(char *nptr, int n_nbr)
 
 bool	verify_atof(char *nptr, float n_nbr)
 {
-	int		i;
+	int	i;
 
 	if (!nptr)
 		return (1);
