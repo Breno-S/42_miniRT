@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   build_image.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/29 14:13:32 by brensant          #+#    #+#             */
-/*   Updated: 2026/05/26 17:56:22 by brensant         ###   ########.fr       */
+/*   Updated: 2026/05/26 19:55:24 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +28,14 @@ static t_vec3	get_color_light(t_light light, t_hit hit, t_ray ray)
 	diffuse = 0;
 	specular = 0;
 	light_dir = vec3_normalize(vec3_sub(light.pos, hit.point));
-	diffuse = fmax(vec3_dot(hit.normal, light_dir), 0.0) * DIFFUSE_STRENGTH;
+	diffuse = fmax(vec3_dot(hit.normal, light_dir), 0.0)
+		* hit.obj->phong_spec->kd;
 	if (diffuse > 0)
 	{
 		reflected = vec3_normalize(vec3_reflect(vec3_negate(light_dir),
 					hit.normal));
 		specular = pow(fmax(vec3_dot(vec3_negate(ray.dir), reflected), 0.0),
-				SPECULAR_HIGHLIGHT) * SPECULAR_STRENGTH;
+				hit.obj->phong_spec->m) * hit.obj->phong_spec->ks;
 	}
 	color_final = vec3_mult(color_to_vec(hit.obj->color),
 			vec3_scale(vec3_new(1, 1, 1), light.brightness * diffuse));
@@ -55,7 +56,8 @@ static t_color	ray_color(t_hit *hit, t_scene scene, t_ray *ray)
 	{
 		color = color_to_vec(hit->obj->color);
 		color_final = vec3_mult(color_to_vec(hit->obj->color),
-				scene.ambient.vec_color);
+				vec3_scale(scene.ambient.vec_color,
+					hit->obj->phong_spec->ka * scene.ambient.i_rate));
 		color_final = vec3_add(get_color_light(scene.lights[0], hit[0], ray[0]),
 				color_final);
 		color.x = sqrt(color.x);
