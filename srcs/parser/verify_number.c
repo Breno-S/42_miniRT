@@ -6,12 +6,11 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/10 20:55:32 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/04/22 19:31:16 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/05/26 17:04:58 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
-#include "math.h"
 
 bool	verify_atoi(char *nptr, int n_nbr)
 {

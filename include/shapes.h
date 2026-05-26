@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shapes.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/01 15:49:00 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/05/21 15:36:53 by brensant         ###   ########.fr       */
+/*   Updated: 2026/05/26 17:14:00 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,15 @@ typedef struct s_cylinder
 	float			height;
 }	t_cylinder;
 
+typedef struct s_material
+{
+	float	ka;
+	float	kd;
+	float	ks;
+	float	m;
+	char	*bump_map;
+}	t_material;
+
 typedef struct s_obj
 {
 	t_shapes_type	type;
@@ -82,6 +91,7 @@ typedef struct s_obj
 		t_plane		plane;
 		t_cylinder	cylinder;
 	};
+	t_material		*phong_spec;
 	t_hit			(*intersect)(t_ray *, struct s_obj *);
 	void			(*set_matrix)(struct s_obj *);
 }	t_obj;

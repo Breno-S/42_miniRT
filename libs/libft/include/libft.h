@@ -6,7 +6,7 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/14 09:57:31 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/04/13 16:45:08 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/05/26 18:13:13 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,6 +130,7 @@ int						ft_printf(const char *str, ...);
 char					*get_next_line(int fd);
 
 void					*ft_cleanls(t_ext_list **lst);
+void					ft_clean_buffer(void	*stock);
 int						ft_lst_content_substr(t_list **lst, int loc, char *sec);
 int						ft_strcmp(const char *s1, const char *s2);
 int						ft_check_extension(const char *str, const char *ext);
