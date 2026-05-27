@@ -6,7 +6,7 @@
 /*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/29 14:13:32 by brensant          #+#    #+#             */
-/*   Updated: 2026/05/26 17:56:22 by brensant         ###   ########.fr       */
+/*   Updated: 2026/05/27 14:38:45 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,6 @@ static t_vec3	get_color_light(t_light light, t_hit hit, t_ray ray)
 	return (color_final);
 }
 
-/**
- * TODO: add ambient light.
- */
 static t_color	ray_color(t_hit *hit, t_scene scene, t_ray *ray)
 {
 	t_vec3	color_final;
@@ -66,7 +63,6 @@ static t_color	ray_color(t_hit *hit, t_scene scene, t_ray *ray)
 	return ((t_color){.hex = BACKGROURD_COLOR});
 }
 
-// TODO: STATIC
 t_hit	get_closest_collision(t_ray *ray, t_obj *list, int list_size)
 {
 	t_hit	hit;
@@ -85,32 +81,36 @@ t_hit	get_closest_collision(t_ray *ray, t_obj *list, int list_size)
 	return (closest);
 }
 
-// set_color
-// static void secondary_ray(t_rt *rt, )
-// {
-// 	rt->rc.color = (t_color){.hex = BACKGROURD_COLOR};
-// 	// Create secondary ray // Sets the color
-// 	if (rt->rc.closest_hit.did_hit)
-// 	{
-// 		hit_att = vec3_add(rt->rc.closest_hit.point, vec3_scale(rt->rc.closest_hit.normal, 0.001));
-// 		to_light = vec3_sub(rt->scene.lights[0].pos, rt->rc.closest_hit.point);
-// 		secondary_ray = ray_new(hit_att, to_light);
-// 		secondary_hit = get_closest_collision(&secondary_ray, rt->scene.obj, rt->scene.objs_num);
-// 		if (!(secondary_hit.did_hit && secondary_hit.distance <= vec3_length(to_light)))
-// 			rt->rc.color = ray_color(&rt->rc.closest_hit, rt->scene, &rt->rc.ray);
-// 		else
-// 			rt->rc.color =	color_from_vec(vec3_mult(color_to_vec(rt->rc.closest_hit.obj->color),
-// 				rt->scene.ambient.vec_color));
-// 	}
-// }
+static void	secondary_ray(t_rt *rt)
+{
+	t_vec3	hit_padded;
+	t_vec3	to_light;
+	t_ray	sec_ray;
+	t_hit	sec_hit;
+
+	if (rt->rc.closest_hit.did_hit)
+	{
+		hit_padded = vec3_add(rt->rc.closest_hit.point,
+				vec3_scale(rt->rc.closest_hit.normal, 0.001));
+		to_light = vec3_sub(rt->scene.lights[0].pos, rt->rc.closest_hit.point);
+		sec_ray = ray_new(hit_padded, to_light);
+		sec_hit = get_closest_collision(&sec_ray, rt->scene.obj,
+				rt->scene.objs_num);
+		if (!(sec_hit.did_hit && sec_hit.distance <= vec3_length(to_light)))
+			rt->rc.color = ray_color(&rt->rc.closest_hit, rt->scene,
+					&rt->rc.ray);
+		else
+			rt->rc.color = color_from_vec(vec3_mult(
+						color_to_vec(rt->rc.closest_hit.obj->color),
+						rt->scene.ambient.vec_color));
+	}
+	else
+		rt->rc.color = (t_color){.hex = BACKGROURD_COLOR};
+}
 
 void	rt_build_image(t_rt *rt)
 {
 	int		xy[2];
-	t_ray	secondary_ray;
-	t_hit	secondary_hit;
-	t_vec3	to_light;
-	t_vec3	hit_att;
 
 	xy[1] = 0;
 	while (xy[1] < rt->mlx.height)
@@ -118,27 +118,13 @@ void	rt_build_image(t_rt *rt)
 		xy[0] = 0;
 		while (xy[0] < rt->mlx.width)
 		{
-			// Primary ray
 			rt->rc.px = vec3_add(rt->rc.start, vec3_scale(rt->rc.dx, xy[0]));
 			rt->rc.px = vec3_add(rt->rc.px, vec3_scale(rt->rc.dy, xy[1]));
 			rt->rc.ray = ray_new(rt->rc.orig, (vec3_sub(rt->rc.px,
 							rt->rc.orig)));
 			rt->rc.closest_hit = get_closest_collision(&rt->rc.ray,
 					rt->scene.obj, rt->scene.objs_num);
-			rt->rc.color = (t_color){.hex = BACKGROURD_COLOR};
-			// Create secondary ray // Sets the color
-			if (rt->rc.closest_hit.did_hit)
-			{
-				hit_att = vec3_add(rt->rc.closest_hit.point, vec3_scale(rt->rc.closest_hit.normal, 0.001));
-				to_light = vec3_sub(rt->scene.lights[0].pos, rt->rc.closest_hit.point);
-				secondary_ray = ray_new(hit_att, to_light);
-				secondary_hit = get_closest_collision(&secondary_ray, rt->scene.obj, rt->scene.objs_num);
-				if (!(secondary_hit.did_hit && secondary_hit.distance <= vec3_length(to_light)))
-					rt->rc.color = ray_color(&rt->rc.closest_hit, rt->scene, &rt->rc.ray);
-				else
-					rt->rc.color =	color_from_vec(vec3_mult(color_to_vec(rt->rc.closest_hit.obj->color),
-						rt->scene.ambient.vec_color));
-			}
+			secondary_ray(rt);
 			pixel_put(&rt->mlx, xy[0], xy[1], rt->rc.color.hex);
 			xy[0]++;
 		}
