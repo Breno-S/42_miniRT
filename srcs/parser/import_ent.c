@@ -1,16 +1,63 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   import_ent_ii.c                                    :+:      :+:    :+:   */
+/*   import_ent.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/04/10 20:58:39 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/05/28 17:32:50 by rgomes-d         ###   ########.fr       */
+/*   Created: 2026/04/10 20:51:26 by rgomes-d          #+#    #+#             */
+/*   Updated: 2026/05/28 18:56:26 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
+#include "hit.h"
+
+bool	create_camera(char *entity)
+{
+	char		**s_ent;
+	t_rt_list	*lst;
+
+	lst = ft_gc_calloc_root(1, sizeof(*lst), "ent");
+	lst->camera.type = CAMERA;
+	lst->camera.matrix = matrix_identity();
+	s_ent = ft_split_spaces(entity);
+	ft_gcfct_arr_register((void **)s_ent, GC_DATA);
+	if (ft_size_chrarr(s_ent) != 4)
+		return (error_msg(MANY_ARGS));
+	if (import_vec3(s_ent[1], &lst->camera.pos) == 1)
+		return (1);
+	if (import_vec3_normalize(s_ent[2], &lst->camera.dir) == 1)
+		return (1);
+	lst->camera.fov = ft_atoi(s_ent[3]);
+	if (verify_atoi(s_ent[3], lst->camera.fov))
+		return (1);
+	if (lst->camera.fov > 180 || lst->camera.fov < 0)
+		return (error_msg(ERR_FOV));
+	link_entity(lst);
+	return (0);
+}
+
+bool	create_light(char *entity)
+{
+	char		**s_ent;
+	t_rt_list	*lst;
+
+	lst = ft_gc_calloc_root(1, sizeof(*lst), "ent");
+	lst->light.type = LIGHT;
+	s_ent = ft_split_spaces(entity);
+	ft_gcfct_arr_register((void **)s_ent, GC_DATA);
+	if (ft_size_chrarr(s_ent) != 4 && ft_size_chrarr(s_ent) != 3)
+		return (error_msg(MANY_ARGS));
+	if (import_vec3(s_ent[1], &lst->light.pos) == 1)
+		return (1);
+	lst->light.brightness = ft_atof(s_ent[2]);
+	if (verify_atof(s_ent[2], lst->light.brightness)
+		|| lst->light.brightness > 1.0 || lst->light.brightness < 0.0)
+		return (error_msg(ERR_LIGHT));
+	link_entity(lst);
+	return (0);
+}
 
 bool	create_ambient(char *entity)
 {
@@ -29,37 +76,6 @@ bool	create_ambient(char *entity)
 	if (import_color(s_ent[2], &lst->ambient.color) == 1)
 		return (1);
 	lst->ambient.vec_color = color_to_vec(lst->ambient.color);
-	link_entity(lst);
-	return (0);
-}
-
-bool	create_cone(char *entity)
-{
-	char		**s_ent;
-	t_rt_list	*lst;
-	float		diameter;
-
-	lst = ft_gc_calloc_root(1, sizeof(*lst), "ent");
-	lst->obj.type = CONE;
-	s_ent = ft_split_spaces(entity);
-	ft_gcfct_arr_register((void **)s_ent, GC_DATA);
-	if (ft_size_chrarr(s_ent) != 6)
-		return (error_msg(MANY_ARGS));
-	if (import_vec3(s_ent[1], &lst->obj.pos) == 1)
-		return (1);
-	if (import_vec3_normalize(s_ent[2], &lst->obj.cone.axis) == 1)
-		return (1);
-	diameter = ft_atof(s_ent[3]);
-	lst->obj.cone.height = ft_atof(s_ent[4]) * 2;
-	lst->obj.pos = vec3_add(lst->obj.pos,
-			vec3_scale(lst->obj.cone.axis, lst->obj.cone.height / 2.0));
-	if (verify_atof(s_ent[3], diameter)
-		|| verify_atof(s_ent[4], lst->obj.cone.height))
-		return (1);
-	lst->obj.cone.radius = diameter / 2.0;
-	if (import_color(s_ent[5], &lst->obj.color) == 1)
-		return (1);
-	lst->obj.intersect = hit_cone;
 	link_entity(lst);
 	return (0);
 }

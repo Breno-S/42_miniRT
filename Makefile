@@ -31,8 +31,9 @@ SRCS_MANDATORY_PARSER := \
 	parser.c \
 	ft_rtlstadd_back.c \
 	error.c \
-	import_ent_i.c \
-	import_ent_ii.c \
+	import_ent.c \
+	import_obj.c \
+	import_obj_bonus.c \
 	import_ent_utils.c \
 	import_file.c \
 	verify_number.c \

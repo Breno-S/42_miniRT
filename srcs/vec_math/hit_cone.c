@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hit_cone.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/22 15:13:13 by brensant          #+#    #+#             */
-/*   Updated: 2026/05/28 16:05:30 by brensant         ###   ########.fr       */
+/*   Updated: 2026/05/28 19:07:37 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,26 +78,21 @@ static void	set_hit(t_hit *hit, t_ray *ray, t_vec4 *coeff)
 t_hit	hit_cone(t_ray *ray, t_obj *cone)
 {
 	t_hit	hit;
-	t_vec3	oc;
 	t_vec4	coeff;
+	t_vec3	oc[2];
 	t_vec3	d_perp;
-	t_vec3	oc_perp;
+	t_vec3	proj;
 
-	float	m; // Projeção da direção do raio no eixo
-	float	n; // Projeção de oc no eixo
-	float	k2; // Razão (raio / altura)^2
-
-	oc = vec3_sub(ray->orig, cone->pos);
-
-	m = vec3_dot(ray->dir, cone->cone.axis);
-	n = vec3_dot(oc, cone->cone.axis);
-	k2 = (cone->cone.radius / cone->cone.height * 2) * (cone->cone.radius / cone->cone.height * 2);
-
-	d_perp = vec3_sub(ray->dir, vec3_scale(cone->cone.axis, m));
-	oc_perp = vec3_sub(oc, vec3_scale(cone->cone.axis, n));
-	coeff.x = vec3_dot(d_perp, d_perp) - k2 * (m * m);
-	coeff.y = 2.0 * (vec3_dot(d_perp, oc_perp) - k2 * (m * n));
-	coeff.z = vec3_dot(oc_perp, oc_perp) - k2 * (n * n);
+	oc[0] = vec3_sub(ray->orig, cone->pos);
+	proj.x = vec3_dot(ray->dir, cone->cone.axis);
+	proj.y = vec3_dot(oc[0], cone->cone.axis);
+	proj.z = (cone->cone.radius / cone->cone.height * 2)
+		* (cone->cone.radius / cone->cone.height * 2);
+	d_perp = vec3_sub(ray->dir, vec3_scale(cone->cone.axis, proj.x));
+	oc[1] = vec3_sub(oc[0], vec3_scale(cone->cone.axis, proj.y));
+	coeff.x = vec3_dot(d_perp, d_perp) - proj.z * (proj.x * proj.x);
+	coeff.y = 2.0 * (vec3_dot(d_perp, oc[1]) - proj.z * (proj.x * proj.y));
+	coeff.z = vec3_dot(oc[1], oc[1]) - proj.z * (proj.y * proj.y);
 	coeff.w = coeff.y * coeff.y - 4 * coeff.x * coeff.z;
 	if (coeff.w < 0)
 		return (hit_miss());
