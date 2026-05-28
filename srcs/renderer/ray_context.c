@@ -6,7 +6,7 @@
 /*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/26 17:19:24 by brensant          #+#    #+#             */
-/*   Updated: 2026/05/26 17:39:39 by brensant         ###   ########.fr       */
+/*   Updated: 2026/05/28 14:35:46 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ static t_matrix	get_rotation_x_axis(t_camera *cam)
 	return (mat);
 }
 
-static t_matrix	get_camera_matrix(t_camera *cam)
+static t_matrix	get_cam_basis_matrix(t_camera *cam)
 {
 	t_matrix	mat_rotation_y;
 	t_matrix	mat_rotation_x;
@@ -61,9 +61,6 @@ static t_matrix	get_camera_matrix(t_camera *cam)
 	mat_rotation_y = get_rotation_y_axis(cam);
 	mat_rotation_x = get_rotation_x_axis(cam);
 	camera_matrix = matrix_mult(&mat_rotation_x, &mat_rotation_y);
-	camera_matrix.m[0][3] = cam->pos.x;
-	camera_matrix.m[1][3] = cam->pos.y;
-	camera_matrix.m[2][3] = cam->pos.z;
 	return (camera_matrix);
 }
 
@@ -75,7 +72,7 @@ void	rt_ray_context_setup(t_rt *rt)
 	t_vec3		basis[3];
 	t_vec3		xyz[3];
 
-	cam_mat = get_camera_matrix(&rt->scene.cam);
+	cam_mat = get_cam_basis_matrix(&rt->scene.cam);
 	rt->rc.orig = rt->scene.cam.pos;
 	basis[0] = vec3_transform((t_vec3){-1, 0, 0, 0}, &cam_mat);
 	basis[1] = vec3_transform((t_vec3){0, 1, 0, 0}, &cam_mat);

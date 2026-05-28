@@ -6,7 +6,7 @@
 /*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/22 15:13:13 by brensant          #+#    #+#             */
-/*   Updated: 2026/05/27 21:11:59 by brensant         ###   ########.fr       */
+/*   Updated: 2026/05/28 16:05:30 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,14 +29,14 @@ static float	get_visible_scalar(t_hit *hit, t_ray *ray, float t0, float t1)
 	{
 		p = ray_at(ray, t0);
 		proj = vec3_dot(vec3_sub(p, hit->obj->pos), hit->obj->cone.axis);
-		if (proj >= -half_height && proj <= half_height)
+		if (proj >= -half_height && proj <= 0)
 			return (t0);
 	}
 	if (t1 > FLT_EPSILON)
 	{
 		p = ray_at(ray, t1);
 		proj = vec3_dot(vec3_sub(p, hit->obj->pos), hit->obj->cone.axis);
-		if (proj >= -half_height && proj <= half_height)
+		if (proj >= -half_height && proj <= 0)
 			return (t1);
 	}
 	return (-1);
@@ -91,7 +91,7 @@ t_hit	hit_cone(t_ray *ray, t_obj *cone)
 
 	m = vec3_dot(ray->dir, cone->cone.axis);
 	n = vec3_dot(oc, cone->cone.axis);
-	k2 = (cone->cone.radius / cone->cone.height) * (cone->cone.radius / cone->cone.height);
+	k2 = (cone->cone.radius / cone->cone.height * 2) * (cone->cone.radius / cone->cone.height * 2);
 
 	d_perp = vec3_sub(ray->dir, vec3_scale(cone->cone.axis, m));
 	oc_perp = vec3_sub(oc, vec3_scale(cone->cone.axis, n));
