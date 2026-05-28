@@ -6,7 +6,7 @@
 /*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/10 20:52:50 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/05/26 15:22:23 by brensant         ###   ########.fr       */
+/*   Updated: 2026/05/28 00:22:03 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,5 +120,7 @@ bool	create_entity(char *entity, int type)
 		rtn = create_plane(entity);
 	else if (type == CYLINDER)
 		rtn = create_cylinder(entity);
+	else if (type == CONE)
+		rtn = create_cone(entity);
 	return (rtn);
 }

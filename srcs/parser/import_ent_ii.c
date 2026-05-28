@@ -6,7 +6,7 @@
 /*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/10 20:58:39 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/05/26 15:21:57 by brensant         ###   ########.fr       */
+/*   Updated: 2026/05/28 00:36:24 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,35 @@ bool	create_ambient(char *entity)
 	lst->ambient.vec_color = color_to_vec(lst->ambient.color);
 	lst->ambient.vec_color = vec3_scale(lst->ambient.vec_color,
 			lst->ambient.i_rate);
+	link_entity(lst);
+	return (0);
+}
+
+bool	create_cone(char *entity)
+{
+	char		**s_ent;
+	t_rt_list	*lst;
+	float		diameter;
+
+	lst = ft_gc_calloc_root(1, sizeof(*lst), "ent");
+	lst->obj.type = CONE;
+	s_ent = ft_split_spaces(entity);
+	ft_gcfct_arr_register((void **)s_ent, GC_DATA);
+	if (ft_size_chrarr(s_ent) != 6)
+		return (error_msg(MANY_ARGS));
+	if (import_vec3(s_ent[1], &lst->obj.pos) == 1)
+		return (1);
+	if (import_vec3_normalize(s_ent[2], &lst->obj.cone.axis) == 1)
+		return (1);
+	diameter = ft_atof(s_ent[3]);
+	lst->obj.cone.height = ft_atof(s_ent[4]);
+	if (verify_atof(s_ent[3], diameter)
+		|| verify_atof(s_ent[4], lst->obj.cone.height))
+		return (1);
+	lst->obj.cone.radius = diameter / 2.0;
+	if (import_color(s_ent[5], &lst->obj.color) == 1)
+		return (1);
+	lst->obj.intersect = hit_cone;
 	link_entity(lst);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/01 15:49:00 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/05/27 16:30:45 by brensant         ###   ########.fr       */
+/*   Updated: 2026/05/28 00:19:12 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ typedef enum e_shapes_type
 	SPHERE,
 	PLANE,
 	CYLINDER,
+	CONE
 }	t_shapes_type;
 
 typedef struct s_ambient
@@ -70,6 +71,8 @@ typedef struct s_cylinder
 	float			height;
 }	t_cylinder;
 
+typedef t_cylinder	t_cone;
+
 typedef struct s_obj
 {
 	t_shapes_type	type;
@@ -80,6 +83,7 @@ typedef struct s_obj
 		t_sphere	sphere;
 		t_plane		plane;
 		t_cylinder	cylinder;
+		t_cone		cone;
 	};
 	t_hit		(*intersect)(t_ray *, struct s_obj *);
 }	t_obj;

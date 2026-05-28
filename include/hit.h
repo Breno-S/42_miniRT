@@ -6,7 +6,7 @@
 /*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/16 13:02:25 by brensant          #+#    #+#             */
-/*   Updated: 2026/05/26 15:19:29 by brensant         ###   ########.fr       */
+/*   Updated: 2026/05/28 00:21:07 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,5 +34,6 @@ t_hit	hit_miss(void);
 t_hit	hit_sphere(t_ray *ray, t_obj *sphere);
 t_hit	hit_plane(t_ray *ray, t_obj *plane);
 t_hit	hit_cylinder(t_ray *ray, t_obj *cylinder);
+t_hit	hit_cone(t_ray *ray, t_obj *cylinder);
 
 #endif // HIT_H

@@ -40,6 +40,7 @@ SRCS_MANDATORY_PARSER := \
 
 SRCS_MANDATORY_VEC_MATH := \
 	color.c \
+	hit_cone.c \
 	hit_cylinder.c \
 	hit_plane.c \
 	hit_sphere.c \
