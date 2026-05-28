@@ -6,7 +6,7 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/10 20:58:39 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/05/28 14:33:04 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/05/28 15:08:40 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,9 @@ bool	create_material(char **entity, t_rt_list *lst)
 	mat->ka = ft_atof(entity[1]);
 	mat->kd = ft_atof(entity[2]);
 	mat->ks = ft_atof(entity[3]);
+	if ((mat->ka > 1.0 || mat->ks > 1.0 || mat->kd > 1.0)
+		&& (mat->ka < 0.0 || mat->ks > 0.0 || mat->kd > 0.0))
+		return (error_msg_ii(NBR_NORM));
 	mat->m = ft_atof(entity[4]);
 	if (isinf(mat->ka) || isinf(mat->kd) || isinf(mat->ks) || isinf(mat->m))
 		return (1);

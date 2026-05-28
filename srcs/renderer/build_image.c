@@ -6,7 +6,7 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/29 14:13:32 by brensant          #+#    #+#             */
-/*   Updated: 2026/05/28 14:33:47 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/05/28 15:00:33 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,8 @@ static void	secondary_ray(t_rt *rt)
 		else
 			rt->rc.color = color_from_vec(vec3_mult(
 						color_to_vec(rt->rc.closest_hit.obj->color),
-						rt->scene.ambient.vec_color));
+						vec3_scale(rt->scene.ambient.vec_color,
+							rt->rc.closest_hit.obj->phong_spec->ka)));
 	}
 	else
 		rt->rc.color = (t_color){.hex = BACKGROURD_COLOR};
