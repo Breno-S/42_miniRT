@@ -6,7 +6,7 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/01 13:54:17 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/05/28 14:31:03 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/05/28 19:24:29 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ typedef enum e_ent_type
 
 // PARSER
 
-t_scene	parser(int argc, char **argv);
+t_scene		parser(int argc, char **argv);
 
 // READ FILE
 
@@ -50,7 +50,7 @@ bool		create_plane(char *entity);
 bool		create_cylinder(char *entity);
 bool		create_material(char **entity, t_rt_list *lst);
 char		*save_xpm(char *file);
-bool	create_cone(char *entity);
+bool		create_cone(char *entity);
 
 void		link_entity(t_rt_list *n_rt_list);
 bool		verify_mandatory_ent(t_shapes_type type, unsigned char *verify_ent,
