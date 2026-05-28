@@ -6,7 +6,7 @@
 /*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/01 13:53:38 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/05/14 14:41:23 by brensant         ###   ########.fr       */
+/*   Updated: 2026/05/27 14:35:21 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ int	main(int argc, char **argv)
 		return (finish_program(1));
 	if (!rt_mlx_setup(&rt, WIDTH, HEIGHT, "Ray Sniffer"))
 		return (finish_program(1));
-	rt_ray_context_setup(&rt);
 	rt_render(&rt);
 	if (rt.mlx.mlx_ptr)
 		mlx_loop(rt.mlx.mlx_ptr);

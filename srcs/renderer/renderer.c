@@ -6,7 +6,7 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/09 14:18:38 by brensant          #+#    #+#             */
-/*   Updated: 2026/05/26 18:50:59 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/05/28 14:33:59 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@
 
 void	rt_render(t_rt *rt)
 {
+	rt_ray_context_setup(rt);
 	rt_build_image(rt);
 	mlx_put_image_to_window(rt->mlx.mlx_ptr, rt->mlx.win_ptr,
 		rt->mlx.img_ptr, 0, 0);

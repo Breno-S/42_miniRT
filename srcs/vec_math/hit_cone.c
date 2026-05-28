@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   hit_cylinder.c                                     :+:      :+:    :+:   */
+/*   hit_cone.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/22 15:13:13 by brensant          #+#    #+#             */
-/*   Updated: 2026/05/27 21:13:45 by brensant         ###   ########.fr       */
+/*   Updated: 2026/05/27 21:11:59 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,18 +24,18 @@ static float	get_visible_scalar(t_hit *hit, t_ray *ray, float t0, float t1)
 	t_vec3	p;
 	float	proj;
 
-	half_height = hit->obj->cylinder.height / 2.0;
+	half_height = hit->obj->cone.height / 2.0;
 	if (t0 > FLT_EPSILON)
 	{
 		p = ray_at(ray, t0);
-		proj = vec3_dot(vec3_sub(p, hit->obj->pos), hit->obj->cylinder.axis);
+		proj = vec3_dot(vec3_sub(p, hit->obj->pos), hit->obj->cone.axis);
 		if (proj >= -half_height && proj <= half_height)
 			return (t0);
 	}
 	if (t1 > FLT_EPSILON)
 	{
 		p = ray_at(ray, t1);
-		proj = vec3_dot(vec3_sub(p, hit->obj->pos), hit->obj->cylinder.axis);
+		proj = vec3_dot(vec3_sub(p, hit->obj->pos), hit->obj->cone.axis);
 		if (proj >= -half_height && proj <= half_height)
 			return (t1);
 	}
@@ -59,8 +59,8 @@ static void	set_hit(t_hit *hit, t_ray *ray, t_vec4 *coeff)
 		hit->distance = t;
 		hit->point = ray_at(ray, t);
 		cp = vec3_sub(hit->point, hit->obj->pos);
-		proj = vec3_scale(hit->obj->cylinder.axis,
-				vec3_dot(cp, hit->obj->cylinder.axis));
+		proj = vec3_scale(hit->obj->cone.axis,
+				vec3_dot(cp, hit->obj->cone.axis));
 		hit->normal = vec3_normalize(vec3_sub(cp, proj));
 		if (vec3_dot(ray->dir, hit->normal) > FLT_EPSILON)
 			hit->normal = vec3_negate(hit->normal);
@@ -75,7 +75,7 @@ static void	set_hit(t_hit *hit, t_ray *ray, t_vec4 *coeff)
  * `coeff.z = c;
  * `coeff.w = sqrt(discriminant);
  */
-t_hit	hit_cylinder(t_ray *ray, t_obj *cylinder)
+t_hit	hit_cone(t_ray *ray, t_obj *cone)
 {
 	t_hit	hit;
 	t_vec3	oc;
@@ -83,22 +83,28 @@ t_hit	hit_cylinder(t_ray *ray, t_obj *cylinder)
 	t_vec3	d_perp;
 	t_vec3	oc_perp;
 
-	oc = vec3_sub(ray->orig, cylinder->pos);
-	d_perp = vec3_sub(ray->dir, vec3_scale(cylinder->cylinder.axis,
-				vec3_dot(ray->dir, cylinder->cylinder.axis)));
-	oc_perp = vec3_sub(oc, vec3_scale(cylinder->cylinder.axis,
-				vec3_dot(oc, cylinder->cylinder.axis)));
-	coeff.x = vec3_dot(d_perp, d_perp);
-	coeff.y = 2.0 * vec3_dot(d_perp, oc_perp);
-	coeff.z = vec3_dot(oc_perp, oc_perp)
-		- cylinder->cylinder.radius * cylinder->cylinder.radius;
+	float	m; // Projeção da direção do raio no eixo
+	float	n; // Projeção de oc no eixo
+	float	k2; // Razão (raio / altura)^2
+
+	oc = vec3_sub(ray->orig, cone->pos);
+
+	m = vec3_dot(ray->dir, cone->cone.axis);
+	n = vec3_dot(oc, cone->cone.axis);
+	k2 = (cone->cone.radius / cone->cone.height) * (cone->cone.radius / cone->cone.height);
+
+	d_perp = vec3_sub(ray->dir, vec3_scale(cone->cone.axis, m));
+	oc_perp = vec3_sub(oc, vec3_scale(cone->cone.axis, n));
+	coeff.x = vec3_dot(d_perp, d_perp) - k2 * (m * m);
+	coeff.y = 2.0 * (vec3_dot(d_perp, oc_perp) - k2 * (m * n));
+	coeff.z = vec3_dot(oc_perp, oc_perp) - k2 * (n * n);
 	coeff.w = coeff.y * coeff.y - 4 * coeff.x * coeff.z;
 	if (coeff.w < 0)
 		return (hit_miss());
 	coeff.w = sqrt(coeff.w);
 	if (coeff.w < FLT_EPSILON)
 		return (hit_miss());
-	hit.obj = cylinder;
+	hit.obj = cone;
 	set_hit(&hit, ray, &coeff);
 	return (hit);
 }

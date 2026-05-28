@@ -6,7 +6,7 @@
 /*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/01 14:56:06 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/04/28 01:55:06 by brensant         ###   ########.fr       */
+/*   Updated: 2026/05/28 00:27:45 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,8 @@ int	verify_entity(char *line, int init, int size)
 		rtn = PLANE;
 	else if (!ft_strcmp(&line[init], "cy"))
 		rtn = CYLINDER;
+	else if (!ft_strcmp(&line[init], "co"))
+		rtn = CONE;
 	if (flag == 1)
 		line[init + size] = ' ';
 	return (rtn);
