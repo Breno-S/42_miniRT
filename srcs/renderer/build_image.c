@@ -6,7 +6,7 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/29 14:13:32 by brensant          #+#    #+#             */
-/*   Updated: 2026/05/26 19:55:24 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/05/28 14:26:16 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,7 @@ static t_color	ray_color(t_hit *hit, t_scene scene, t_ray *ray)
 	{
 		color = color_to_vec(hit->obj->color);
 		color_final = vec3_mult(color_to_vec(hit->obj->color),
-				vec3_scale(scene.ambient.vec_color,
-					hit->obj->phong_spec->ka * scene.ambient.i_rate));
+				vec3_scale(scene.ambient.vec_color, hit->obj->phong_spec->ka));
 		color_final = vec3_add(get_color_light(scene.lights[0], hit[0], ray[0]),
 				color_final);
 		color.x = sqrt(color.x);
@@ -139,7 +138,7 @@ void	rt_build_image(t_rt *rt)
 					rt->rc.color = ray_color(&rt->rc.closest_hit, rt->scene, &rt->rc.ray);
 				else
 					rt->rc.color =	color_from_vec(vec3_mult(color_to_vec(rt->rc.closest_hit.obj->color),
-						rt->scene.ambient.vec_color));
+						vec3_scale(rt->scene.ambient.vec_color, rt->rc.closest_hit.obj->phong_spec->ka)));
 			}
 			pixel_put(&rt->mlx, xy[0], xy[1], rt->rc.color.hex);
 			xy[0]++;

@@ -70,14 +70,14 @@ typedef struct s_cylinder
 	float			height;
 }	t_cylinder;
 
-typedef struct s_material
+typedef struct s_mat
 {
 	float	ka;
 	float	kd;
 	float	ks;
 	float	m;
 	char	*bump_map;
-}	t_material;
+}	t_mat;
 
 typedef struct s_obj
 {
@@ -90,7 +90,7 @@ typedef struct s_obj
 		t_plane		plane;
 		t_cylinder	cylinder;
 	};
-	t_material		*phong_spec;
+	t_mat			*phong_spec;
 	t_hit			(*intersect)(t_ray *, struct s_obj *);
 }	t_obj;
 

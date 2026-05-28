@@ -35,7 +35,7 @@ bool	create_ambient(char *entity)
 
 bool	create_material(char **entity, t_rt_list *lst)
 {
-	t_material	*mat;
+	t_mat	*mat;
 
 	mat = ft_gc_calloc_root(1, sizeof(*mat), "obj");
 	lst->obj.phong_spec = mat;
