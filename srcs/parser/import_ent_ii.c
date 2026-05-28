@@ -6,7 +6,7 @@
 /*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/10 20:58:39 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/05/28 00:36:24 by brensant         ###   ########.fr       */
+/*   Updated: 2026/05/28 16:06:44 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,9 @@ bool	create_cone(char *entity)
 	if (import_vec3_normalize(s_ent[2], &lst->obj.cone.axis) == 1)
 		return (1);
 	diameter = ft_atof(s_ent[3]);
-	lst->obj.cone.height = ft_atof(s_ent[4]);
+	lst->obj.cone.height = ft_atof(s_ent[4]) * 2;
+	lst->obj.pos = vec3_add(lst->obj.pos,
+			vec3_scale(lst->obj.cone.axis, lst->obj.cone.height / 2.0));
 	if (verify_atof(s_ent[3], diameter)
 		|| verify_atof(s_ent[4], lst->obj.cone.height))
 		return (1);
