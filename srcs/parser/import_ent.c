@@ -6,7 +6,7 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/10 20:51:26 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/05/28 18:56:26 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/05/29 13:35:04 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ bool	create_camera(char *entity)
 	if (import_vec3_normalize(s_ent[2], &lst->camera.dir) == 1)
 		return (1);
 	lst->camera.fov = ft_atoi(s_ent[3]);
-	if (verify_atoi(s_ent[3], lst->camera.fov))
+	if (verify_atoi(s_ent[3]))
 		return (1);
 	if (lst->camera.fov > 180 || lst->camera.fov < 0)
 		return (error_msg(ERR_FOV));

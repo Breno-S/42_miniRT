@@ -6,7 +6,7 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/01 13:54:17 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/05/28 19:24:29 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/05/29 13:34:01 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ bool		verify_mandatory_ent(t_shapes_type type, unsigned char *verify_ent,
 bool		import_vec3_normalize(char *text, t_vec3 *vec3);
 bool		import_color(char *text, t_color *vec3);
 bool		import_vec3(char *text, t_vec3 *vec3);
-bool		verify_atoi(char *nptr, int n_nbr);
+bool		verify_atoi(char *nptr);
 bool		verify_atof(char *nptr, float n_nbr);
 
 // ERRORS

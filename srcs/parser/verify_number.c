@@ -6,13 +6,13 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/10 20:55:32 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/05/28 19:14:27 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/05/29 13:33:47 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
 
-bool	verify_atoi(char *nptr, int n_nbr)
+bool	verify_atoi(char *nptr)
 {
 	int			i;
 	int			nbr_prev;
