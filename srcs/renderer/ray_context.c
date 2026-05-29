@@ -6,7 +6,7 @@
 /*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/26 17:19:24 by brensant          #+#    #+#             */
-/*   Updated: 2026/05/28 14:35:46 by brensant         ###   ########.fr       */
+/*   Updated: 2026/05/29 15:26:55 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include "vec_math.h"
 
 #include <math.h>
+#include <float.h>
 
 static t_matrix	get_rotation_y_axis(t_camera *cam)
 {
@@ -42,6 +43,8 @@ static t_matrix	get_rotation_x_axis(t_camera *cam)
 	float		sin_angle;
 
 	angle = atan2f(cam->dir.y, fabsf(cam->dir.z));
+	if (cam->dir.z >= FLT_EPSILON)
+		angle = -angle;
 	cos_angle = cosf(angle);
 	sin_angle = sinf(angle);
 	mat = matrix_identity();
