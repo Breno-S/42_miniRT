@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser.c                                           :+:      :+:    :+:   */
+/*   parser_bonus.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/01 14:56:06 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/05/29 15:19:03 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/05/29 15:19:06 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ bool	verify_mandatory_ent(t_shapes_type type, unsigned char *verify_ent,
 		verify_ent[0] |= ambient;
 	else if (type == CAMERA && !(verify_ent[0] & camera))
 		verify_ent[0] |= camera;
-	else if (type == LIGHT && !(verify_ent[0] & light))
+	else if (type == LIGHT )
 	{
 		scene->lights_num++;
 		verify_ent[0] |= light;
@@ -110,6 +110,8 @@ int	verify_entity(char *line, int init, int size)
 		rtn = PLANE;
 	else if (!ft_strcmp(&line[init], "cy"))
 		rtn = CYLINDER;
+	else if (!ft_strcmp(&line[init], "co"))
+		rtn = CONE;
 	if (flag == 1)
 		line[init + size] = ' ';
 	return (rtn);
