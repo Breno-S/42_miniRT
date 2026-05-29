@@ -6,7 +6,7 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/01 14:56:06 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/05/29 15:19:06 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/05/29 19:56:30 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ bool	verify_mandatory_ent(t_shapes_type type, unsigned char *verify_ent,
 		verify_ent[0] |= ambient;
 	else if (type == CAMERA && !(verify_ent[0] & camera))
 		verify_ent[0] |= camera;
-	else if (type == LIGHT )
+	else if (type == LIGHT)
 	{
 		scene->lights_num++;
 		verify_ent[0] |= light;

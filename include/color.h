@@ -6,7 +6,7 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/06 16:31:16 by brensant          #+#    #+#             */
-/*   Updated: 2026/05/12 19:36:15 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/05/29 19:42:45 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,10 @@
 # define AMBIENT_STRENGTH 0.3f
 # define DIFFUSE_STRENGTH 0.9f
 # define SPECULAR_HIGHLIGHT 128.0f
+
+# define D1 1.0
+# define D2 0.09
+# define D3 0.0032
 
 typedef union u_color
 {

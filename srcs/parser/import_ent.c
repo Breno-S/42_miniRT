@@ -6,7 +6,7 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/10 20:51:26 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/05/29 13:35:04 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/05/29 19:37:22 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,12 @@ bool	create_light(char *entity)
 	if (verify_atof(s_ent[2], lst->light.brightness)
 		|| lst->light.brightness > 1.0 || lst->light.brightness < 0.0)
 		return (error_msg(ERR_LIGHT));
+	if (ft_size_chrarr(s_ent) == 4)
+	{
+		if (import_color(s_ent[3], &lst->light.color) == 1)
+			return (1);
+		lst->light.vec_color = color_to_vec(lst->light.color);
+	}
 	link_entity(lst);
 	return (0);
 }
@@ -94,7 +100,7 @@ bool	create_material(char **entity, t_rt_list *lst)
 	mat->kd = ft_atof(entity[2]);
 	mat->ks = ft_atof(entity[3]);
 	if ((mat->ka > 1.0 || mat->ks > 1.0 || mat->kd > 1.0)
-		&& (mat->ka < 0.0 || mat->ks > 0.0 || mat->kd > 0.0))
+		&& (mat->ka < 0.0 || mat->ks < 0.0 || mat->kd < 0.0))
 		return (error_msg_ii(NBR_NORM));
 	mat->m = ft_atof(entity[4]);
 	if (isinf(mat->ka) || isinf(mat->kd) || isinf(mat->ks) || isinf(mat->m))

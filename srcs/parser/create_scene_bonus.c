@@ -6,7 +6,7 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/22 18:52:33 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/05/29 14:12:05 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/05/29 19:34:39 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,8 @@ bool	create_scene_aux(t_rt_list *rt_list, t_scene *scene, t_mat *mat)
 		rt_list = rt_list->next;
 	}
 	while (i_obj-- > 0)
-		scene->obj[i_obj].phong_spec->ka *= scene->ambient.i_rate;
+		scene->obj[i_obj].ka_final = scene->ambient.i_rate
+			* scene->obj[i_obj].phong_spec->ka;
 	return (0);
 }
 
@@ -73,9 +74,9 @@ t_mat	*generic_material(void)
 	if (!material)
 		return (NULL);
 	material->bump_map = NULL;
-	material->ka = 0.1;
+	material->ka = 0.2;
 	material->kd = 0.9;
 	material->ks = 1.0;
-	material->m = 128;
+	material->m = 32;
 	return (material);
 }
