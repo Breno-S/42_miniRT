@@ -6,7 +6,7 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/01 15:49:00 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/05/29 19:22:52 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/06/01 14:54:21 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,7 @@ typedef struct s_obj
 	t_shapes_type	type;
 	t_vec3			pos;
 	t_color			color;
+	t_vec3			color_vec;
 	union
 	{
 		t_sphere	sphere;

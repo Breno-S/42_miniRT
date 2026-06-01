@@ -36,14 +36,13 @@ SRCS_COMMON_PARSER := \
 	import_ent_utils.c \
 	import_file.c \
 	verify_number.c \
+	create_scene.c
 
 SRCS_MANDATORY_PARSER := \
 	parser.c \
-	create_scene.c
 
 SRCS_BONUS_PARSER := \
 	parser_bonus.c \
-	create_scene_bonus.c
 
 SRCS_MANDATORY_VEC_MATH := \
 	color.c \
@@ -61,7 +60,8 @@ SRCS_MANDATORY_VEC_MATH := \
 SRCS_MANDATORY_RENDERER := \
 	build_image.c \
 	renderer.c \
-	ray_context.c
+	ray_context.c \
+	phong.c
 
 SRCS_COMMON_PARSER += $(SRCS_MANDATORY_PARSER)
 
@@ -192,3 +192,5 @@ fclean:
 		@rm -f $(addprefix $(PATH_BIN),$(NAME))
 
 re: fclean all
+
+re bre: fclean bonus
