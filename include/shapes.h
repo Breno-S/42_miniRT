@@ -6,7 +6,7 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/01 15:49:00 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/05/28 14:32:06 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/05/29 19:22:52 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ typedef struct s_light
 	t_vec3			pos;
 	float			brightness;
 	t_color			color;
+	t_vec3			vec_color;
 }	t_light;
 
 typedef struct s_sphere
@@ -95,6 +96,7 @@ typedef struct s_obj
 		t_cone		cone;
 	};
 	t_mat			*phong_spec;
+	float			ka_final;
 	t_hit			(*intersect)(t_ray *, struct s_obj *);
 }	t_obj;
 

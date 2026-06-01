@@ -27,8 +27,7 @@ SRCS_MANDATORY_COMMON := \
 	main.c \
 	utils.c
 
-SRCS_MANDATORY_PARSER := \
-	parser.c \
+SRCS_COMMON_PARSER := \
 	ft_rtlstadd_back.c \
 	error.c \
 	import_ent.c \
@@ -37,7 +36,14 @@ SRCS_MANDATORY_PARSER := \
 	import_ent_utils.c \
 	import_file.c \
 	verify_number.c \
+
+SRCS_MANDATORY_PARSER := \
+	parser.c \
 	create_scene.c
+
+SRCS_BONUS_PARSER := \
+	parser_bonus.c \
+	create_scene_bonus.c
 
 SRCS_MANDATORY_VEC_MATH := \
 	color.c \
@@ -57,13 +63,15 @@ SRCS_MANDATORY_RENDERER := \
 	renderer.c \
 	ray_context.c
 
+SRCS_COMMON_PARSER += $(SRCS_MANDATORY_PARSER)
+
 SRCS_MANDATORY := $(addprefix $(PATH_MANDATORY)/,$(SRCS_MANDATORY_COMMON))
-SRCS_MANDATORY := $(SRCS_MANDATORY) $(addprefix $(PATH_MANDATORY)/$(PARSER_SRC_DIR)/,$(SRCS_MANDATORY_PARSER))
+SRCS_MANDATORY := $(SRCS_MANDATORY) $(addprefix $(PATH_MANDATORY)/$(PARSER_SRC_DIR)/,$(SRCS_COMMON_PARSER))
 SRCS_MANDATORY := $(SRCS_MANDATORY) $(addprefix $(PATH_MANDATORY)/$(VEC_MATH_SRC_DIR)/,$(SRCS_MANDATORY_VEC_MATH))
 SRCS_MANDATORY := $(SRCS_MANDATORY) $(addprefix $(PATH_MANDATORY)/$(RENDERER_SRC_DIR)/,$(SRCS_MANDATORY_RENDERER))
 
 OBJTS := $(addprefix $(PATH_OBJT),$(SRCS_MANDATORY_COMMON))
-OBJTS := $(OBJTS) $(addprefix $(PATH_OBJT),$(SRCS_MANDATORY_PARSER))
+OBJTS := $(OBJTS) $(addprefix $(PATH_OBJT),$(SRCS_COMMON_PARSER))
 OBJTS := $(OBJTS) $(addprefix $(PATH_OBJT),$(SRCS_MANDATORY_VEC_MATH))
 OBJTS := $(OBJTS) $(addprefix $(PATH_OBJT),$(SRCS_MANDATORY_RENDERER))
 
@@ -152,11 +160,17 @@ $(PATH_OBJT)%.o: $(PATH_MANDATORY)/%.c
 		@sleep 0.01
 		@$(CC) -c $(CFLAGS) $(CPPFLAGS) $< -o $(subst srcs/,build/,$@)
 
+bonus: fclean
+		$(MAKE) SRCS_MANDATORY_PARSER="$(SRCS_BONUS_PARSER)" all
+
 .PHONY: clean fclean re all bonus $(OBJTS_LIBFT) debug
 
 debug: fclean
 debug: CFLAGS = -g
 debug: all
+
+bdebug:
+		$(MAKE) SRCS_MANDATORY_PARSER="$(SRCS_BONUS_PARSER)" debug
 
 valgrind:
 	valgrind --leak-check=full --show-leak-kinds=all ./miniRT "scenes/basic_cylinder.rt"

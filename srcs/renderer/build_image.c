@@ -6,7 +6,7 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/29 14:13:32 by brensant          #+#    #+#             */
-/*   Updated: 2026/05/28 15:00:33 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/05/29 19:57:15 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,9 @@
 #include <float.h>
 #include <math.h>
 
-static t_vec3	get_color_light(t_light light, t_hit hit, t_ray ray)
+t_hit	get_closest_collision(t_ray *ray, t_obj *list, int list_size);
+
+static t_vec3	get_color_light(t_light light, t_hit hit, t_ray ray, float d)
 {
 	t_vec3	reflected;
 	t_vec3	light_dir;
@@ -29,7 +31,8 @@ static t_vec3	get_color_light(t_light light, t_hit hit, t_ray ray)
 	specular = 0;
 	light_dir = vec3_normalize(vec3_sub(light.pos, hit.point));
 	diffuse = fmax(vec3_dot(hit.normal, light_dir), 0.0)
-		* hit.obj->phong_spec->kd;
+		* hit.obj->phong_spec->kd
+		* (light.brightness / (D1 + D2 * d + D3 * (d * d)));
 	if (diffuse > 0)
 	{
 		reflected = vec3_normalize(vec3_reflect(vec3_negate(light_dir),
@@ -38,30 +41,26 @@ static t_vec3	get_color_light(t_light light, t_hit hit, t_ray ray)
 				hit.obj->phong_spec->m) * hit.obj->phong_spec->ks;
 	}
 	color_final = vec3_mult(color_to_vec(hit.obj->color),
-			vec3_scale(vec3_new(1, 1, 1), light.brightness * diffuse));
-	color_final = vec3_add(color_final, vec3_scale(vec3_new(1, 1, 1),
+			vec3_scale(light.vec_color, light.brightness * diffuse));
+	color_final = vec3_add(color_final, vec3_scale(light.vec_color,
 				specular));
 	return (color_final);
 }
 
-static t_color	ray_color(t_hit *hit, t_scene scene, t_ray *ray)
+static void	ray_color(t_rt *rt, t_vec3 hit_padded, t_light light, t_vec3 *color)
 {
-	t_vec3	color_final;
-	t_vec3	color;
+	t_vec3	to_light;
+	t_ray	sec_ray;
+	t_hit	sec_hit;
 
-	if (hit->did_hit)
-	{
-		color = color_to_vec(hit->obj->color);
-		color_final = vec3_mult(color_to_vec(hit->obj->color),
-				vec3_scale(scene.ambient.vec_color, hit->obj->phong_spec->ka));
-		color_final = vec3_add(get_color_light(scene.lights[0], hit[0], ray[0]),
-				color_final);
-		color.x = sqrt(color.x);
-		color.y = sqrt(color.y);
-		color.z = sqrt(color.z);
-		return (color_from_vec(color_vec_clamp(color_final)));
-	}
-	return ((t_color){.hex = BACKGROURD_COLOR});
+	to_light = vec3_sub(light.pos, rt->rc.closest_hit.point);
+	sec_ray = ray_new(hit_padded, to_light);
+	sec_hit = get_closest_collision(&sec_ray, rt->scene.obj,
+			rt->scene.objs_num);
+	if (!(sec_hit.did_hit && sec_hit.distance <= vec3_length(to_light)))
+		*color = vec3_add(get_color_light(light, rt->rc.closest_hit,
+					rt->rc.ray, vec3_length(to_light)), *color);
+	return ;
 }
 
 t_hit	get_closest_collision(t_ray *ray, t_obj *list, int list_size)
@@ -85,26 +84,21 @@ t_hit	get_closest_collision(t_ray *ray, t_obj *list, int list_size)
 static void	secondary_ray(t_rt *rt)
 {
 	t_vec3	hit_padded;
-	t_vec3	to_light;
-	t_ray	sec_ray;
-	t_hit	sec_hit;
+	t_vec3	color_final;
+	int		i;
 
+	i = 0;
+	color_final = (t_vec3){0};
 	if (rt->rc.closest_hit.did_hit)
 	{
+		color_final = vec3_mult(color_to_vec(rt->rc.closest_hit.obj->color),
+				vec3_scale(rt->scene.ambient.vec_color,
+					rt->rc.closest_hit.obj->ka_final));
 		hit_padded = vec3_add(rt->rc.closest_hit.point,
-				vec3_scale(rt->rc.closest_hit.normal, 0.001));
-		to_light = vec3_sub(rt->scene.lights[0].pos, rt->rc.closest_hit.point);
-		sec_ray = ray_new(hit_padded, to_light);
-		sec_hit = get_closest_collision(&sec_ray, rt->scene.obj,
-				rt->scene.objs_num);
-		if (!(sec_hit.did_hit && sec_hit.distance <= vec3_length(to_light)))
-			rt->rc.color = ray_color(&rt->rc.closest_hit, rt->scene,
-					&rt->rc.ray);
-		else
-			rt->rc.color = color_from_vec(vec3_mult(
-						color_to_vec(rt->rc.closest_hit.obj->color),
-						vec3_scale(rt->scene.ambient.vec_color,
-							rt->rc.closest_hit.obj->phong_spec->ka)));
+				vec3_scale(rt->rc.closest_hit.normal, 0.0001));
+		while (i < rt->scene.lights_num)
+			ray_color(rt, hit_padded, rt->scene.lights[i++], &color_final);
+		rt->rc.color = color_from_vec(color_vec_clamp(color_final));
 	}
 	else
 		rt->rc.color = (t_color){.hex = BACKGROURD_COLOR};

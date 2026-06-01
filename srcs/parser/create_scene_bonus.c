@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   create_scene.c                                     :+:      :+:    :+:   */
+/*   create_scene_bonus.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/22 18:52:33 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/05/29 19:33:11 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/05/29 19:34:39 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ t_mat	*generic_material(void)
 	if (!material)
 		return (NULL);
 	material->bump_map = NULL;
-	material->ka = 0.1;
+	material->ka = 0.2;
 	material->kd = 0.9;
 	material->ks = 1.0;
 	material->m = 32;
