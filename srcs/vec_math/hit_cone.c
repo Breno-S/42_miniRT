@@ -5,10 +5,11 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/04/22 15:13:13 by brensant          #+#    #+#             */
-/*   Updated: 2026/05/28 16:05:30 by brensant         ###   ########.fr       */
+/*   Created: Invalid date        by                   #+#    #+#             */
+/*   Updated: 2026/06/01 17:11:39 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "hit.h"
 #include "ray.h"
@@ -42,6 +43,20 @@ static float	get_visible_scalar(t_hit *hit, t_ray *ray, float t0, float t1)
 	return (-1);
 }
 
+static void	set_normal(t_hit *hit, t_obj *cone)
+{
+	t_vec3	hit_proj_in_axis;
+	t_vec3	out_vec;
+	t_vec3	base_center;
+
+	base_center = vec3_sub(cone->pos, vec3_scale(cone->cone.axis, cone->cone.height));
+	hit_proj_in_axis = vec3_scale(cone->cone.axis, vec3_dot(
+			vec3_sub(hit->point, base_center), cone->cone.axis));
+	out_vec = vec3_normalize(vec3_sub(hit->point ,hit_proj_in_axis));
+	hit->normal = vec3_normalize(vec3_add(vec3_scale(out_vec, cone->cone.height),
+		vec3_scale(cone->cone.axis, cone->cone.radius)));
+}
+
 static void	set_hit(t_hit *hit, t_ray *ray, t_vec4 *coeff)
 {
 	float	closest_hit_scalar;
@@ -61,7 +76,8 @@ static void	set_hit(t_hit *hit, t_ray *ray, t_vec4 *coeff)
 		cp = vec3_sub(hit->point, hit->obj->pos);
 		proj = vec3_scale(hit->obj->cone.axis,
 				vec3_dot(cp, hit->obj->cone.axis));
-		hit->normal = vec3_normalize(vec3_sub(cp, proj));
+		// hit->normal = vec3_normalize(vec3_sub(cp, proj));
+		set_normal(hit, hit->obj);
 		if (vec3_dot(ray->dir, hit->normal) > FLT_EPSILON)
 			hit->normal = vec3_negate(hit->normal);
 	}
