@@ -1,37 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ray_context.h                                      :+:      :+:    :+:   */
+/*   phong.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/04/10 02:09:15 by brensant          #+#    #+#             */
-/*   Updated: 2026/06/01 15:22:13 by rgomes-d         ###   ########.fr       */
+/*   Created: 2026/06/01 15:03:13 by rgomes-d          #+#    #+#             */
+/*   Updated: 2026/06/01 15:26:03 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef RAY_CONTEXT_H
-# define RAY_CONTEXT_H
+#ifndef PHONG_H
+# define PHONG_H
 
 # include "vec_math.h"
 # include "shapes.h"
 # include "scene.h"
 # include "ray.h"
+# include "rt.h"
 # include "mlx_env.h"
 
-typedef struct s_ray_context
-{
-	t_vec3	orig;
+t_vec3	get_color_light(t_light light, t_hit hit, t_ray ray, float d);
 
-	t_vec3	start;
-	t_vec3	dx;
-	t_vec3	dy;
+t_vec3	get_new_color(float diff, float spec, t_vec3 color_light, t_hit hit);
 
-	t_ray	ray;
-	t_vec3	px;
-	t_color	color;
-	t_hit	closest_hit;
+void	ray_color(t_rt *rt, t_vec3 hit_padded, t_light light, t_vec3 *color);
 
-}	t_ray_context;
-
-#endif // RAY_CONTEXT_H
+#endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shapes.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/01 15:49:00 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/05/28 00:19:12 by brensant         ###   ########.fr       */
+/*   Updated: 2026/06/01 14:54:21 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ typedef struct s_light
 	t_vec3			pos;
 	float			brightness;
 	t_color			color;
+	t_vec3			vec_color;
 }	t_light;
 
 typedef struct s_sphere
@@ -71,6 +72,15 @@ typedef struct s_cylinder
 	float			height;
 }	t_cylinder;
 
+typedef struct s_mat
+{
+	float	ka;
+	float	kd;
+	float	ks;
+	float	m;
+	char	*bump_map;
+}	t_mat;
+
 typedef t_cylinder	t_cone;
 
 typedef struct s_obj
@@ -78,6 +88,7 @@ typedef struct s_obj
 	t_shapes_type	type;
 	t_vec3			pos;
 	t_color			color;
+	t_vec3			color_vec;
 	union
 	{
 		t_sphere	sphere;
@@ -85,7 +96,9 @@ typedef struct s_obj
 		t_cylinder	cylinder;
 		t_cone		cone;
 	};
-	t_hit		(*intersect)(t_ray *, struct s_obj *);
+	t_mat			*phong_spec;
+	float			ka_final;
+	t_hit			(*intersect)(t_ray *, struct s_obj *);
 }	t_obj;
 
 typedef struct s_rt_list

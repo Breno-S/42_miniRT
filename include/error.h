@@ -6,7 +6,7 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/06 13:34:32 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/04/22 19:31:21 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/05/28 15:12:06 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 # define M_SIZE_VEC "miniRT: Invalid vector size.\n"
 # define M_ERR_CONV "miniRT: Invalid number conversion (overflow or inf.).\n"
 # define M_DUP_ENT "miniRT: Dup. entity declaration (ambient, cam or light).\n"
+# define M_NBR_NORM "miniRT: nbr not normalized (between '0' and '1').\n"
 
 typedef enum e_type_err
 {
@@ -39,6 +40,7 @@ typedef enum e_type_err
 	SIZE_VEC,
 	ERR_CONV,
 	DUP_ENT,
+	NBR_NORM,
 }	t_type_erro;
 
 #endif

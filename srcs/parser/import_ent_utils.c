@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   import_ent_utils.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/10 20:52:50 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/05/28 00:22:03 by brensant         ###   ########.fr       */
+/*   Updated: 2026/05/29 13:40:01 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,7 @@ bool	import_color(char *text, t_color *vec3)
 	color[0] = ft_atoi(c_v3[0]);
 	color[1] = ft_atoi(c_v3[1]);
 	color[2] = ft_atoi(c_v3[2]);
-	if (verify_atoi(c_v3[0], color[0]) || verify_atoi(c_v3[1], color[1])
-		|| verify_atoi(c_v3[2], color[2]))
+	if (verify_atoi(c_v3[0]) || verify_atoi(c_v3[1]) || verify_atoi(c_v3[2]))
 		return (1);
 	if ((color[0] > 255 || color[1] > 255 || color[2] > 255)
 		|| (color[0] < 0 || color[1] < 0 || color[2] < 0))
