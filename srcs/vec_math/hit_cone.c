@@ -6,7 +6,7 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2026/06/01 17:19:28 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/06/02 00:41:05 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,16 +45,75 @@ static float	get_visible_scalar(t_hit *hit, t_ray *ray, float t0, float t1)
 
 static void	set_normal(t_hit *hit, t_obj *cone)
 {
-	t_vec3	hit_proj_in_axis;
-	t_vec3	out_vec;
-	t_vec3	base_center;
+	t_vec3	v;
+	t_vec3	radial;
+	float	h;
+	float	k;
+	float	k2;
 
-	base_center = vec3_sub(cone->pos, vec3_scale(cone->cone.axis, cone->cone.height));
-	hit_proj_in_axis = vec3_scale(cone->cone.axis, vec3_dot(
-			vec3_sub(hit->point, base_center), cone->cone.axis));
-	out_vec = vec3_normalize(vec3_sub(hit->point ,hit_proj_in_axis));
-	hit->normal = vec3_normalize(vec3_add(vec3_scale(out_vec, cone->cone.height),
-		vec3_scale(cone->cone.axis, cone->cone.radius)));
+	/*
+	** Vetor do vértice do cone até o ponto de interseção.
+	**
+	** cone->pos é o vértice do cone.
+	** hit->point é o ponto onde o raio acertou.
+	*/
+	v = vec3_sub(hit->point, cone->pos);
+
+	/*
+	** Distância projetada ao longo do eixo do cone.
+	**
+	** h representa o quanto avançamos no eixo.
+	**
+	** Se h = 0 estamos no vértice.
+	** Quanto mais negativo, mais próximos da base.
+	*/
+	h = vec3_dot(v, cone->cone.axis);
+
+	/*
+	** Remove a componente paralela ao eixo.
+	**
+	** Sobra apenas a direção radial,
+	** ou seja, a direção que "afasta" do eixo.
+	*/
+	radial = vec3_sub(
+			v,
+			vec3_scale(cone->cone.axis, h));
+
+	/*
+	** Inclinação da parede do cone.
+	**
+	** Como o cone visível possui altura efetiva
+	** de height / 2, usamos:
+	**
+	** k = raio / (height / 2)
+	**   = (2 * raio) / height
+	*/
+	k = (cone->cone.radius * 2.0f)
+		/ cone->cone.height;
+
+	/*
+	** k² aparece diretamente na derivada
+	** da equação implícita do cone.
+	*/
+	k2 = k * k;
+
+	/*
+	** Gradiente da superfície implícita:
+	**
+	** normal = radial - axis * (k² * h)
+	**
+	** O gradiente aponta perpendicularmente
+	** à superfície do cone.
+	**
+	** Esta é a normal geométrica correta,
+	** diferente da aproximação que usávamos antes.
+	*/
+	hit->normal = vec3_normalize(
+			vec3_sub(
+				radial,
+				vec3_scale(
+					cone->cone.axis,
+					k2 * h)));
 }
 
 static void	set_hit(t_hit *hit, t_ray *ray, t_vec4 *coeff)
