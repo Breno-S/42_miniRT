@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shapes.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/01 15:49:00 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/06/01 14:54:21 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/06/02 15:13:27 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,7 @@ typedef struct s_obj
 	t_mat			*phong_spec;
 	float			ka_final;
 	t_hit			(*intersect)(t_ray *, struct s_obj *);
+	bool			is_checkered;
 }	t_obj;
 
 typedef struct s_rt_list

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   build_image.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/29 14:13:32 by brensant          #+#    #+#             */
-/*   Updated: 2026/06/02 00:35:58 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/06/02 15:47:13 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,24 @@
 
 #include <float.h>
 #include <math.h>
+
+t_vec3	get_surface_color(t_hit *hit)
+{
+	int		u_idx;
+	int		v_idx;
+	float	pattern_size;
+
+	if (hit->obj->is_checkered)
+	{
+		pattern_size = 5.0;
+		u_idx = floorf(hit->uv[0] * pattern_size);
+		v_idx = floorf(hit->uv[1] * pattern_size);
+		if ((u_idx + v_idx) % 2 == 0)
+			return ((t_vec3){0.9, 0.9, 0.9, 1});
+		return ((t_vec3){0.1, 0.1, 0.1, 1});
+	}
+	return (hit->obj->color_vec);
+}
 
 t_hit	get_closest_collision(t_ray *ray, t_obj *list, int list_size)
 {
@@ -33,6 +51,8 @@ t_hit	get_closest_collision(t_ray *ray, t_obj *list, int list_size)
 			closest = hit;
 		i++;
 	}
+	if (closest.did_hit)
+		set_uv_coords(&closest);
 	return (closest);
 }
 
@@ -40,13 +60,15 @@ static void	secondary_ray(t_rt *rt)
 {
 	t_vec3	hit_padded;
 	t_vec3	color_final;
+	t_vec3	base_color;
 	int		i;
 
 	i = 0;
 	color_final = (t_vec3){0};
 	if (rt->rc.closest_hit.did_hit)
 	{
-		color_final = vec3_mult(rt->rc.closest_hit.obj->color_vec,
+		base_color = get_surface_color(&rt->rc.closest_hit);
+		color_final = vec3_mult(base_color,
 				vec3_scale(rt->scene.ambient.vec_color,
 					rt->rc.closest_hit.obj->ka_final));
 		hit_padded = vec3_add(rt->rc.closest_hit.point,

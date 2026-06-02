@@ -53,6 +53,7 @@ SRCS_MANDATORY_VEC_MATH := \
 	hooks.c \
 	mlx_env.c \
 	ray.c \
+	uv_coords.c \
 	vec_math_binary.c \
 	vec_math_extra.c \
 	vec_math_unary.c
