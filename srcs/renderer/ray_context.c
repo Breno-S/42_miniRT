@@ -6,7 +6,7 @@
 /*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/26 17:19:24 by brensant          #+#    #+#             */
-/*   Updated: 2026/05/29 15:26:55 by brensant         ###   ########.fr       */
+/*   Updated: 2026/05/31 01:58:28 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,15 @@ static t_matrix	get_rotation_y_axis(t_camera *cam)
 	float		cos_angle;
 	float		sin_angle;
 
-	angle = atan2f(cam->dir.x, cam->dir.z);
+	if (cam->dir.x == 0)
+	{
+		if (cam->dir.z <= -FLT_EPSILON)
+			angle = PI;
+		else
+			angle = 0;
+	}
+	else
+		angle = atan2f(cam->dir.x, cam->dir.z);
 	cos_angle = cosf(angle);
 	sin_angle = sinf(angle);
 	mat = matrix_identity();
@@ -41,10 +49,15 @@ static t_matrix	get_rotation_x_axis(t_camera *cam)
 	float		angle;
 	float		cos_angle;
 	float		sin_angle;
+	float		x;
 
-	angle = atan2f(cam->dir.y, fabsf(cam->dir.z));
-	if (cam->dir.z >= FLT_EPSILON)
-		angle = -angle;
+	if (cam->dir.y == 0)
+		angle = 0;
+	else
+	{
+		x = sqrtf(pow(vec3_length(cam->dir), 2) - cam->dir.y * cam->dir.y);
+		angle = -atan2f(cam->dir.y, x);
+	}
 	cos_angle = cosf(angle);
 	sin_angle = sinf(angle);
 	mat = matrix_identity();
@@ -63,7 +76,7 @@ static t_matrix	get_cam_basis_matrix(t_camera *cam)
 
 	mat_rotation_y = get_rotation_y_axis(cam);
 	mat_rotation_x = get_rotation_x_axis(cam);
-	camera_matrix = matrix_mult(&mat_rotation_x, &mat_rotation_y);
+	camera_matrix = matrix_mult(&mat_rotation_y, &mat_rotation_x);
 	return (camera_matrix);
 }
 
