@@ -6,7 +6,7 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/31 19:03:22 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/05/26 18:16:26 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/06/03 13:40:35 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,14 +56,14 @@ int	ft_lst_content_substr(t_list **lst, int loc, char *sec)
 	return (0);
 }
 
-void ft_clean_buffer(void	*stock)
+void	ft_clean_buffer(void	*stock)
 {
-	int i;
-	t_ext_list **n_stock;
+	int			i;
+	t_ext_list	**n_stock;
 
 	n_stock = (t_ext_list **)stock;
 	i = 0;
-	while(i < FILE_DESCRIPTORS)
+	while (i < FILE_DESCRIPTORS)
 	{
 		if (n_stock[i])
 			ft_cleanls(&n_stock[i]);

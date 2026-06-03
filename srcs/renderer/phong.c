@@ -6,7 +6,7 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/01 14:59:12 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/06/02 00:35:36 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/06/03 19:15:32 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,14 +32,14 @@ t_vec3	get_color_light(t_light light, t_hit hit, t_ray ray, float d)
 	attenuation = (light.brightness / (D1 + D2 * d + D3 * (d * d)));
 	if (attenuation == 0)
 		attenuation = 0.000001;
-	diff = fmax(vec3_dot(hit.normal, light_dir), 0.0) * hit.obj->phong_spec->kd
+	diff = fmax(vec3_dot(hit.normal, light_dir), 0.0) * hit.obj->phong_spec.kd
 		* attenuation;
 	if (diff > 0)
 	{
 		reflected = vec3_normalize(vec3_reflect(vec3_negate(light_dir),
 					hit.normal));
 		spec = pow(fmax(vec3_dot(vec3_negate(ray.dir), reflected), 0.0),
-				hit.obj->phong_spec->m) * hit.obj->phong_spec->ks * attenuation;
+				hit.obj->phong_spec.m) * hit.obj->phong_spec.ks * attenuation;
 	}
 	return (get_new_color(diff, spec, light.vec_color, hit));
 }

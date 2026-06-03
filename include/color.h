@@ -6,7 +6,7 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/06 16:31:16 by brensant          #+#    #+#             */
-/*   Updated: 2026/06/02 00:27:37 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/06/03 17:00:41 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # define C_KD 0.9f
 # define C_KS 1.0f
 # define C_M  32.0f
+# define C_R  0.0f
 
 # define D1 1.0f
 # define D2 0.05f

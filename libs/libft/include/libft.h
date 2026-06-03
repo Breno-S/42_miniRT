@@ -6,7 +6,7 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/14 09:57:31 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/05/26 18:13:13 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/06/03 13:38:24 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -174,5 +174,6 @@ void					*ft_realloc(void **mem, size_t nmemb, size_t size,
 							size_t current_size);
 double					ft_atof(const char *nptr);
 char					**ft_split_spaces(char const *s);
+int						ft_atoi_base(char *str, char *base);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/01 13:54:17 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/05/29 13:34:01 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/06/03 19:18:09 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,8 @@ bool		create_light(char *entity);
 bool		create_sphere(char *entity);
 bool		create_plane(char *entity);
 bool		create_cylinder(char *entity);
-bool		create_material(char **entity, t_rt_list *lst);
-char		*save_xpm(char *file);
+bool		create_material(char **entity, t_rt_list **lst);
+void		import_textures(char **filename, t_mat *mat);
 bool		create_cone(char *entity);
 
 void		link_entity(t_rt_list *n_rt_list);
@@ -72,7 +72,7 @@ bool		error_msg_ii(int err_type);
 // CREATE SCENE
 
 bool		create_scene(t_scene *scene);
-bool		create_scene_aux(t_rt_list *rt_list, t_scene *scene, t_mat *mat);
-t_mat		*generic_material(void);
+bool		create_scene_aux(t_rt_list *rt_list, t_scene *scene, t_mat mat);
+t_mat		generic_material(void);
 
 #endif
