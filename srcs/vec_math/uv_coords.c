@@ -80,7 +80,7 @@ static void	set_uv_coords_pl(t_hit *hit, t_obj *plane)
 	else
 		dummy_axis = (t_vec3){0, 1, 0};
 	u_axis = vec3_normalize(vec3_cross(dummy_axis, plane->plane.normal));
-	v_axis = vec3_normalize(vec3_cross(plane->plane.normal, u_axis));
+	v_axis = vec3_cross(plane->plane.normal, u_axis);
 	diff = vec3_sub(hit->point, plane->pos);
 	hit->uv[0] = vec3_dot(diff, u_axis);
 	hit->uv[1] = vec3_dot(diff, v_axis);

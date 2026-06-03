@@ -26,12 +26,15 @@ t_vec3	get_surface_color(t_hit *hit)
 
 	if (hit->obj->is_checkered)
 	{
-		pattern_size = 5.0;
+		if (hit->obj->type == PLANE)
+			pattern_size = 1.0;
+		else
+			pattern_size = 10.0;
 		u_idx = floorf(hit->uv[0] * pattern_size);
 		v_idx = floorf(hit->uv[1] * pattern_size);
 		if ((u_idx + v_idx) % 2 == 0)
-			return ((t_vec3){0.9, 0.9, 0.9, 1});
-		return ((t_vec3){0.1, 0.1, 0.1, 1});
+			return ((t_vec3){1, 1, 1, 1});
+		return ((t_vec3){0, 0, 0, 1});
 	}
 	return (hit->obj->color_vec);
 }
