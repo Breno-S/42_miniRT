@@ -6,7 +6,7 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/22 18:52:33 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/05/29 19:33:11 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/06/01 14:56:48 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,8 @@ bool	create_scene_aux(t_rt_list *rt_list, t_scene *scene, t_mat *mat)
 	i_obj = 0;
 	while (rt_list)
 	{
+		if (rt_list->obj.type > 3)
+			rt_list->obj.color_vec = color_to_vec(rt_list->obj.color);
 		if (rt_list->obj.type > 3 && !rt_list->obj.phong_spec)
 			rt_list->obj.phong_spec = mat;
 		if (rt_list->obj.type == AMBIENT)
@@ -74,9 +76,9 @@ t_mat	*generic_material(void)
 	if (!material)
 		return (NULL);
 	material->bump_map = NULL;
-	material->ka = 0.1;
-	material->kd = 0.9;
-	material->ks = 1.0;
-	material->m = 32;
+	material->ka = C_KA;
+	material->kd = C_KD;
+	material->ks = C_KS;
+	material->m = C_M;
 	return (material);
 }

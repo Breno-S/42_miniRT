@@ -3,64 +3,40 @@
 /*                                                        :::      ::::::::   */
 /*   build_image.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/29 14:13:32 by brensant          #+#    #+#             */
-/*   Updated: 2026/05/29 19:57:15 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/06/02 15:47:13 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "hit.h"
 #include "rt.h"
 #include "utils.h"
+#include "phong.h"
 
 #include <float.h>
 #include <math.h>
 
-t_hit	get_closest_collision(t_ray *ray, t_obj *list, int list_size);
-
-static t_vec3	get_color_light(t_light light, t_hit hit, t_ray ray, float d)
+t_vec3	get_surface_color(t_hit *hit)
 {
-	t_vec3	reflected;
-	t_vec3	light_dir;
-	t_vec3	color_final;
-	float	diffuse;
-	float	specular;
+	int		u_idx;
+	int		v_idx;
+	float	pattern_size;
 
-	diffuse = 0;
-	specular = 0;
-	light_dir = vec3_normalize(vec3_sub(light.pos, hit.point));
-	diffuse = fmax(vec3_dot(hit.normal, light_dir), 0.0)
-		* hit.obj->phong_spec->kd
-		* (light.brightness / (D1 + D2 * d + D3 * (d * d)));
-	if (diffuse > 0)
+	if (hit->obj->is_checkered)
 	{
-		reflected = vec3_normalize(vec3_reflect(vec3_negate(light_dir),
-					hit.normal));
-		specular = pow(fmax(vec3_dot(vec3_negate(ray.dir), reflected), 0.0),
-				hit.obj->phong_spec->m) * hit.obj->phong_spec->ks;
+		if (hit->obj->type == PLANE)
+			pattern_size = 1.0;
+		else
+			pattern_size = 10.0;
+		u_idx = floorf(hit->uv[0] * pattern_size);
+		v_idx = floorf(hit->uv[1] * pattern_size);
+		if ((u_idx + v_idx) % 2 == 0)
+			return ((t_vec3){1, 1, 1, 1});
+		return ((t_vec3){0, 0, 0, 1});
 	}
-	color_final = vec3_mult(color_to_vec(hit.obj->color),
-			vec3_scale(light.vec_color, light.brightness * diffuse));
-	color_final = vec3_add(color_final, vec3_scale(light.vec_color,
-				specular));
-	return (color_final);
-}
-
-static void	ray_color(t_rt *rt, t_vec3 hit_padded, t_light light, t_vec3 *color)
-{
-	t_vec3	to_light;
-	t_ray	sec_ray;
-	t_hit	sec_hit;
-
-	to_light = vec3_sub(light.pos, rt->rc.closest_hit.point);
-	sec_ray = ray_new(hit_padded, to_light);
-	sec_hit = get_closest_collision(&sec_ray, rt->scene.obj,
-			rt->scene.objs_num);
-	if (!(sec_hit.did_hit && sec_hit.distance <= vec3_length(to_light)))
-		*color = vec3_add(get_color_light(light, rt->rc.closest_hit,
-					rt->rc.ray, vec3_length(to_light)), *color);
-	return ;
+	return (hit->obj->color_vec);
 }
 
 t_hit	get_closest_collision(t_ray *ray, t_obj *list, int list_size)
@@ -78,6 +54,8 @@ t_hit	get_closest_collision(t_ray *ray, t_obj *list, int list_size)
 			closest = hit;
 		i++;
 	}
+	if (closest.did_hit)
+		set_uv_coords(&closest);
 	return (closest);
 }
 
@@ -85,13 +63,15 @@ static void	secondary_ray(t_rt *rt)
 {
 	t_vec3	hit_padded;
 	t_vec3	color_final;
+	t_vec3	base_color;
 	int		i;
 
 	i = 0;
 	color_final = (t_vec3){0};
 	if (rt->rc.closest_hit.did_hit)
 	{
-		color_final = vec3_mult(color_to_vec(rt->rc.closest_hit.obj->color),
+		base_color = get_surface_color(&rt->rc.closest_hit);
+		color_final = vec3_mult(base_color,
 				vec3_scale(rt->scene.ambient.vec_color,
 					rt->rc.closest_hit.obj->ka_final));
 		hit_padded = vec3_add(rt->rc.closest_hit.point,

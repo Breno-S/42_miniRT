@@ -6,7 +6,7 @@
 /*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/16 13:02:25 by brensant          #+#    #+#             */
-/*   Updated: 2026/05/28 00:21:07 by brensant         ###   ########.fr       */
+/*   Updated: 2026/06/02 12:58:18 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ typedef struct s_obj	t_obj;
 
 typedef struct s_hit
 {
+	float		uv[2];
 	t_vec3		point;
 	t_vec3		normal;
 	t_vec3		reflected;
@@ -30,6 +31,9 @@ typedef struct s_hit
 	bool		did_hit;
 }	t_hit;
 
+void	set_uv_coords(t_hit *hit);
+
+t_hit	get_closest_collision(t_ray *ray, t_obj *list, int list_size);
 t_hit	hit_miss(void);
 t_hit	hit_sphere(t_ray *ray, t_obj *sphere);
 t_hit	hit_plane(t_ray *ray, t_obj *plane);

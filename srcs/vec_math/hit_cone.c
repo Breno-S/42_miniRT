@@ -5,10 +5,11 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/04/22 15:13:13 by brensant          #+#    #+#             */
-/*   Updated: 2026/05/28 19:07:37 by rgomes-d         ###   ########.fr       */
+/*   Created: Invalid date        by                   #+#    #+#             */
+/*   Updated: 2026/06/02 00:41:05 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "hit.h"
 #include "ray.h"
@@ -42,6 +43,79 @@ static float	get_visible_scalar(t_hit *hit, t_ray *ray, float t0, float t1)
 	return (-1);
 }
 
+static void	set_normal(t_hit *hit, t_obj *cone)
+{
+	t_vec3	v;
+	t_vec3	radial;
+	float	h;
+	float	k;
+	float	k2;
+
+	/*
+	** Vetor do vértice do cone até o ponto de interseção.
+	**
+	** cone->pos é o vértice do cone.
+	** hit->point é o ponto onde o raio acertou.
+	*/
+	v = vec3_sub(hit->point, cone->pos);
+
+	/*
+	** Distância projetada ao longo do eixo do cone.
+	**
+	** h representa o quanto avançamos no eixo.
+	**
+	** Se h = 0 estamos no vértice.
+	** Quanto mais negativo, mais próximos da base.
+	*/
+	h = vec3_dot(v, cone->cone.axis);
+
+	/*
+	** Remove a componente paralela ao eixo.
+	**
+	** Sobra apenas a direção radial,
+	** ou seja, a direção que "afasta" do eixo.
+	*/
+	radial = vec3_sub(
+			v,
+			vec3_scale(cone->cone.axis, h));
+
+	/*
+	** Inclinação da parede do cone.
+	**
+	** Como o cone visível possui altura efetiva
+	** de height / 2, usamos:
+	**
+	** k = raio / (height / 2)
+	**   = (2 * raio) / height
+	*/
+	k = (cone->cone.radius * 2.0f)
+		/ cone->cone.height;
+
+	/*
+	** k² aparece diretamente na derivada
+	** da equação implícita do cone.
+	*/
+	k2 = k * k;
+
+	/*
+	** Gradiente da superfície implícita:
+	**
+	** normal = radial - axis * (k² * h)
+	**
+	** O gradiente aponta perpendicularmente
+	** à superfície do cone.
+	**
+	** Esta é a normal geométrica correta,
+	** diferente da aproximação que usávamos antes.
+	*/
+	hit->normal = vec3_normalize(
+			vec3_sub(
+				radial,
+				vec3_scale(
+					cone->cone.axis,
+					k2 * h)));
+}
+
 static void	set_hit(t_hit *hit, t_ray *ray, t_vec4 *coeff)
 {
 	float	closest_hit_scalar;
@@ -61,7 +135,8 @@ static void	set_hit(t_hit *hit, t_ray *ray, t_vec4 *coeff)
 		cp = vec3_sub(hit->point, hit->obj->pos);
 		proj = vec3_scale(hit->obj->cone.axis,
 				vec3_dot(cp, hit->obj->cone.axis));
-		hit->normal = vec3_normalize(vec3_sub(cp, proj));
+		// hit->normal = vec3_normalize(vec3_sub(cp, proj));
+		set_normal(hit, hit->obj);
 		if (vec3_dot(ray->dir, hit->normal) > FLT_EPSILON)
 			hit->normal = vec3_negate(hit->normal);
 	}
