@@ -6,7 +6,7 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/10 20:51:26 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/05/29 19:37:22 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/06/03 19:45:01 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,55 +86,50 @@ bool	create_ambient(char *entity)
 	return (0);
 }
 
-bool	create_material(char **entity, t_rt_list *lst)
+bool	create_material(char **entity, t_rt_list **lst)
 {
-	t_mat	*mat;
+	t_mat	mat;
 
-	mat = ft_gc_calloc_root(1, sizeof(*mat), "obj");
-	lst->obj.phong_spec = mat;
-	if (!mat)
-		return (1);
+	mat = (t_mat){0};
+	mat.has_mat = 1;
 	if (ft_strcmp(entity[0], "mt"))
 		return (1);
-	mat->ka = ft_atof(entity[1]);
-	mat->kd = ft_atof(entity[2]);
-	mat->ks = ft_atof(entity[3]);
-	if ((mat->ka > 1.0 || mat->ks > 1.0 || mat->kd > 1.0)
-		&& (mat->ka < 0.0 || mat->ks < 0.0 || mat->kd < 0.0))
+	mat.ka = ft_atof(entity[1]);
+	mat.kd = ft_atof(entity[2]);
+	mat.ks = ft_atof(entity[3]);
+	mat.m = ft_atof(entity[4]);
+	mat.r = ft_atof(entity[5]);
+	if ((mat.ka > 1.0 || mat.ks > 1.0 || mat.kd > 1.0 || mat.r > 1.0)
+		&& (mat.ka < 0.0 || mat.ks < 0.0 || mat.kd < 0.0 || mat.r < 0.0))
 		return (error_msg_ii(NBR_NORM));
-	mat->m = ft_atof(entity[4]);
-	if (isinf(mat->ka) || isinf(mat->kd) || isinf(mat->ks) || isinf(mat->m))
+	if (verify_atof(entity[1], mat.ka) || verify_atof(entity[2], mat.kd)
+		|| verify_atof(entity[3], mat.ks) || verify_atof(entity[4], mat.m)
+		|| verify_atof(entity[5], mat.r))
 		return (1);
-	if (!ft_check_extension(entity[5], ".xpm"))
-		mat->bump_map = save_xpm(entity[5]);
-	else if (ft_strnstr(entity[5], "NO_XPM", 99))
-		mat->bump_map = NULL;
-	else
-		return (1);
+	import_textures(&entity[6], &mat);
+	lst[0]->obj.phong_spec = mat;
 	return (0);
 }
 
-char	*save_xpm(char *file)
+void	import_textures(char **filename, t_mat *mat)
 {
-	int		fd;
-	char	*buffer;
-	char	*join;
-	char	*bump;
-
-	fd = open(file, O_RDONLY);
-	if (fd == -1)
-		return (NULL);
-	while (1)
+	if (!ft_check_extension(filename[0], ".xpm"))
 	{
-		buffer = get_next_line(fd);
-		if (!buffer)
-			break ;
-		join = ft_strjoin(bump, buffer);
-		free(bump);
-		free(buffer);
-		bump = join;
+		mat->b_type |= NORMAL;
+		mat->normal.b_type |= NORMAL;
+		mat->normal.filename = ft_gcfct_register_root(
+				(void *)ft_strdup(filename[0]), "bmp");
 	}
-	close(fd);
-	ft_gcfct_register_root(bump, "bump_map");
-	return (bump);
+	if (!ft_check_extension(filename[1], ".xpm"))
+	{
+		mat->b_type |= COLOR;
+		mat->color.b_type |= COLOR;
+		mat->color.filename = ft_gcfct_register_root(
+				(void *)ft_strdup(filename[1]), "bmp");
+	}
+	else if (ft_strnstr(filename[1], "CHK", 99))
+	{
+		mat->b_type |= CHK;
+		mat->color.b_type |= CHK;
+	}
 }

@@ -6,7 +6,7 @@
 /*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/29 14:13:32 by brensant          #+#    #+#             */
-/*   Updated: 2026/06/02 15:47:13 by brensant         ###   ########.fr       */
+/*   Updated: 2026/06/03 19:57:15 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ t_vec3	get_surface_color(t_hit *hit)
 	int		v_idx;
 	float	pattern_size;
 
-	if (hit->obj->is_checkered)
+	if (hit->obj->phong_spec.b_type & CHK)
 	{
 		if (hit->obj->type == PLANE)
 			pattern_size = 1.0;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   import_obj.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/28 18:23:33 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/05/28 18:51:53 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/06/03 20:05:26 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,9 @@ bool	create_sphere(char *entity)
 	lst->obj.type = SPHERE;
 	s_ent = ft_split_spaces(entity);
 	ft_gcfct_arr_register((void **)s_ent, GC_DATA);
-	if (ft_size_chrarr(s_ent) != 4 && ft_size_chrarr(s_ent) != 10)
+	if (ft_size_chrarr(s_ent) != 4 && ft_size_chrarr(s_ent) != 12)
 		return (error_msg(MANY_ARGS));
-	if (ft_size_chrarr(s_ent) == 10 && create_material(&s_ent[4], lst))
+	if (ft_size_chrarr(s_ent) == 12 && create_material(&s_ent[4], &lst))
 		return (1);
 	if (import_vec3(s_ent[1], &lst->obj.pos) == 1)
 		return (1);
@@ -48,9 +48,9 @@ bool	create_plane(char *entity)
 	lst->obj.type = PLANE;
 	s_ent = ft_split_spaces(entity);
 	ft_gcfct_arr_register((void **)s_ent, GC_DATA);
-	if (ft_size_chrarr(s_ent) != 4 && ft_size_chrarr(s_ent) != 10)
+	if (ft_size_chrarr(s_ent) != 4 && ft_size_chrarr(s_ent) != 12)
 		return (error_msg(MANY_ARGS));
-	if (ft_size_chrarr(s_ent) == 10 && create_material(&s_ent[4], lst))
+	if (ft_size_chrarr(s_ent) == 12 && create_material(&s_ent[4], &lst))
 		return (1);
 	if (import_vec3(s_ent[1], &lst->obj.pos) == 1)
 		return (1);
@@ -72,9 +72,9 @@ bool	create_cylinder(char *entity)
 	lst->obj.type = CYLINDER;
 	s_ent = ft_split_spaces(entity);
 	ft_gcfct_arr_register((void **)s_ent, GC_DATA);
-	if (ft_size_chrarr(s_ent) != 6 && ft_size_chrarr(s_ent) != 12)
+	if (ft_size_chrarr(s_ent) != 6 && ft_size_chrarr(s_ent) != 14)
 		return (error_msg(MANY_ARGS));
-	if (ft_size_chrarr(s_ent) == 12 && create_material(&s_ent[6], lst))
+	if (ft_size_chrarr(s_ent) == 14 && create_material(&s_ent[6], &lst))
 		return (1);
 	if (import_vec3(s_ent[1], &lst->obj.pos) == 1)
 		return (1);

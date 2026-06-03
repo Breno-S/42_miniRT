@@ -6,7 +6,7 @@
 /*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/06 16:31:16 by brensant          #+#    #+#             */
-/*   Updated: 2026/06/02 11:06:14 by brensant         ###   ########.fr       */
+/*   Updated: 2026/06/03 19:55:09 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # define C_KD 0.9f
 # define C_KS 1.0f
 # define C_M  32.0f
+# define C_R  0.0f
 
 # define D1 1.0f
 # define D2 0.000005f

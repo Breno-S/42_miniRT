@@ -6,7 +6,7 @@
 /*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/01 15:49:00 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/06/02 15:13:27 by brensant         ###   ########.fr       */
+/*   Updated: 2026/06/03 19:56:13 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,13 @@ typedef enum e_shapes_type
 	CYLINDER,
 	CONE
 }	t_shapes_type;
+
+typedef enum e_btype
+{
+	CHK			= 1 << 0,
+	NORMAL		= 1 << 1,
+	COLOR		= 1 << 2
+}	t_btype;
 
 typedef struct s_ambient
 {
@@ -72,16 +79,29 @@ typedef struct s_cylinder
 	float			height;
 }	t_cylinder;
 
+typedef struct s_bump
+{
+	t_btype	b_type;
+	char	*filename;
+	void	*img;
+	int		width;
+	int		heigth;
+}	t_bump;
+
+typedef t_cylinder	t_cone;
+
 typedef struct s_mat
 {
+	bool	has_mat;
 	float	ka;
 	float	kd;
 	float	ks;
 	float	m;
-	char	*bump_map;
+	float	r;
+	t_btype	b_type;
+	t_bump	normal;
+	t_bump	color;
 }	t_mat;
-
-typedef t_cylinder	t_cone;
 
 typedef struct s_obj
 {
@@ -96,10 +116,9 @@ typedef struct s_obj
 		t_cylinder	cylinder;
 		t_cone		cone;
 	};
-	t_mat			*phong_spec;
+	t_mat			phong_spec;
 	float			ka_final;
 	t_hit			(*intersect)(t_ray *, struct s_obj *);
-	bool			is_checkered;
 }	t_obj;
 
 typedef struct s_rt_list

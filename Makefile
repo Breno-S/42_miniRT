@@ -174,7 +174,7 @@ bdebug:
 		$(MAKE) SRCS_MANDATORY_PARSER="$(SRCS_BONUS_PARSER)" debug
 
 valgrind:
-	valgrind --leak-check=full --show-leak-kinds=all ./miniRT "scenes/basic_cylinder.rt"
+	valgrind --leak-check=full --show-leak-kinds=all ./miniRT "scenes/wall.rt"
 
 clean:
 		@make -C $(PATH_LIBFT) clean
