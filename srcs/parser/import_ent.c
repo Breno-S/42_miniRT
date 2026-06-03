@@ -6,7 +6,7 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/10 20:51:26 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/06/03 19:30:32 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/06/03 19:45:01 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,5 +128,8 @@ void	import_textures(char **filename, t_mat *mat)
 				(void *)ft_strdup(filename[1]), "bmp");
 	}
 	else if (ft_strnstr(filename[1], "CHK", 99))
+	{
+		mat->b_type |= CHK;
 		mat->color.b_type |= CHK;
+	}
 }
