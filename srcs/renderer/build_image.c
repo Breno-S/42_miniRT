@@ -6,7 +6,7 @@
 /*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/29 14:13:32 by brensant          #+#    #+#             */
-/*   Updated: 2026/06/03 19:57:15 by brensant         ###   ########.fr       */
+/*   Updated: 2026/06/03 21:22:48 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,43 @@ static void	secondary_ray(t_rt *rt)
 		rt->rc.color = (t_color){.hex = BACKGROURD_COLOR};
 }
 
+		t_hit hit_obj = get_closest_collision(&(t_ray){hit_padded, reflected_ray}, rt->scene.obj, rt->scene.objs_num);
+		base_color = get_surface_color(&hit_obj);
+		rt->rc.color = color_from_vec(vec3_mult(base_color,
+				vec3_scale(rt->scene.ambient.vec_color,
+					hit_obj.obj->ka_final)));
+
+t_color	ray_trace(t_rt *rt, int depth)
+{
+	t_ray	reflected_ray;
+	t_ray	reflected_color;
+	t_color	local_color;
+	t_color	final_color;
+
+	// Calcular a colisão mais próxima
+	rt->rc.closest_hit = get_closest_collision(&rt->rc.ray,
+			rt->scene.obj, rt->scene.objs_num);
+	if (!rt->rc.closest_hit.did_hit)
+	{
+		rt->rc.color.hex = BACKGROURD_COLOR;
+		return ;
+	}
+	else
+	{
+		local_color =
+	}
+	// Se for refletivo e # de iterações < max
+	if (rt->rc.closest_hit.obj->type == SPHERE && depth < 10)
+	{
+		reflected_ray = vec3_reflect(rt->rc.ray.dir, rt->rc.closest_hit.normal);
+		reflected_color = ray_trace(rt, depth + 1);
+		final
+	}
+	else
+		final_color = local_color;
+	return (final_color);
+}
+
 void	rt_build_image(t_rt *rt)
 {
 	int		xy[2];
@@ -94,14 +131,22 @@ void	rt_build_image(t_rt *rt)
 		xy[0] = 0;
 		while (xy[0] < rt->mlx.width)
 		{
+			// Calcular o pixel atual que será perpassado pelo raio.
 			rt->rc.px = vec3_add(rt->rc.start, vec3_scale(rt->rc.dx, xy[0]));
 			rt->rc.px = vec3_add(rt->rc.px, vec3_scale(rt->rc.dy, xy[1]));
+
+			// Criar raio primário, que atravessa este pixel
 			rt->rc.ray = ray_new(rt->rc.orig, (vec3_sub(rt->rc.px,
 							rt->rc.orig)));
-			rt->rc.closest_hit = get_closest_collision(&rt->rc.ray,
-					rt->scene.obj, rt->scene.objs_num);
-			secondary_ray(rt);
-			pixel_put(&rt->mlx, xy[0], xy[1], rt->rc.color.hex);
+			ray_trace(rt, 0);
+			// Calcular a colisão mais próxima
+			// rt->rc.closest_hit = get_closest_collision(&rt->rc.ray,
+			// 		rt->scene.obj, rt->scene.objs_num);
+			if (rt->rc.closest_hit.obj->type == SPHERE)
+				reflection_ray(rt);
+			else
+				secondary_ray(rt);
+			pixel_put(&rt->mlx, xy[0], xy[1], ray_trace(rt, 0));
 			xy[0]++;
 		}
 		xy[1]++;
