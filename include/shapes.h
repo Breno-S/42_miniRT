@@ -6,7 +6,7 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/01 15:49:00 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/06/03 19:21:48 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/06/04 23:44:50 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ typedef struct s_light
 	float			brightness;
 	t_color			color;
 	t_vec3			vec_color;
+	float			to_light;
 }	t_light;
 
 typedef struct s_sphere
