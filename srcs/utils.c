@@ -6,7 +6,7 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/26 17:02:53 by brensant          #+#    #+#             */
-/*   Updated: 2026/06/03 19:24:36 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/06/04 22:38:36 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 #include "mlx_env.h"
 #include "mlx.h"
 #include "utils.h"
+#include "rt_error.h"
+#include "libft.h"
 
 void	pixel_put(t_mlx_env *env, int x, int y, int color)
 {
@@ -66,6 +68,8 @@ bool	import_bump_file(t_bump *bump, void *mlx)
 			bump[0].b_type = (bump[0].b_type & ~NORMAL);
 		if (bump[0].b_type & COLOR)
 			bump[0].b_type = (bump[0].b_type & ~COLOR);
+		error_msg_ii(IMP_XPM);
+		ft_putendl_fd(bump[0].filename, 2);
 		return (1);
 	}
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/10 20:56:10 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/05/28 15:12:22 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/06/04 23:01:18 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,12 @@ bool	error_msg_ii(int err_type)
 		write(2, M_DUP_ENT, ft_strlen(M_DUP_ENT));
 	else if (err_type == NBR_NORM)
 		write(2, M_NBR_NORM, ft_strlen(M_NBR_NORM));
+	else if (err_type == IMP_XPM)
+		write(2, M_IMP_XPM, ft_strlen(M_IMP_XPM));
+	else if (err_type == BMP_ERR)
+		write(2, M_BMP_ERR, ft_strlen(M_BMP_ERR));
+	else if (err_type == NORMAL_ERR)
+		write(2, M_NORMAL_ERR, ft_strlen(M_NORMAL_ERR));
 	else
 		perror("miniRT");
 	return (1);
