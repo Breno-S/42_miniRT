@@ -6,7 +6,7 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/10 20:51:26 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/06/04 23:00:22 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/06/04 23:15:18 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,7 @@ void	import_textures(char **filename, t_mat *mat)
 		mat->normal.filename = ft_gcfct_register_root(
 				(void *)ft_strdup(filename[0]), "bmp");
 	}
-	else if (!ft_strnstr(filename[1], "NON_NORMAL", 99))
+	else if (!ft_strnstr(filename[0], "NON_NORMAL", 99))
 		error_msg_ii(NORMAL_ERR);
 	if (!ft_check_extension(filename[1], ".xpm"))
 	{
