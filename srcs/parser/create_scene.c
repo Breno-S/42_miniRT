@@ -6,7 +6,7 @@
 /*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/22 18:52:33 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/06/08 14:50:35 by brensant         ###   ########.fr       */
+/*   Updated: 2026/06/08 15:40:33 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,11 @@ bool	create_scene(t_scene *scene)
 	obj = ft_gc_calloc_root(scene->objs_num, sizeof(*obj), "scene");
 	light = ft_gc_calloc_root(scene->lights_num, sizeof(*light), "scene");
 	if (!obj || !light)
-		return (error_msg(99));
+		return (error_msg(0, NULL));
 	scene->obj = obj;
 	scene->lights = light;
 	if (create_scene_aux(rt_list, scene, material))
-		return (error_msg(99));
+		return (error_msg(0, NULL));
 	ft_gc_del_root("ent");
 	ft_gc_collect();
 	return (0);

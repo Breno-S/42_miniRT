@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   import_ent_utils.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/10 20:52:50 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/05/29 13:40:01 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/06/08 15:53:42 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ bool	import_color(char *text, t_color *vec3)
 	c_v3 = ft_split(text, ',');
 	ft_gcfct_arr_register((void **)c_v3, GC_DATA);
 	if (ft_size_chrarr(c_v3) != 3)
-		return (error_msg(SIZE_VEC));
+		return (error_msg(1, M_SIZE_VEC));
 	color[0] = ft_atoi(c_v3[0]);
 	color[1] = ft_atoi(c_v3[1]);
 	color[2] = ft_atoi(c_v3[2]);
@@ -30,10 +30,7 @@ bool	import_color(char *text, t_color *vec3)
 		return (1);
 	if ((color[0] > 255 || color[1] > 255 || color[2] > 255)
 		|| (color[0] < 0 || color[1] < 0 || color[2] < 0))
-	{
-		error_msg(ERR_COLOR);
-		return (1);
-	}
+		return (error_msg(1, M_ERR_COLOR));
 	vec3->r = color[0];
 	vec3->g = color[1];
 	vec3->b = color[2];
@@ -49,7 +46,7 @@ bool	import_vec3_normalize(char *text, t_vec3 *vec3)
 	c_v3 = ft_split(text, ',');
 	ft_gcfct_arr_register((void **)c_v3, GC_DATA);
 	if (ft_size_chrarr(c_v3) != 3)
-		return (error_msg(SIZE_VEC));
+		return (error_msg(1, M_SIZE_VEC));
 	vec3->x = ft_atof(c_v3[0]);
 	vec3->y = ft_atof(c_v3[1]);
 	vec3->z = ft_atof(c_v3[2]);
@@ -58,10 +55,7 @@ bool	import_vec3_normalize(char *text, t_vec3 *vec3)
 		return (1);
 	if ((vec3->x > 1.0 || vec3->y > 1.0 || vec3->z > 1.0)
 		|| (vec3->x < -1.0 || vec3->y < -1.0 || vec3->z < -1.0))
-	{
-		error_msg(NON_NORMALIZE);
-		return (1);
-	}
+		return (error_msg(1, M_NON_NORMALIZE));
 	*vec3 = vec3_normalize(*vec3);
 	return (0);
 }
@@ -75,7 +69,7 @@ bool	import_vec3(char *text, t_vec3 *vec3)
 	c_v3 = ft_split(text, ',');
 	ft_gcfct_arr_register((void **)c_v3, GC_DATA);
 	if (ft_size_chrarr(c_v3) != 3)
-		return (error_msg(SIZE_VEC));
+		return (error_msg(1, M_SIZE_VEC));
 	vec3->x = ft_atof(c_v3[0]);
 	vec3->y = ft_atof(c_v3[1]);
 	vec3->z = ft_atof(c_v3[2]);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/01 14:56:06 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/05/29 15:19:03 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/06/08 15:45:20 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,7 @@
 bool	rt_parse_args(t_rt *rt, int argc, char **argv)
 {
 	if (!rt || argc != 2)
-	{
-		error_msg(INVALID_ARG);
-		return (false);
-	}
+		return (error_msg(1, M_INVALID_ARG));
 	if (check_file(argv[1], &rt->scene))
 		return (false);
 	if (create_scene(&rt->scene))
@@ -84,7 +81,7 @@ bool	verify_mandatory_ent(t_shapes_type type, unsigned char *verify_ent,
 		verify_ent[0] |= light;
 	}
 	else
-		return (error_msg_ii(DUP_ENT));
+		return (error_msg(1, M_DUP_ENT));
 	return (0);
 }
 
