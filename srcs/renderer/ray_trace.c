@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ray_trace.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/29 14:13:32 by brensant          #+#    #+#             */
-/*   Updated: 2026/06/08 16:00:16 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/06/08 19:10:02 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,24 @@ t_vec3	get_surface_color(t_hit *hit)
 		if ((u_idx + v_idx) % 2 == 0)
 			return ((t_vec3){1, 1, 1, 1});
 		return ((t_vec3){0, 0, 0, 1});
+	}
+	else if (hit->obj->phong_spec.b_type & COLOR)
+	{
+		/* Obter as cores na textura associada ao objeto */
+		int		x;
+		int		y;
+		t_color	pixel_value;
+
+		// Converter as coordenadas uv para o espaço da textura retangular
+		x = roundf(hit->uv[0] * hit->obj->phong_spec.color.width);
+		y = roundf(hit->uv[1] * hit->obj->phong_spec.color.height);
+
+		// Buscar no arquivo a cor do pixel (x,y)
+		pixel_value = (t_color){.hex
+			= hit->obj->phong_spec.color.img_addr[y
+			* hit->obj->phong_spec.color.size_line + x]};
+
+		return (color_to_vec(pixel_value));
 	}
 	return (hit->obj->color_vec);
 }

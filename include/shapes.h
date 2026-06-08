@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shapes.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/01 15:49:00 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/06/08 14:02:38 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/06/08 18:51:28 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,8 +85,12 @@ typedef struct s_bump
 	t_btype	b_type;
 	char	*filename;
 	void	*img;
+	char	*img_addr;
+	int		size_line;
+	int		bpp;
+	int		endian;
 	int		width;
-	int		heigth;
+	int		height;
 }	t_bump;
 
 typedef t_cylinder	t_cone;
