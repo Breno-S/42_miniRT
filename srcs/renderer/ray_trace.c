@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ray_trace.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/29 14:13:32 by brensant          #+#    #+#             */
-/*   Updated: 2026/06/08 14:51:38 by brensant         ###   ########.fr       */
+/*   Updated: 2026/06/08 16:00:16 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,7 @@ t_color	ray_trace(t_rt *rt, int depth)
 	else
 		local_color = set_pixel_color(rt);
 	local_kr = rt->rc.closest_hit.obj->phong_spec.kr;
-	if (local_kr > 0.0 && depth < 10)
+	if (local_kr > 0.0 && depth < MAX_DEPTH)
 	{
 		reflected_ray = vec3_reflect(rt->rc.ray.dir, rt->rc.closest_hit.normal);
 		rt->rc.ray = ray_new(rt->rc.closest_hit.point, reflected_ray);

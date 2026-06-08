@@ -6,12 +6,14 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/27 16:33:22 by brensant          #+#    #+#             */
-/*   Updated: 2026/06/01 15:01:39 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/06/08 16:00:06 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef RT_H
 # define RT_H
+
+# define MAX_DEPTH 10
 
 # include "mlx_env.h"
 # include "ray_context.h"
