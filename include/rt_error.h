@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   rt_error.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/06 13:34:32 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/06/04 23:01:57 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/06/08 15:03:00 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef RT_ERROR_H
 # define RT_ERROR_H
 
-#include <stdbool.h>
+# include <stdbool.h>
 
 # define M_INVALID_ARG	"miniRT: Invalid args\n"
 # define M_INVALID_EXT	"miniRT: Invalid extension\n"

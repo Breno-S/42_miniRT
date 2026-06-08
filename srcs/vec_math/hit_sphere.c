@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hit_sphere.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/19 18:12:44 by brensant          #+#    #+#             */
-/*   Updated: 2026/05/11 15:45:26 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/06/08 14:48:30 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,9 +56,4 @@ t_hit	hit_sphere(t_ray *ray, t_obj *sphere)
 	hit.obj = sphere;
 	set_hit(&hit, ray, b, discriminant);
 	return (hit);
-}
-
-t_hit	hit_miss(void)
-{
-	return ((t_hit){.did_hit = false, .distance = INFINITY});
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hit.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/16 13:02:25 by brensant          #+#    #+#             */
-/*   Updated: 2026/06/08 12:58:56 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/06/08 15:02:03 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ typedef struct s_hit
 }	t_hit;
 
 void	set_uv_coords(t_hit *hit);
+
+t_vec3	get_surface_color(t_hit *hit);
 
 t_hit	hit_miss(void);
 t_hit	hit_sphere(t_ray *ray, t_obj *sphere);

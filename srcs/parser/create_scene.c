@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_scene.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/22 18:52:33 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/06/08 14:02:49 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/06/08 14:50:35 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,5 @@ t_mat	generic_material(void)
 	material.ks = C_KS;
 	material.m = C_M;
 	material.kr = C_R;
-	// material.b_type = CHK;
 	return (material);
 }

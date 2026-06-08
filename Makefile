@@ -46,6 +46,7 @@ SRCS_BONUS_PARSER := \
 
 SRCS_MANDATORY_VEC_MATH := \
 	color.c \
+	hit_aux.c \
 	hit_cone.c \
 	hit_cylinder.c \
 	hit_plane.c \
@@ -59,9 +60,9 @@ SRCS_MANDATORY_VEC_MATH := \
 	vec_math_unary.c
 
 SRCS_MANDATORY_RENDERER := \
-	build_image.c \
-	renderer.c \
 	ray_context.c \
+	ray_trace.c \
+	renderer.c \
 	phong.c
 
 SRCS_COMMON_PARSER += $(SRCS_MANDATORY_PARSER)
