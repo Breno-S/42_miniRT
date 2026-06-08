@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   phong.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/01 14:59:12 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/06/08 14:51:14 by brensant         ###   ########.fr       */
+/*   Updated: 2026/06/08 18:24:32 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,12 +49,10 @@ t_vec3	get_color_light(t_light light, t_hit hit, t_ray ray)
 t_vec3	get_new_color(float diff, float spec, t_vec3 color_light, t_hit hit)
 {
 	t_vec3	color_final;
-	t_vec3	base_color;
 
 	color_final = (t_vec3){0};
-	base_color = get_surface_color(&hit);
 	if (diff > 0)
-		color_final = vec3_scale(vec3_mult(hit.obj->color_vec, color_light),
+		color_final = vec3_scale(vec3_mult(hit.base_color, color_light),
 				diff);
 	if (spec > 0)
 		color_final = vec3_add(color_final, vec3_scale(color_light, spec));

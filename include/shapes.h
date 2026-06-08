@@ -6,7 +6,7 @@
 /*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/01 15:49:00 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/06/08 18:51:28 by brensant         ###   ########.fr       */
+/*   Updated: 2026/06/08 19:14:31 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,10 @@ typedef enum e_shapes_type
 
 typedef enum e_btype
 {
-	CHK			= 1 << 0,
-	NORMAL		= 1 << 1,
-	COLOR		= 1 << 2
+	CHK				= 1 << 0,
+	NORMAL			= 1 << 1,
+	COLOR			= 1 << 2,
+	NORMAL_COLOR	= 1 << 3
 }	t_btype;
 
 typedef struct s_ambient
@@ -97,15 +98,15 @@ typedef t_cylinder	t_cone;
 
 typedef struct s_mat
 {
-	bool	has_mat;
-	float	ka;
-	float	kd;
-	float	ks;
-	float	m;
-	float	kr;
-	t_btype	b_type;
-	t_bump	normal;
-	t_bump	color;
+	bool			has_mat;
+	float			ka;
+	float			kd;
+	float			ks;
+	float			m;
+	float			kr;
+	unsigned char	b_type;
+	t_bump			normal;
+	t_bump			color;
 }	t_mat;
 
 typedef struct s_obj
