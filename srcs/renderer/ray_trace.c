@@ -6,7 +6,7 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/29 14:13:32 by brensant          #+#    #+#             */
-/*   Updated: 2026/06/08 16:00:16 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/06/08 18:26:26 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,27 +17,6 @@
 
 #include <float.h>
 #include <math.h>
-
-t_vec3	get_surface_color(t_hit *hit)
-{
-	int		u_idx;
-	int		v_idx;
-	float	pattern_size;
-
-	if (hit->obj->phong_spec.b_type & CHK)
-	{
-		if (hit->obj->type == PLANE)
-			pattern_size = 1.0;
-		else
-			pattern_size = 10.0;
-		u_idx = floorf(hit->uv[0] * pattern_size);
-		v_idx = floorf(hit->uv[1] * pattern_size);
-		if ((u_idx + v_idx) % 2 == 0)
-			return ((t_vec3){1, 1, 1, 1});
-		return ((t_vec3){0, 0, 0, 1});
-	}
-	return (hit->obj->color_vec);
-}
 
 static t_hit	get_closest_collision(t_ray *ray, t_obj *list, int list_size)
 {
@@ -55,7 +34,11 @@ static t_hit	get_closest_collision(t_ray *ray, t_obj *list, int list_size)
 		i++;
 	}
 	if (closest.did_hit)
+	{
 		set_uv_coords(&closest);
+		closest.hit_padded = vec3_add(closest.point,
+				vec3_scale(closest.normal, 0.0001));
+	}
 	return (closest);
 }
 
@@ -75,24 +58,22 @@ static bool	check_shadow(t_rt *rt, t_vec3 hit_padded, t_light *light)
 
 static t_color	set_pixel_color(t_rt *rt)
 {
-	t_vec3	hit_padded;
 	t_vec3	color_final;
-	t_vec3	base_color;
 	int		i;
 
 	i = 0;
 	color_final = color_to_vec((t_color){BACKGROURD_COLOR});
 	if (rt->rc.closest_hit.did_hit)
 	{
-		base_color = get_surface_color(&rt->rc.closest_hit);
-		color_final = vec3_mult(base_color,
+		rt->rc.closest_hit.base_color
+			= handle_surface_color(&rt->rc.closest_hit);
+		color_final = vec3_mult(rt->rc.closest_hit.base_color,
 				vec3_scale(rt->scene.ambient.vec_color,
 					rt->rc.closest_hit.obj->ka_final));
-		hit_padded = vec3_add(rt->rc.closest_hit.point,
-				vec3_scale(rt->rc.closest_hit.normal, 0.0001));
 		while (i < rt->scene.lights_num)
 		{
-			if (check_shadow(rt, hit_padded, &rt->scene.lights[i]))
+			if (check_shadow(rt, rt->rc.closest_hit.hit_padded,
+					&rt->scene.lights[i]))
 				color_final = vec3_add(get_color_light(rt->scene.lights[i],
 							rt->rc.closest_hit, rt->rc.ray), color_final);
 			i++;
@@ -103,7 +84,6 @@ static t_color	set_pixel_color(t_rt *rt)
 
 t_color	ray_trace(t_rt *rt, int depth)
 {
-	t_vec3	reflected_ray;
 	t_color	reflected_color;
 	t_color	local_color;
 	t_color	final_color;
@@ -119,8 +99,10 @@ t_color	ray_trace(t_rt *rt, int depth)
 	local_kr = rt->rc.closest_hit.obj->phong_spec.kr;
 	if (local_kr > 0.0 && depth < MAX_DEPTH)
 	{
-		reflected_ray = vec3_reflect(rt->rc.ray.dir, rt->rc.closest_hit.normal);
-		rt->rc.ray = ray_new(rt->rc.closest_hit.point, reflected_ray);
+		rt->rc.closest_hit.reflected = vec3_reflect(rt->rc.ray.dir,
+				rt->rc.closest_hit.normal);
+		rt->rc.ray = ray_new(rt->rc.closest_hit.hit_padded,
+				rt->rc.closest_hit.reflected);
 		reflected_color = ray_trace(rt, depth + 1);
 		final_color = blend_color(local_color, reflected_color, local_kr);
 	}

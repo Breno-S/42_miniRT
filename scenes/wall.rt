@@ -6,4 +6,4 @@ C   0,0,0      0,0,1                70
 
 pl  0,0,10     0,0,-1                230,100,30     mt  0.32  0.78  0.992157  27.89 1 scenes/brick_wall.xpm CHK
 
-sp	-1,0,-3			1				255,0,0    mt  0.32  0.78  0.992157  27.89 0 scenes/brick_wall.xpm NON_COLOR
+sp	-1,0,-3			1				255,0,0    mt  0.32  0.78  0.992157  27.89 0 scenes/brick_wall.xpm NORMAL_COLOR

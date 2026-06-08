@@ -31,6 +31,7 @@ SRCS_COMMON_PARSER := \
 	ft_rtlstadd_back.c \
 	error.c \
 	import_ent.c \
+	import_material.c \
 	import_obj.c \
 	import_obj_bonus.c \
 	import_ent_utils.c \
@@ -63,7 +64,8 @@ SRCS_MANDATORY_RENDERER := \
 	ray_context.c \
 	ray_trace.c \
 	renderer.c \
-	phong.c
+	phong.c \
+	surface_color.c
 
 SRCS_COMMON_PARSER += $(SRCS_MANDATORY_PARSER)
 
