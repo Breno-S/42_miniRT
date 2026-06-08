@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   phong.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/01 15:03:13 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/06/02 15:47:11 by brensant         ###   ########.fr       */
+/*   Updated: 2026/06/08 12:54:02 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,9 @@
 
 t_vec3	get_surface_color(t_hit *hit);
 
-t_vec3	get_color_light(t_light light, t_hit hit, t_ray ray, float d);
+t_vec3	get_surface_color(t_hit *hit);
+
+t_vec3	get_color_light(t_light light, t_hit hit, t_ray ray);
 
 t_vec3	get_new_color(float diff, float spec, t_vec3 color_light, t_hit hit);
 

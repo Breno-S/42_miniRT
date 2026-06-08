@@ -6,14 +6,14 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/01 13:54:17 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/06/03 19:46:02 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/06/04 22:35:25 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PARSER_H
 # define PARSER_H
 
-# include "error.h"
+# include "rt_error.h"
 # include "shapes.h"
 # include "scene.h"
 # include "libft.h"
@@ -64,11 +64,6 @@ bool		import_color(char *text, t_color *vec3);
 bool		import_vec3(char *text, t_vec3 *vec3);
 bool		verify_atoi(char *nptr);
 bool		verify_atof(char *nptr, float n_nbr);
-
-// ERRORS
-
-bool		error_msg(int err_type);
-bool		error_msg_ii(int err_type);
 
 // CREATE SCENE
 
