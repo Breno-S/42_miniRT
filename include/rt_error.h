@@ -6,7 +6,7 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/06 13:34:32 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/06/04 23:01:57 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/06/08 15:29:40 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,29 +31,8 @@
 # define M_BMP_ERR "miniRT: color map invalid (not a .xpm file or CHK)\n"
 # define M_NORMAL_ERR "miniRT: normal map invalid (not a .xpm file)\n"
 
-typedef enum e_type_err
-{
-	INVALID_ARG,
-	INVALID_EXTENSION,
-	OPEN_ERR,
-	MISS_ENT,
-	NON_NORMALIZE,
-	ERR_COLOR,
-	ERR_FOV,
-	ERR_LIGHT,
-	MANY_ARGS,
-	SIZE_VEC,
-	ERR_CONV,
-	DUP_ENT,
-	NBR_NORM,
-	NORMAL_ERR,
-	BMP_ERR,
-	IMP_XPM,
-}	t_type_erro;
-
 // ERRORS
 
-bool		error_msg(int err_type);
-bool		error_msg_ii(int err_type);
+bool		error_msg(int err_type, char *msg);
 
 #endif

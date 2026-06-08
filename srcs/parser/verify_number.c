@@ -6,7 +6,7 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/10 20:55:32 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/05/29 13:33:47 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/06/08 15:28:22 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ bool	verify_atoi(char *nptr)
 			return (1);
 	}
 	if ((nptr[i] && !ft_isdigit(nptr[i])))
-		return (error_msg_ii(ERR_CONV));
+		return (error_msg(1, M_ERR_CONV));
 	return (0);
 }
 
@@ -55,6 +55,6 @@ bool	verify_atof(char *nptr, float n_nbr)
 	while (ft_isdigit(nptr[i]))
 		i++;
 	if (isinf(n_nbr) == 1 || (nptr[i] && !ft_isdigit(nptr[i])))
-		return (error_msg_ii(ERR_CONV));
+		return (error_msg(1, M_ERR_CONV));
 	return (0);
 }

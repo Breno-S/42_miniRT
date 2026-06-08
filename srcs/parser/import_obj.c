@@ -6,7 +6,7 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/28 18:23:33 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/06/03 19:18:29 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/06/08 15:24:26 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ bool	create_sphere(char *entity)
 	s_ent = ft_split_spaces(entity);
 	ft_gcfct_arr_register((void **)s_ent, GC_DATA);
 	if (ft_size_chrarr(s_ent) != 4 && ft_size_chrarr(s_ent) != 12)
-		return (error_msg(MANY_ARGS));
+		return (error_msg(1, M_MANY_ARG));
 	if (ft_size_chrarr(s_ent) == 12 && create_material(&s_ent[4], &lst))
 		return (1);
 	if (import_vec3(s_ent[1], &lst->obj.pos) == 1)
@@ -49,7 +49,7 @@ bool	create_plane(char *entity)
 	s_ent = ft_split_spaces(entity);
 	ft_gcfct_arr_register((void **)s_ent, GC_DATA);
 	if (ft_size_chrarr(s_ent) != 4 && ft_size_chrarr(s_ent) != 12)
-		return (error_msg(MANY_ARGS));
+		return (error_msg(1, M_MANY_ARG));
 	if (ft_size_chrarr(s_ent) == 12 && create_material(&s_ent[4], &lst))
 		return (1);
 	if (import_vec3(s_ent[1], &lst->obj.pos) == 1)
@@ -73,7 +73,7 @@ bool	create_cylinder(char *entity)
 	s_ent = ft_split_spaces(entity);
 	ft_gcfct_arr_register((void **)s_ent, GC_DATA);
 	if (ft_size_chrarr(s_ent) != 6 && ft_size_chrarr(s_ent) != 14)
-		return (error_msg(MANY_ARGS));
+		return (error_msg(1, M_MANY_ARG));
 	if (ft_size_chrarr(s_ent) == 14 && create_material(&s_ent[6], &lst))
 		return (1);
 	if (import_vec3(s_ent[1], &lst->obj.pos) == 1)
@@ -84,7 +84,7 @@ bool	create_cylinder(char *entity)
 	lst->obj.cylinder.height = ft_atof(s_ent[4]);
 	if (verify_atof(s_ent[3], lst->obj.cylinder.radius)
 		|| verify_atof(s_ent[4], lst->obj.cylinder.height))
-		return (error_msg_ii(ERR_CONV));
+		return (error_msg(1, M_ERR_CONV));
 	if (import_color(s_ent[5], &lst->obj.color) == 1)
 		return (1);
 	lst->obj.intersect = hit_cylinder;
