@@ -6,7 +6,7 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/01 14:59:12 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/06/08 12:57:05 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/06/08 14:01:09 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,4 +59,18 @@ t_vec3	get_new_color(float diff, float spec, t_vec3 color_light, t_hit hit)
 	if (spec > 0)
 		color_final = vec3_add(color_final, vec3_scale(color_light, spec));
 	return (color_final);
+}
+
+t_color blend_color(t_color color1, t_color color2, float kr)
+{
+	t_vec3	v_color1;
+	t_vec3	v_color2;
+	t_vec3	final_color;
+
+	v_color1 = color_to_vec(color1);
+	v_color2 = color_to_vec(color2);
+
+	final_color = vec3_add(vec3_scale(v_color1, (1 - kr)),
+		vec3_scale(v_color2, (kr)));
+	return (color_from_vec(final_color));
 }

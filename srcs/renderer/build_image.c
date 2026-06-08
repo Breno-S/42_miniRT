@@ -6,7 +6,7 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/29 14:13:32 by brensant          #+#    #+#             */
-/*   Updated: 2026/06/08 13:14:54 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/06/08 14:21:53 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ static bool	check_shadow(t_rt *rt, t_vec3 hit_padded, t_light *light)
 	return (!(sec_hit.did_hit && sec_hit.distance <= light->to_light));
 }
 
-static void	set_pixel_color(t_rt *rt)
+static t_color	set_pixel_color(t_rt *rt)
 {
 	t_vec3	hit_padded;
 	t_vec3	color_final;
@@ -81,8 +81,7 @@ static void	set_pixel_color(t_rt *rt)
 	int		i;
 
 	i = 0;
-	color_final = (t_vec3){0};
-	rt->rc.color = (t_color){.hex = BACKGROURD_COLOR};
+	color_final = color_to_vec((t_color){.hex = BACKGROURD_COLOR});
 	if (rt->rc.closest_hit.did_hit)
 	{
 		base_color = get_surface_color(&rt->rc.closest_hit);
@@ -98,8 +97,8 @@ static void	set_pixel_color(t_rt *rt)
 							rt->rc.closest_hit, rt->rc.ray), color_final);
 			i++;
 		}
-		rt->rc.color = color_from_vec(color_vec_clamp(color_final));
 	}
+	return (color_from_vec(color_vec_clamp(color_final)));
 }
 // TODO: I DON'T KNOW
 		// t_hit hit_obj = get_closest_collision(&(t_ray){hit_padded, reflected_ray}, rt->scene.obj, rt->scene.objs_num);
@@ -114,25 +113,23 @@ t_color	ray_trace(t_rt *rt, int depth)
 	t_color	reflected_color;
 	t_color	local_color;
 	t_color	final_color;
+	float	local_kr;
 
 	// Calcular a colisão mais próxima
 	rt->rc.closest_hit = get_closest_collision(&rt->rc.ray,
 			rt->scene.obj, rt->scene.objs_num);
+	local_color.hex = BACKGROURD_COLOR;
 	if (!rt->rc.closest_hit.did_hit)
-	{
-		rt->rc.color.hex = BACKGROURD_COLOR;
-		return (rt->rc.color);
-	}
+		return (local_color);
 	else
-	{
-		local_color.hex = BACKGROURD_COLOR;
-	}
-	// Se for refletivo e # de iterações < max
-	if (rt->rc.closest_hit.obj->type == SPHERE && depth < 10)
+		local_color = set_pixel_color(rt);
+	local_kr = rt->rc.closest_hit.obj->phong_spec.kr;
+	if (local_kr > 0.0 && depth < 10)
 	{
 		reflected_ray = vec3_reflect(rt->rc.ray.dir, rt->rc.closest_hit.normal);
+		rt->rc.ray = ray_new(rt->rc.closest_hit.point, reflected_ray);
 		reflected_color = ray_trace(rt, depth + 1);
-		final_color.hex = BACKGROURD_COLOR;
+		final_color = blend_color(local_color, reflected_color, local_kr);
 	}
 	else
 		final_color = local_color;
@@ -156,14 +153,10 @@ void	rt_build_image(t_rt *rt)
 			// Criar raio primário, que atravessa este pixel
 			rt->rc.ray = ray_new(rt->rc.orig, (vec3_sub(rt->rc.px,
 							rt->rc.orig)));
-			ray_trace(rt, 0);
+			rt->rc.color = ray_trace(rt, 0);
 			// Calcular a colisão mais próxima
 			// rt->rc.closest_hit = get_closest_collision(&rt->rc.ray,
 			// 		rt->scene.obj, rt->scene.objs_num);
-			if (rt->rc.closest_hit.obj->type == SPHERE)
-				set_pixel_color(rt);
-			else
-				set_pixel_color(rt);
 			pixel_put(&rt->mlx, xy[0], xy[1], rt->rc.color.hex);
 			xy[0]++;
 		}

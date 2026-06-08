@@ -6,7 +6,7 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/10 20:51:26 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/06/04 23:15:18 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/06/08 14:03:32 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,13 +98,13 @@ bool	create_material(char **entity, t_rt_list **lst)
 	mat.kd = ft_atof(entity[2]);
 	mat.ks = ft_atof(entity[3]);
 	mat.m = ft_atof(entity[4]);
-	mat.r = ft_atof(entity[5]);
-	if ((mat.ka > 1.0 || mat.ks > 1.0 || mat.kd > 1.0 || mat.r > 1.0)
-		&& (mat.ka < 0.0 || mat.ks < 0.0 || mat.kd < 0.0 || mat.r < 0.0))
+	mat.kr = ft_atof(entity[5]);
+	if ((mat.ka > 1.0 || mat.ks > 1.0 || mat.kd > 1.0 || mat.kr > 1.0)
+		&& (mat.ka < 0.0 || mat.ks < 0.0 || mat.kd < 0.0 || mat.kr < 0.0))
 		return (error_msg_ii(NBR_NORM));
 	if (verify_atof(entity[1], mat.ka) || verify_atof(entity[2], mat.kd)
 		|| verify_atof(entity[3], mat.ks) || verify_atof(entity[4], mat.m)
-		|| verify_atof(entity[5], mat.r))
+		|| verify_atof(entity[5], mat.kr))
 		return (1);
 	import_textures(&entity[6], &mat);
 	lst[0]->obj.phong_spec = mat;

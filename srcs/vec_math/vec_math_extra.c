@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vec_math_extra.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/23 01:33:38 by brensant          #+#    #+#             */
-/*   Updated: 2026/05/27 14:30:32 by brensant         ###   ########.fr       */
+/*   Updated: 2026/06/08 14:09:39 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@ float	vec3_distance(t_vec3 u, t_vec3 v)
 
 t_vec3	vec3_reflect(t_vec3 v, t_vec3 mirror_vector)
 {
-	return (vec3_sub(v, vec3_scale(mirror_vector,
-				2.0 * vec3_dot(v, mirror_vector))));
+	return (vec3_normalize(vec3_sub(v, vec3_scale(mirror_vector,
+				2.0 * vec3_dot(v, mirror_vector)))));
 }
 
 t_vec3	vec3_transform(t_vec3 v, t_matrix *m)
