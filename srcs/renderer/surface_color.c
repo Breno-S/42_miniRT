@@ -6,7 +6,7 @@
 /*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/08 17:27:13 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/06/08 19:26:02 by brensant         ###   ########.fr       */
+/*   Updated: 2026/06/08 20:32:54 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,19 +17,6 @@
 #include <float.h>
 #include <math.h>
 
-t_vec3	get_surface_color(t_hit *hit)
-{
-	int	x;
-	int	y;
-	t_color	pixel_value;
-
-	x = roundf(hit->uv[0] * hit->obj->phong_spec.color.width);
-	y = roundf(hit->uv[1] * hit->obj->phong_spec.color.height);
-	pixel_value = (t_color){.hex = hit->obj->phong_spec.color.img_addr[y
-		* hit->obj->phong_spec.color.size_line + x]};
-	return (color_to_vec(pixel_value));
-}
-
 t_vec3	handle_surface_color(t_hit *hit)
 {
 	if (hit->obj->phong_spec.b_type & CHK)
@@ -39,6 +26,26 @@ t_vec3	handle_surface_color(t_hit *hit)
 	else if (hit->obj->phong_spec.b_type & COLOR)
 		return (get_surface_color(hit));
 	return (hit->obj->color_vec);
+}
+
+t_vec3	get_surface_color(t_hit *hit)
+{
+	int		x;
+	int		y;
+	t_color	pixel_value;
+
+	t_color test_first_line = (t_color){.hex = (uint32_t)hit->obj->phong_spec.color.img_addr[
+		0 * hit->obj->phong_spec.color.size_line
+		+ 0 * hit->obj->phong_spec.color.bpp / 8]};;
+	t_color test_last_line = (t_color){.hex = (uint32_t)hit->obj->phong_spec.color.img_addr[
+		100 * hit->obj->phong_spec.color.size_line
+		+ 0 * hit->obj->phong_spec.color.bpp / 8]};;
+	x = roundf(hit->uv[0] * hit->obj->phong_spec.color.width);
+	y = roundf(hit->uv[1] * hit->obj->phong_spec.color.height);
+	pixel_value = (t_color){.hex = hit->obj->phong_spec.color.img_addr[
+		y * hit->obj->phong_spec.color.size_line
+		+ x * hit->obj->phong_spec.color.bpp / 8]};
+	return (color_to_vec(pixel_value));
 }
 
 t_vec3	get_surface_chk(t_hit *hit)
