@@ -6,7 +6,7 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/16 13:02:25 by brensant          #+#    #+#             */
-/*   Updated: 2026/06/08 12:52:44 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/06/08 12:58:56 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ typedef struct s_hit
 
 void	set_uv_coords(t_hit *hit);
 
-t_hit	get_closest_collision(t_ray *ray, t_obj *list, int list_size);
 t_hit	hit_miss(void);
 t_hit	hit_sphere(t_ray *ray, t_obj *sphere);
 t_hit	hit_plane(t_ray *ray, t_obj *plane);
