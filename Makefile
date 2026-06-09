@@ -61,6 +61,7 @@ SRCS_MANDATORY_VEC_MATH := \
 	vec_math_unary.c
 
 SRCS_MANDATORY_RENDERER := \
+	bump.c \
 	ray_context.c \
 	ray_trace.c \
 	renderer.c \

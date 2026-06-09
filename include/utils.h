@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/26 17:06:52 by brensant          #+#    #+#             */
-/*   Updated: 2026/06/03 17:56:07 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/06/09 17:43:55 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,6 @@ void	pixel_put(t_mlx_env *env, int x, int y, int color);
 
 void	create_textures(t_rt *rt);
 
-bool	import_bump_file(t_bump *bump, void *mlx);
+bool	import_bump_file(t_mapping *bump, void *mlx);
 
 #endif // UTILS_H

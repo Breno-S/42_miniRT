@@ -6,7 +6,7 @@
 /*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/01 15:49:00 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/06/08 19:14:31 by brensant         ###   ########.fr       */
+/*   Updated: 2026/06/09 17:44:12 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ typedef struct s_cylinder
 	float			height;
 }	t_cylinder;
 
-typedef struct s_bump
+typedef struct s_mapping
 {
 	t_btype	b_type;
 	char	*filename;
@@ -92,7 +92,7 @@ typedef struct s_bump
 	int		endian;
 	int		width;
 	int		height;
-}	t_bump;
+}	t_mapping;
 
 typedef t_cylinder	t_cone;
 
@@ -105,8 +105,8 @@ typedef struct s_mat
 	float			m;
 	float			kr;
 	unsigned char	b_type;
-	t_bump			normal;
-	t_bump			color;
+	t_mapping			normal;
+	t_mapping			color;
 }	t_mat;
 
 typedef struct s_obj

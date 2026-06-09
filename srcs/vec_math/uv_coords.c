@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   uv_coords.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/02 11:10:28 by brensant          #+#    #+#             */
-/*   Updated: 2026/06/09 15:38:04 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/06/09 18:37:21 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ static void	set_uv_coords_pl(t_hit *hit, t_obj *plane)
 	t_vec3	diff;
 	float	scale;
 
-	scale = 0.1;
+	scale = 0.5;
 	if (fabsf(hit->normal.y) == 1)
 		dummy_axis = (t_vec3){1, 0, 0, 0};
 	else

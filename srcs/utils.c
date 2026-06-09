@@ -6,7 +6,7 @@
 /*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/26 17:02:53 by brensant          #+#    #+#             */
-/*   Updated: 2026/06/08 19:12:10 by brensant         ###   ########.fr       */
+/*   Updated: 2026/06/09 17:43:55 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void	create_textures(t_rt *rt)
 	}
 }
 
-bool	import_bump_file(t_bump *bump, void *mlx)
+bool	import_bump_file(t_mapping *bump, void *mlx)
 {
 	bump[0].img = mlx_xpm_file_to_image(
 			mlx, bump[0].filename, &bump->width, &bump->height);

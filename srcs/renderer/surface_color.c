@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   surface_color.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/08 17:27:13 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/06/09 15:41:18 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/06/09 17:48:52 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,21 +24,20 @@ t_vec3	handle_surface_color(t_hit *hit)
 	else if (hit->obj->phong_spec.b_type & NORMAL_COLOR)
 		return (get_surface_normal(hit));
 	else if (hit->obj->phong_spec.b_type & COLOR)
-		return (get_surface_color(hit));
+		return (get_map_value(hit, &hit->obj->phong_spec.color));
 	return (hit->obj->color_vec);
 }
 
-t_vec3	get_surface_color(t_hit *hit)
+t_vec3	get_map_value(t_hit *hit, t_mapping *map)
 {
 	int		x;
 	int		y;
 	t_color	pixel_value;
 
-	x = roundf(hit->uv[0] * (hit->obj->phong_spec.color.width - 1));
-	y = roundf(hit->uv[1] * (hit->obj->phong_spec.color.height - 1));
-	pixel_value.hex = *(uint32_t *)&hit->obj->phong_spec.color.img_addr
-		[y * hit->obj->phong_spec.color.size_line + x
-		* (hit->obj->phong_spec.color.bpp / 8)];
+	x = roundf(hit->uv[0] * (map->width - 1));
+	y = roundf(hit->uv[1] * (map->height - 1));
+	pixel_value.hex = *(uint32_t *)&map->img_addr[y * map->size_line
+			+ x * (map->bpp / 8)];
 	return (color_to_vec(pixel_value));
 }
 

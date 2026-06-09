@@ -6,7 +6,7 @@
 /*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/01 15:03:13 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/06/08 15:10:25 by brensant         ###   ########.fr       */
+/*   Updated: 2026/06/09 17:45:23 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,6 @@
 # include "ray.h"
 # include "rt.h"
 # include "mlx_env.h"
-
-t_vec3	get_surface_color(t_hit *hit);
 
 t_color	blend_color(t_color color1, t_color color2, float kr);
 
