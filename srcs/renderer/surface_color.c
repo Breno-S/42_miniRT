@@ -6,7 +6,7 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/08 17:27:13 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/06/09 00:02:41 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/06/09 15:41:18 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,11 @@ t_vec3	get_surface_color(t_hit *hit)
 	int		y;
 	t_color	pixel_value;
 
-	x = roundf(hit->uv[0] * hit->obj->phong_spec.color.width);
-	y = roundf(hit->uv[1] * hit->obj->phong_spec.color.height);
-	pixel_value.hex = *(uint32_t *)(char *)&hit->obj->phong_spec.color.img_addr
-		[y * hit->obj->phong_spec.color.size_line
-		+ x * (hit->obj->phong_spec.color.bpp / 8)];
+	x = roundf(hit->uv[0] * (hit->obj->phong_spec.color.width - 1));
+	y = roundf(hit->uv[1] * (hit->obj->phong_spec.color.height - 1));
+	pixel_value.hex = *(uint32_t *)&hit->obj->phong_spec.color.img_addr
+		[y * hit->obj->phong_spec.color.size_line + x
+		* (hit->obj->phong_spec.color.bpp / 8)];
 	return (color_to_vec(pixel_value));
 }
 
@@ -49,7 +49,7 @@ t_vec3	get_surface_chk(t_hit *hit)
 	float	pattern_size;
 
 	if (hit->obj->type == PLANE)
-		pattern_size = 1.0;
+		pattern_size = 10.0;
 	else
 		pattern_size = 10.0;
 	u_idx = floorf(hit->uv[0] * pattern_size);

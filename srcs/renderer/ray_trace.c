@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ray_trace.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/29 14:13:32 by brensant          #+#    #+#             */
-/*   Updated: 2026/06/08 19:26:02 by brensant         ###   ########.fr       */
+/*   Updated: 2026/06/09 14:46:14 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,9 @@ static t_hit	get_closest_collision(t_ray *ray, t_obj *list, int list_size)
 	}
 	if (closest.did_hit)
 	{
-		set_uv_coords(&closest);
 		closest.hit_padded = vec3_add(closest.point,
 				vec3_scale(closest.normal, 0.0001));
+		set_uv_coords(&closest);
 	}
 	return (closest);
 }

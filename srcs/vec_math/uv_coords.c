@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   uv_coords.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/02 11:10:28 by brensant          #+#    #+#             */
-/*   Updated: 2026/06/08 14:43:58 by brensant         ###   ########.fr       */
+/*   Updated: 2026/06/09 15:38:04 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt.h"
+#include "libft.h"
 
 #include <math.h>
 #include <float.h>
@@ -25,7 +26,7 @@ static void	set_uv_coords_co(t_hit *hit, t_obj *cone)
 
 	vp = vec3_sub(cone->pos, hit->point);
 	hit_height = vec3_dot(vp, cone->cone.axis);
-	hit->uv[1] = hit_height / cone->cone.height;
+	hit->uv[1] = hit_height / (cone->cone.height / 2);
 	if (fabsf(cone->cone.axis.y) == 1)
 		dummy_x_axis = vec3_normalize(
 				vec3_cross((t_vec3){1, 0, 0, 0}, cone->cone.axis));
@@ -49,7 +50,7 @@ static void	set_uv_coords_cy(t_hit *hit, t_obj *cylinder)
 
 	cp = vec3_sub(hit->point, cylinder->pos);
 	hit_height = vec3_dot(cp, cylinder->cylinder.axis);
-	hit->uv[1] = hit_height / cylinder->cylinder.height;
+	hit->uv[1] = 0.5 + (hit_height / cylinder->cylinder.height);
 	if (fabsf(cylinder->cylinder.axis.y) == 1)
 		dummy_x_axis = vec3_normalize(
 				vec3_cross((t_vec3){1, 0, 0, 0}, cylinder->cylinder.axis));
@@ -74,16 +75,20 @@ static void	set_uv_coords_pl(t_hit *hit, t_obj *plane)
 	t_vec3	u_axis;
 	t_vec3	v_axis;
 	t_vec3	diff;
+	float	scale;
 
-	if (fabsf(plane->plane.normal.y) == 1)
+	scale = 0.1;
+	if (fabsf(hit->normal.y) == 1)
 		dummy_axis = (t_vec3){1, 0, 0, 0};
 	else
 		dummy_axis = (t_vec3){0, 1, 0, 0};
-	u_axis = vec3_normalize(vec3_cross(dummy_axis, plane->plane.normal));
-	v_axis = vec3_cross(plane->plane.normal, u_axis);
+	u_axis = vec3_normalize(vec3_cross(dummy_axis, hit->normal));
+	v_axis = vec3_normalize(vec3_cross(hit->normal, u_axis));
 	diff = vec3_sub(hit->point, plane->pos);
-	hit->uv[0] = vec3_dot(diff, u_axis);
-	hit->uv[1] = vec3_dot(diff, v_axis);
+	hit->uv[0] = vec3_dot(diff, u_axis) * scale;
+	hit->uv[1] = vec3_dot(diff, v_axis) * scale;
+	hit->uv[0] -= floorf(hit->uv[0]);
+	hit->uv[1] -= floorf(hit->uv[1]);
 }
 
 void	set_uv_coords(t_hit *hit)
