@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   uv_coords.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/02 11:10:28 by brensant          #+#    #+#             */
-/*   Updated: 2026/06/10 20:56:40 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/06/11 16:43:31 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ static void	set_uv_coords_cy(t_hit *hit, t_obj *cylinder)
 
 static void	set_uv_coords_sp(t_hit *hit)
 {
-	hit->uv[0] = 0.5 + (atan2f(hit->normal.z, hit->normal.x) / (2 * PI));
+	hit->uv[0] = 0.5 + (atan2f(hit->normal.z, hit->normal.x) / (-2 * PI));
 	hit->uv[1] = 0.5 - (asinf(hit->normal.y) / PI);
 }
 
