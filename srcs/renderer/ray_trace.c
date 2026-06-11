@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ray_trace.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/29 14:13:32 by brensant          #+#    #+#             */
-/*   Updated: 2026/06/09 18:04:28 by brensant         ###   ########.fr       */
+/*   Updated: 2026/06/10 19:33:47 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,11 +35,11 @@ static t_hit	get_closest_collision(t_ray *ray, t_obj *list, int list_size)
 	}
 	if (closest.did_hit)
 	{
-		if (closest.obj->phong_spec.b_type & (CHK | NORMAL | COLOR))
+		if (closest.obj->phong_spec.b_type & (B_CHK | B_NORMAL | B_COLOR))
 		{
 			set_uv_coords(&closest);
-			if (closest.obj->phong_spec.b_type & NORMAL)
-				apply_bump_map(&closest);
+			if (closest.obj->phong_spec.b_type & (B_NORMAL | B_BUMP))
+				handle_texture_maps(&closest);
 		}
 		closest.hit_padded = vec3_add(closest.point,
 				vec3_scale(closest.normal, 0.0001));

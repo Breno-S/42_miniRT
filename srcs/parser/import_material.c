@@ -6,7 +6,7 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/08 17:38:03 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/06/08 17:49:13 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/06/10 20:58:26 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,17 +34,31 @@ bool	create_material(char **entity, t_rt_list **lst)
 		|| verify_atof(entity[5], mat.kr))
 		return (1);
 	import_normal_map(entity[6], &mat);
-	import_color_map(entity[7], &mat);
+	import_bump_map(entity[7], &mat);
+	import_color_map(entity[8], &mat);
 	lst[0]->obj.phong_spec = mat;
 	return (0);
+}
+
+void	import_bump_map(char *filename, t_mat *mat)
+{
+	if (!ft_check_extension(filename, ".xpm"))
+	{
+		mat->b_type |= B_BUMP;
+		mat->bump.b_type |= B_BUMP;
+		mat->bump.filename = ft_gcfct_register_root(
+				(void *)ft_strdup(filename), "bmp");
+	}
+	else if (!ft_strnstr(filename, "NON_BUMP", 99))
+		error_msg(1, M_NORMAL_ERR);
 }
 
 void	import_normal_map(char *filename, t_mat *mat)
 {
 	if (!ft_check_extension(filename, ".xpm"))
 	{
-		mat->b_type |= NORMAL;
-		mat->normal.b_type |= NORMAL;
+		mat->b_type |= B_NORMAL;
+		mat->normal.b_type |= B_NORMAL;
 		mat->normal.filename = ft_gcfct_register_root(
 				(void *)ft_strdup(filename), "bmp");
 	}
@@ -56,20 +70,20 @@ void	import_color_map(char *filename, t_mat *mat)
 {
 	if (!ft_check_extension(filename, ".xpm"))
 	{
-		mat->b_type |= COLOR;
-		mat->color.b_type |= COLOR;
+		mat->b_type |= B_COLOR;
+		mat->color.b_type |= B_COLOR;
 		mat->color.filename = ft_gcfct_register_root(
 				(void *)ft_strdup(filename), "bmp");
 	}
 	else if (ft_strnstr(filename, "CHK", 99))
 	{
-		mat->b_type |= CHK;
-		mat->color.b_type |= CHK;
+		mat->b_type |= B_CHK;
+		mat->color.b_type |= B_CHK;
 	}
 	else if (ft_strnstr(filename, "NORMAL_COLOR", 99))
 	{
-		mat->b_type |= NORMAL_COLOR;
-		mat->color.b_type |= NORMAL_COLOR;
+		mat->b_type |= B_NORMAL_COLOR;
+		mat->color.b_type |= B_NORMAL_COLOR;
 	}
 	else if (!ft_strnstr(filename, "NON_COLOR", 99))
 		error_msg(1, M_BMP_ERR);

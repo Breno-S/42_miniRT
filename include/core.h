@@ -6,7 +6,7 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/01 16:58:42 by brensant          #+#    #+#             */
-/*   Updated: 2026/05/29 19:40:22 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/06/10 17:01:51 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 
 # define FOCAL_DISTANCE 0.6f
 
-# define BACKGROURD_COLOR 0x101010
+# define BACKGROURD_COLOR 0x000000
 
 typedef struct t_vec4
 {

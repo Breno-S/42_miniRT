@@ -6,7 +6,7 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/01 13:53:38 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/06/08 15:35:12 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/06/10 16:51:40 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,10 @@ static int	finish_program(t_rt rt, int rtn)
 	{
 		while (i < rt.scene.objs_num)
 		{
-			if (rt.scene.obj[i].phong_spec.b_type & NORMAL)
+			if (rt.scene.obj[i].phong_spec.b_type & B_NORMAL)
 				mlx_destroy_image(rt.mlx.mlx_ptr,
 					rt.scene.obj[i].phong_spec.normal.img);
-			if (rt.scene.obj[i].phong_spec.b_type & COLOR)
+			if (rt.scene.obj[i].phong_spec.b_type & B_COLOR)
 				mlx_destroy_image(rt.mlx.mlx_ptr,
 					rt.scene.obj[i].phong_spec.color.img);
 			i++;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   import_obj_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/28 18:25:02 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/06/08 15:40:56 by brensant         ###   ########.fr       */
+/*   Updated: 2026/06/10 20:43:53 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,9 @@ bool	create_cone(char *entity)
 	lst->obj.type = CONE;
 	s_ent = ft_split_spaces(entity);
 	ft_gcfct_arr_register((void **)s_ent, GC_DATA);
-	if (ft_size_chrarr(s_ent) != 6 && ft_size_chrarr(s_ent) != 14)
+	if (ft_size_chrarr(s_ent) != 6 && ft_size_chrarr(s_ent) != 15)
 		return (error_msg(1, M_MANY_ARG));
-	if (ft_size_chrarr(s_ent) == 14 && create_material(&s_ent[6], &lst))
+	if (ft_size_chrarr(s_ent) == 15 && create_material(&s_ent[6], &lst))
 		return (1);
 	if (import_vec3(s_ent[1], &lst->obj.pos) == 1)
 		return (1);

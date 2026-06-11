@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shapes.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/01 15:49:00 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/06/09 17:44:12 by brensant         ###   ########.fr       */
+/*   Updated: 2026/06/10 23:49:16 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,11 @@ typedef enum e_shapes_type
 
 typedef enum e_btype
 {
-	CHK				= 1 << 0,
-	NORMAL			= 1 << 1,
-	COLOR			= 1 << 2,
-	NORMAL_COLOR	= 1 << 3
+	B_CHK			= 1 << 0,
+	B_NORMAL		= 1 << 1,
+	B_BUMP			= 1 << 2,
+	B_COLOR			= 1 << 3,
+	B_NORMAL_COLOR	= 1 << 4
 }	t_btype;
 
 typedef struct s_ambient
@@ -105,8 +106,9 @@ typedef struct s_mat
 	float			m;
 	float			kr;
 	unsigned char	b_type;
-	t_mapping			normal;
-	t_mapping			color;
+	t_mapping		normal;
+	t_mapping		bump;
+	t_mapping		color;
 }	t_mat;
 
 typedef struct s_obj

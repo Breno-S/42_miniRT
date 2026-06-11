@@ -6,7 +6,7 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/03 19:32:11 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/06/03 19:32:51 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/06/10 22:24:23 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,6 @@ static void	set_hit(t_hit *hit, t_ray *ray, t_vec4 *coeff)
 	float	closest_hit_scalar;
 	float	farthest_hit_scalar;
 	float	t;
-	t_vec3	cp;
-	t_vec3	proj;
 
 	closest_hit_scalar = (-coeff->y - coeff->w) / (2.0 * coeff->x);
 	farthest_hit_scalar = (-coeff->y + coeff->w) / (2.0 * coeff->x);
@@ -75,9 +73,6 @@ static void	set_hit(t_hit *hit, t_ray *ray, t_vec4 *coeff)
 		hit->did_hit = true;
 		hit->distance = t;
 		hit->point = ray_at(ray, t);
-		cp = vec3_sub(hit->point, hit->obj->pos);
-		proj = vec3_scale(hit->obj->cone.axis,
-				vec3_dot(cp, hit->obj->cone.axis));
 		set_normal(hit, hit->obj);
 		if (vec3_dot(ray->dir, hit->normal) > FLT_EPSILON)
 			hit->normal = vec3_negate(hit->normal);

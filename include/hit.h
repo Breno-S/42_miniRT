@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hit.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/16 13:02:25 by brensant          #+#    #+#             */
-/*   Updated: 2026/06/09 18:04:16 by brensant         ###   ########.fr       */
+/*   Updated: 2026/06/10 19:34:20 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,9 @@ typedef struct s_hit
 
 void	set_uv_coords(t_hit *hit);
 
-void	apply_bump_map(t_hit *hit);
+void	handle_texture_maps(t_hit *hit);
+void	apply_normal_map(t_hit *hit, t_vec3 tg, t_vec3 btg);
+void	apply_bump_map(t_hit *hit, t_vec3 tg, t_vec3 btg);
 
 t_vec3	handle_surface_color(t_hit *hit);
 t_vec3	get_map_value(t_hit *hit, t_mapping *bump);
