@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rt_error.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/06 13:34:32 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/06/08 15:39:45 by brensant         ###   ########.fr       */
+/*   Updated: 2026/06/11 00:06:55 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,9 @@
 # define M_DUP_ENT "miniRT: Dup. entity declaration (ambient, cam or light).\n"
 # define M_NBR_NORM "miniRT: nbr not normalized (between '0' and '1').\n"
 # define M_IMP_XPM "miniRT: unable to load XPM file (missing or invalid): "
-# define M_BMP_ERR "miniRT: color map invalid (not a .xpm file or CHK)\n"
-# define M_NORMAL_ERR "miniRT: normal map invalid (not a .xpm file)\n"
+# define M_BMP_ERR "miniRT: color map invalid (not a .xpm file or CHK).\n"
+# define M_NORMAL_ERR "miniRT: normal or bump map invalid (not a .xpm file).\n"
+# define M_DEFAULT "Warning: Applying default settings to object."
 
 // ERRORS
 
