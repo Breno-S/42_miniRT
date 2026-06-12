@@ -6,7 +6,7 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/16 13:02:25 by brensant          #+#    #+#             */
-/*   Updated: 2026/06/12 14:43:30 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/06/12 14:44:46 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	handle_texture_maps(t_hit *hit);
 void	apply_normal_map(t_hit *hit, t_vec3 tg, t_vec3 btg);
 void	apply_bump_map(t_hit *hit, t_vec3 tg, t_vec3 btg);
 
-t_vec3	handle_surface_color(t_hit *hit, void *mlx);
+t_vec3	handle_surface_color(t_hit *hit);
 t_vec3	get_map_value(t_hit *hit, t_mapping *bump);
 t_vec3	get_surface_chk(t_hit *hit);
 t_vec3	get_surface_normal(t_hit *hit);

@@ -6,7 +6,7 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/29 14:13:32 by brensant          #+#    #+#             */
-/*   Updated: 2026/06/12 14:43:30 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/06/12 14:44:46 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ static t_color	set_pixel_color(t_rt *rt)
 	if (rt->rc.closest_hit.did_hit)
 	{
 		rt->rc.closest_hit.base_color
-			= handle_surface_color(&rt->rc.closest_hit, rt->mlx.mlx_ptr);
+			= handle_surface_color(&rt->rc.closest_hit);
 		color_final = vec3_mult(rt->rc.closest_hit.base_color,
 				vec3_scale(rt->scene.ambient.vec_color,
 					rt->rc.closest_hit.obj->ka_final));
