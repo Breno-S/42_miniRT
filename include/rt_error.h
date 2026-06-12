@@ -6,7 +6,7 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/06 13:34:32 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/06/11 00:06:55 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/06/12 15:52:43 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,11 @@
 # define M_IMP_XPM "miniRT: unable to load XPM file (missing or invalid): "
 # define M_BMP_ERR "miniRT: color map invalid (not a .xpm file or CHK).\n"
 # define M_NORMAL_ERR "miniRT: normal or bump map invalid (not a .xpm file).\n"
-# define M_DEFAULT "Warning: Applying default settings to object."
+# define M_DEFAULT "Applying default settings to object."
 
 // ERRORS
 
 bool		error_msg(int err_type, char *msg);
+bool		warning_msg(int err_type, char *msg);
 
 #endif

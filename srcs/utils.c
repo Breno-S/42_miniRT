@@ -6,7 +6,7 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/26 17:02:53 by brensant          #+#    #+#             */
-/*   Updated: 2026/06/12 13:55:52 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/06/12 15:52:43 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ bool	import_bump_file(t_mapping *bump, void *mlx, t_list **lst)
 				bump[0].b_type = (bump[0].b_type & ~B_COLOR);
 			if (bump[0].b_type & B_BUMP)
 				bump[0].b_type = (bump[0].b_type & ~B_BUMP);
-			error_msg(1, M_IMP_XPM);
+			warning_msg(1, M_IMP_XPM);
 			ft_putendl_fd(bump[0].filename, 2);
 			ft_putendl_fd(M_DEFAULT, 2);
 			return (1);

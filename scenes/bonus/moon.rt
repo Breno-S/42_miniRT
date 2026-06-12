@@ -23,8 +23,8 @@ L -1,0,5 1.0 255,255,255
 #
 # ⚠️ Replace filenames with yours
 ############################################################
-sp -4,2,4 5 200,200,200 mt 0.1 1 0.25 16 0.2 img/normal_maps/earthnormal2k.xpm img/bump_maps/earthbump2k.xpm img/color_maps/earthcolor2kclouds.xpm
+# sp -4,2,4 5 200,200,200 mt 0.1 1 0.25 16 0.2 img/normal_maps/earthnormal2k.xpm img/bump_maps/earthbump2k.xpm img/color_maps/earthcolor2kclouds.xpm
 
-sp 1,0,0 3 200,200,200 mt 0.1 1 0.25 16 0.2 NON_NORMAL img/bump_maps/moonbump1k.xpm img/color_maps/mooncolor1k.xpm
+sp 1,0,0 3 200,200,200 mt 0.1 1 0.25 16 0.2 NON_NORMAL img/bump_maps/moonbump1k.xpm NON_COLOR
 
 pl  0,0,-10     0,0,-1                230,100,30     mt 1  1  0  255 0 NON_NORMAL NON_BUMP img/color_maps/starscolor2k.xpm

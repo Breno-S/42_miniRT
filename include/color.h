@@ -6,7 +6,7 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/06 16:31:16 by brensant          #+#    #+#             */
-/*   Updated: 2026/06/10 22:33:00 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/06/12 15:52:43 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@
 # define C_M  32.0f
 # define C_R  0.0f
 
-# define BUMP_STRENGHT 2.0f
+# define BUMP_STRENGHT 20.0f
+# define BUMP_EPSILON 0.000001f
 
 # define D1 1.0f
 # define D2 0.000005f

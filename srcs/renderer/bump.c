@@ -6,7 +6,7 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/09 17:20:53 by brensant          #+#    #+#             */
-/*   Updated: 2026/06/12 14:44:46 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/06/12 15:52:43 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,14 +70,16 @@ void	apply_bump_map(t_hit *hit, t_vec3 tg, t_vec3 btg)
 	if (hit->obj->phong_spec.b_type & B_BUMP)
 	{
 		h_center = get_map_value(hit, &hit->obj->phong_spec.bump).x;
-		hit->uv[0] += FLT_EPSILON;
+		hit->uv[0] += BUMP_EPSILON;
 		h_u = get_map_value(hit, &hit->obj->phong_spec.bump).x;
-		hit->uv[0] -= FLT_EPSILON;
-		hit->uv[1] += FLT_EPSILON;
+		hit->uv[0] -= BUMP_EPSILON;
+		hit->uv[1] += BUMP_EPSILON;
 		h_v = get_map_value(hit, &hit->obj->phong_spec.bump).x;
-		hit->uv[1] -= FLT_EPSILON;
+		hit->uv[1] -= BUMP_EPSILON;
 		du = (h_u - h_center) * BUMP_STRENGHT;
 		dv = (h_v - h_center) * BUMP_STRENGHT;
+		if (du > 0 || dv > 0)
+			ft_printf("oi");
 		hit->normal = vec3_sub(hit->normal, vec3_scale(tg, du));
 		hit->normal = vec3_sub(hit->normal, vec3_scale(btg, dv));
 		hit->normal = vec3_normalize(hit->normal);

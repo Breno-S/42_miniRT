@@ -6,7 +6,7 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/08 17:38:03 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/06/11 00:05:55 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/06/12 15:52:43 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	import_bump_map(char *filename, t_mat *mat)
 	}
 	else if (!ft_strnstr(filename, "NON_BUMP", 99))
 	{
-		error_msg(1, M_NORMAL_ERR);
+		warning_msg(1, M_NORMAL_ERR);
 		ft_putendl_fd(M_DEFAULT, 2);
 	}
 }
@@ -67,7 +67,7 @@ void	import_normal_map(char *filename, t_mat *mat)
 	}
 	else if (!ft_strnstr(filename, "NON_NORMAL", 99))
 	{
-		error_msg(1, M_NORMAL_ERR);
+		warning_msg(1, M_NORMAL_ERR);
 		ft_putendl_fd(M_DEFAULT, 2);
 	}
 }
@@ -93,7 +93,7 @@ void	import_color_map(char *filename, t_mat *mat)
 	}
 	else if (!ft_strnstr(filename, "NON_COLOR", 99))
 	{
-		error_msg(1, M_BMP_ERR);
+		warning_msg(1, M_BMP_ERR);
 		ft_putendl_fd(M_DEFAULT, 2);
 	}
 }

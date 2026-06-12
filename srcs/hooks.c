@@ -6,7 +6,7 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/27 17:07:08 by brensant          #+#    #+#             */
-/*   Updated: 2026/06/12 14:44:46 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/06/12 15:13:50 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ static int	handle_keypress(int keysym, t_rt *rt)
 {
 	if (keysym == 0xff1b)
 	{
+		finish_images(*rt);
 		rt_mlx_destroy(rt);
 		ft_gc_end();
 		exit(0);
