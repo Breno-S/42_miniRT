@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   color.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/06 16:31:16 by brensant          #+#    #+#             */
-/*   Updated: 2026/06/12 16:50:34 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/06/12 17:23:22 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 # define C_M  32.0f
 # define C_R  0.0f
 
-# define BUMP_STRENGHT 1.0f
+# define BUMP_STRENGHT 1.5f
 # define BUMP_EPSILON 0.000001f
 
 # define D1 1.0f

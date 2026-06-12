@@ -75,6 +75,6 @@ Here are some of the most useful resources used to understand and develop this p
 - [Ray Tracing in One Weekend Series](https://raytracing.github.io/)
 - [Desenvolvendo um Raytracer em C](https://youtu.be/2ojN-5kAw3s?si=NQJh61q2DOTWRYz8)
 
-> [!Attention] AI Disclaimer
+> [!IMPORTANT]
 >
 > During the development of this project, AI tools (such as ChatGPT) were used as a learning aid to clarify concepts related to ray tracing and help with some math equations. Also, this README was improved with AI. All architectural decisions, implementations, and debugging were performed by the authors, and no code was copied verbatim from AI-generated sources. The project was developed with the intent of understanding and applying the underlying concepts.
