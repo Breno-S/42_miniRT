@@ -6,14 +6,12 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/09 17:20:53 by brensant          #+#    #+#             */
-/*   Updated: 2026/06/12 15:52:43 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/06/12 17:03:52 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt.h"
-#include <float.h>
 #include <math.h>
-#include <mlx.h>
 
 void	handle_texture_maps(t_hit *hit)
 {
@@ -38,7 +36,7 @@ void	handle_texture_maps(t_hit *hit)
 	dot_nt = vec3_dot(hit->normal, tg);
 	tg = vec3_normalize(vec3_sub(tg, vec3_scale(hit->normal, dot_nt)));
 	btg = vec3_normalize(vec3_cross(tg, hit->normal));
-	apply_bump_map(hit, tg, btg);
+	apply_bump_map(hit, tg, btg, (1.0f / hit->obj->phong_spec.bump.width));
 	apply_normal_map(hit, tg, btg);
 }
 
@@ -59,7 +57,7 @@ void	apply_normal_map(t_hit *hit, t_vec3 tg, t_vec3 btg)
 	}
 }
 
-void	apply_bump_map(t_hit *hit, t_vec3 tg, t_vec3 btg)
+void	apply_bump_map(t_hit *hit, t_vec3 tg, t_vec3 btg, float i_epsilon)
 {
 	float	h_center;
 	float	h_u;
@@ -70,18 +68,16 @@ void	apply_bump_map(t_hit *hit, t_vec3 tg, t_vec3 btg)
 	if (hit->obj->phong_spec.b_type & B_BUMP)
 	{
 		h_center = get_map_value(hit, &hit->obj->phong_spec.bump).x;
-		hit->uv[0] += BUMP_EPSILON;
+		hit->uv[0] += i_epsilon;
 		h_u = get_map_value(hit, &hit->obj->phong_spec.bump).x;
-		hit->uv[0] -= BUMP_EPSILON;
-		hit->uv[1] += BUMP_EPSILON;
+		hit->uv[0] -= i_epsilon;
+		hit->uv[1] += i_epsilon;
 		h_v = get_map_value(hit, &hit->obj->phong_spec.bump).x;
-		hit->uv[1] -= BUMP_EPSILON;
+		hit->uv[1] -= i_epsilon;
 		du = (h_u - h_center) * BUMP_STRENGHT;
 		dv = (h_v - h_center) * BUMP_STRENGHT;
-		if (du > 0 || dv > 0)
-			ft_printf("oi");
-		hit->normal = vec3_sub(hit->normal, vec3_scale(tg, du));
-		hit->normal = vec3_sub(hit->normal, vec3_scale(btg, dv));
+		hit->normal = vec3_add(hit->normal, vec3_scale(tg, du));
+		hit->normal = vec3_add(hit->normal, vec3_scale(btg, dv));
 		hit->normal = vec3_normalize(hit->normal);
 	}
 }

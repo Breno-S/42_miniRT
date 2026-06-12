@@ -11,10 +11,8 @@
 /* ************************************************************************** */
 
 #include "rt.h"
-#include "libft.h"
 
 #include <math.h>
-#include <float.h>
 
 static void	set_uv_coords_co(t_hit *hit, t_obj *cone)
 {

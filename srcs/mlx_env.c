@@ -6,15 +6,12 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/08 13:43:03 by brensant          #+#    #+#             */
-/*   Updated: 2026/06/12 14:44:46 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/06/12 16:56:11 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "core.h"
 #include "mlx.h"
 #include "rt.h"
-
-#include <stdlib.h>
 
 void	rt_mlx_destroy(t_rt *rt)
 {

@@ -6,16 +6,14 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/26 17:02:53 by brensant          #+#    #+#             */
-/*   Updated: 2026/06/12 15:52:43 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/06/12 16:15:26 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt.h"
-#include "mlx_env.h"
 #include "mlx.h"
 #include "utils.h"
 #include "rt_error.h"
-#include "libft.h"
 
 static bool	verify_new_xpm(t_list *lst, t_mapping *bump);
 static void	att_lst_xpm(t_list **lst, t_mapping *bump);

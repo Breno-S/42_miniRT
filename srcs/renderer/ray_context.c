@@ -11,8 +11,6 @@
 /* ************************************************************************** */
 
 #include "rt.h"
-#include "shapes.h"
-#include "vec_math.h"
 
 #include <math.h>
 #include <float.h>

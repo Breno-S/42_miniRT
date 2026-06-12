@@ -165,7 +165,7 @@ $(PATH_OBJT)%.o: $(PATH_MANDATORY)/%.c
 		@sleep 0.01
 		@$(CC) -c $(CFLAGS) $(CPPFLAGS) $< -o $(subst srcs/,build/,$@)
 
-bonus: fclean
+bonus:
 		$(MAKE) SRCS_MANDATORY_PARSER="$(SRCS_BONUS_PARSER)" all
 
 .PHONY: clean fclean re all bonus $(OBJTS_LIBFT) debug
@@ -187,11 +187,11 @@ clean:
 		@rm -rf $(PATH_OBJT)
 
 fclean:
-# 		@make -C $(PATH_LIBFT) fclean
-# 		@printf "$(L_GREEN)Removing minilibx...$(NC)\n"
-# 		@make -C $(PATH_MINILIBX) clean
-# 		@printf "$(L_GREEN)Removing objects...$(NC)\n"
-# 		@rm -f $(subst $(PATH_MANDATORY),$(PATH_OBJT),$(OBJTS))
+		@make -C $(PATH_LIBFT) fclean
+		@printf "$(L_GREEN)Removing minilibx...$(NC)\n"
+		@make -C $(PATH_MINILIBX) clean
+		@printf "$(L_GREEN)Removing objects...$(NC)\n"
+		@rm -f $(subst $(PATH_MANDATORY),$(PATH_OBJT),$(OBJTS))
 		@rm -rf $(PATH_OBJT)
 		@printf "$(L_GREEN)Removing executable...$(NC)\n"
 		@rm -f $(addprefix $(PATH_BIN),$(NAME))

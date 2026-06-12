@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "parser.h"
-#include "hit.h"
 
 bool	create_camera(char *entity)
 {

@@ -10,12 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "hit.h"
-#include "rt.h"
-#include "utils.h"
 #include "phong.h"
 
-#include <float.h>
 #include <math.h>
 
 t_vec3	get_color_light(t_light light, t_hit hit, t_ray ray)

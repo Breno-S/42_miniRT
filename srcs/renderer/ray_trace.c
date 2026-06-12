@@ -6,17 +6,11 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/29 14:13:32 by brensant          #+#    #+#             */
-/*   Updated: 2026/06/12 14:44:46 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/06/12 16:57:28 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "hit.h"
-#include "rt.h"
-#include "utils.h"
 #include "phong.h"
-
-#include <float.h>
-#include <math.h>
 
 static t_hit	get_closest_collision(t_ray *ray, t_obj *list, int list_size)
 {
@@ -35,7 +29,7 @@ static t_hit	get_closest_collision(t_ray *ray, t_obj *list, int list_size)
 	}
 	if (closest.did_hit)
 	{
-		if (closest.obj->phong_spec.b_type & (B_CHK | B_NORMAL | B_COLOR))
+		if (closest.obj->phong_spec.b_type)
 		{
 			set_uv_coords(&closest);
 			if (closest.obj->phong_spec.b_type & (B_NORMAL | B_BUMP))

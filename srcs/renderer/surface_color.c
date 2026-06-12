@@ -6,15 +6,12 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/08 17:27:13 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/06/12 14:44:46 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/06/12 16:15:26 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "hit.h"
 #include "rt.h"
-#include "utils.h"
 
-#include <float.h>
 #include <math.h>
 
 t_vec3	handle_surface_color(t_hit *hit)

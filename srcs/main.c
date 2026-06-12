@@ -6,22 +6,13 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/01 13:53:38 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/06/12 14:44:46 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/06/12 16:55:55 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "core.h"
-#include "libft.h"
 #include "mlx.h"
-#include "parser.h"
-#include "ray_context.h"
 #include "rt.h"
 #include "utils.h"
-#include "vec_math.h"
-
-#include <math.h>
-#include <stdio.h>
-#include "scene.h"
 
 static int	finish_program(t_rt rt, int rtn)
 {

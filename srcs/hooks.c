@@ -6,15 +6,12 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/27 17:07:08 by brensant          #+#    #+#             */
-/*   Updated: 2026/06/12 15:13:50 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/06/12 16:56:06 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <X11/X.h>
-
 #include "mlx.h"
 #include "rt.h"
-#include "libft.h"
 
 static void	finish_images(t_rt rt)
 {

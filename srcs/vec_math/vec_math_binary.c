@@ -3,16 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   vec_math_binary.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/06 16:31:22 by brensant          #+#    #+#             */
-/*   Updated: 2026/05/26 16:28:27 by brensant         ###   ########.fr       */
+/*   Updated: 2026/06/12 16:57:36 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vec_math.h"
-
-#include <math.h>
 
 t_vec3	vec3_add(t_vec3 u, t_vec3 v)
 {

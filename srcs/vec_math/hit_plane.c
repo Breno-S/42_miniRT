@@ -10,10 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "hit.h"
-#include "ray.h"
 #include "shapes.h"
-#include "vec_math.h"
 
 #include <math.h>
 #include <float.h>

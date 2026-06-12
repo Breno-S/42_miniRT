@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "ray.h"
-#include "vec_math.h"
 
 t_ray	ray_new(t_vec3 origin, t_vec3 direction)
 {

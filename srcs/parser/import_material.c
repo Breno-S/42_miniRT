@@ -6,12 +6,11 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/08 17:38:03 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/06/12 15:52:43 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/06/12 16:05:09 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
-#include "hit.h"
 
 bool	create_material(char **entity, t_rt_list **lst)
 {
