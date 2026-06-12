@@ -6,7 +6,7 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/26 17:02:53 by brensant          #+#    #+#             */
-/*   Updated: 2026/06/11 00:06:32 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/06/12 12:56:39 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,8 +74,6 @@ bool	import_bump_file(t_mapping *bump, void *mlx, t_list **lst)
 	{
 		bump[0].img = mlx_xpm_file_to_image(
 				mlx, bump[0].filename, &bump->width, &bump->height);
-		bump->img_addr = mlx_get_data_addr(bump->img, &bump->bpp,
-				&bump->size_line, &bump->endian);
 		if (!bump[0].img)
 		{
 			if (bump[0].b_type & B_NORMAL)
@@ -89,6 +87,8 @@ bool	import_bump_file(t_mapping *bump, void *mlx, t_list **lst)
 			ft_putendl_fd(M_DEFAULT, 2);
 			return (1);
 		}
+		bump->img_addr = mlx_get_data_addr(bump->img, &bump->bpp,
+				&bump->size_line, &bump->endian);
 		att_lst_xpm(lst, bump);
 	}
 	return (0);
