@@ -4,6 +4,6 @@ L   0,0,0		1					255,255,255
 
 C   0,0,0      0,0,1                70
 
-pl  0,0,4     0,0,-1                230,100,30     mt  0.32  0.78  0.992157  27.89 0 scenes/brick_wall.xpm NON_BUMP NON_COLOR
+pl  0,0,4     0,0,-1                230,100,30     mt  0.32  0.78  0.992157  27.89 0 img/normal_maps/bricksnormal2k.xpm NON_BUMP NON_COLOR
 
 # sp	-1,0,-3			1				255,0,0    mt  0.32  0.78  0.992157  27.89 0 NON_NORMAL scenes/brick_wall.xpm NORMAL_COLOR

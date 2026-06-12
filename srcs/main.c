@@ -6,7 +6,7 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/01 13:53:38 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/06/10 16:51:40 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/06/12 14:43:30 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,15 +30,11 @@ static int	finish_program(t_rt rt, int rtn)
 	i = 0;
 	if (rt.scene.lights)
 	{
-		while (i < rt.scene.objs_num)
+		while (rt.xpm)
 		{
-			if (rt.scene.obj[i].phong_spec.b_type & B_NORMAL)
-				mlx_destroy_image(rt.mlx.mlx_ptr,
-					rt.scene.obj[i].phong_spec.normal.img);
-			if (rt.scene.obj[i].phong_spec.b_type & B_COLOR)
-				mlx_destroy_image(rt.mlx.mlx_ptr,
-					rt.scene.obj[i].phong_spec.color.img);
-			i++;
+			mlx_destroy_image(rt.mlx.mlx_ptr,
+				((t_mapping *)rt.xpm->content)->img);
+			rt.xpm = rt.xpm->next;
 		}
 	}
 	ft_gc_end();

@@ -6,7 +6,7 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/27 16:33:22 by brensant          #+#    #+#             */
-/*   Updated: 2026/06/08 16:00:06 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/06/12 13:14:54 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include "mlx_env.h"
 # include "ray_context.h"
 # include "scene.h"
+# include "libft.h"
 
 # include <stdbool.h>
 
@@ -26,6 +27,7 @@ typedef struct s_rt
 	t_mlx_env		mlx;
 	t_scene			scene;
 	t_ray_context	rc;
+	t_list			*xpm;
 }	t_rt;
 
 bool	rt_parse_args(t_rt *rt, int argc, char **argv);

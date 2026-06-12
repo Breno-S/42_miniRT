@@ -6,7 +6,7 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/26 17:02:53 by brensant          #+#    #+#             */
-/*   Updated: 2026/06/12 12:56:39 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/06/12 13:55:52 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,25 +43,23 @@ void	pixel_put(t_mlx_env *env, int x, int y, int color)
 void	create_textures(t_rt *rt)
 {
 	int		i;
-	t_list	*lst;
 
 	i = 0;
-	lst = NULL;
 	while (i < rt->scene.objs_num)
 	{
 		if (rt->scene.obj[i].phong_spec.b_type & B_COLOR
 			&& import_bump_file(&rt->scene.obj[i].phong_spec.color,
-				rt->mlx.mlx_ptr, &lst))
+				rt->mlx.mlx_ptr, &rt->xpm))
 			rt->scene.obj[i].phong_spec.b_type
 				= (rt->scene.obj[i].phong_spec.b_type & ~B_COLOR);
 		if (rt->scene.obj[i].phong_spec.b_type & B_NORMAL
 			&& import_bump_file(&rt->scene.obj[i].phong_spec.normal,
-				rt->mlx.mlx_ptr, &lst))
+				rt->mlx.mlx_ptr, &rt->xpm))
 			rt->scene.obj[i].phong_spec.b_type
 				= (rt->scene.obj[i].phong_spec.b_type & ~B_NORMAL);
 		if (rt->scene.obj[i].phong_spec.b_type & B_BUMP
 			&& import_bump_file(&rt->scene.obj[i].phong_spec.bump,
-				rt->mlx.mlx_ptr, &lst))
+				rt->mlx.mlx_ptr, &rt->xpm))
 			rt->scene.obj[i].phong_spec.b_type
 				= (rt->scene.obj[i].phong_spec.b_type & ~B_BUMP);
 		i++;

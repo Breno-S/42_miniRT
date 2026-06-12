@@ -6,13 +6,14 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/09 17:20:53 by brensant          #+#    #+#             */
-/*   Updated: 2026/06/10 23:48:48 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/06/12 14:43:30 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt.h"
 #include <float.h>
 #include <math.h>
+#include <mlx.h>
 
 void	handle_texture_maps(t_hit *hit)
 {

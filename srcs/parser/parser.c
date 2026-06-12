@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/01 14:56:06 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/06/08 15:45:20 by brensant         ###   ########.fr       */
+/*   Updated: 2026/06/12 14:43:30 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,23 +23,6 @@ bool	rt_parse_args(t_rt *rt, int argc, char **argv)
 		return (false);
 	return (true);
 }
-
-// t_scene	parser(int argc, char **argv)
-// {
-// 	t_scene	scene;
-
-// 	scene = (t_scene){0};
-// 	if (argc != 2)
-// 	{
-// 		error_msg(INVALID_ARG);
-// 		return ((t_scene){0});
-// 	}
-// 	if (check_file(argv[1], &scene))
-// 		return ((t_scene){0});
-// 	if (create_scene(&scene))
-// 		return ((t_scene){0});
-// 	return (scene);
-// }
 
 bool	verify_line(char *line, unsigned char *verify_ent, t_scene *scene)
 {
