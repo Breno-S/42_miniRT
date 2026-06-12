@@ -1,0 +1,40 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   rt_error.h                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/04/06 13:34:32 by rgomes-d          #+#    #+#             */
+/*   Updated: 2026/06/12 16:17:50 by rgomes-d         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#ifndef RT_ERROR_H
+# define RT_ERROR_H
+
+# include <stdbool.h>
+
+# define M_INVALID_ARG	"miniRT: Invalid args\n"
+# define M_INVALID_EXT	"miniRT: Invalid extension\n"
+# define M_MISS_ENT "miniRT: A entity is missing (ambient, camera, or light).\n"
+# define M_NON_NORMALIZE "miniRT: Vec. not normalized (between '-1' and '1').\n"
+# define M_ERR_COLOR "miniRT: Color is not within a valid range (0–255).\n"
+# define M_ERR_FOV "miniRT: FOV is out of range (0–180).\n"
+# define M_ERR_LIGHT "miniRT: Amb. rate or bright is out of range (0–1).\n"
+# define M_MANY_ARG "miniRT: Too many arguments in entity.\n"
+# define M_SIZE_VEC "miniRT: Invalid vector size.\n"
+# define M_ERR_CONV "miniRT: Invalid number conversion (overflow or inf.).\n"
+# define M_DUP_ENT "miniRT: Dup. entity declaration (ambient, cam or light).\n"
+# define M_NBR_NORM "miniRT: nbr not normalized (between '0' and '1').\n"
+# define M_IMP_XPM "miniRT: unable to load XPM file (missing or invalid): "
+# define M_BMP_ERR "miniRT: color map invalid (not a .xpm file or CHK).\n"
+# define M_NORMAL_ERR "miniRT: normal or bump map invalid (not a .xpm file).\n"
+# define M_DEFAULT "Applying default settings to object."
+
+// ERRORS
+
+bool		error_msg(int err_type, char *msg);
+bool		warning_msg(int err_type, char *msg);
+
+#endif

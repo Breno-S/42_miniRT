@@ -1,0 +1,77 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parser.h                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/04/01 13:54:17 by rgomes-d          #+#    #+#             */
+/*   Updated: 2026/06/10 19:35:27 by rgomes-d         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#ifndef PARSER_H
+# define PARSER_H
+
+# include "rt_error.h"
+# include "shapes.h"
+# include "scene.h"
+# include "libft.h"
+# include <math.h>
+
+typedef enum e_ent_type
+{
+	ambient	= 1,
+	camera = 2,
+	light = 4
+}	t_ent_type;
+
+// PARSER
+
+t_scene		parser(int argc, char **argv);
+
+// READ FILE
+
+bool		check_file(char *file, t_scene *scene);
+bool		read_file(int fd, t_scene *scene);
+bool		verify_line(char *line, unsigned char *verify_ent, t_scene *scene);
+
+// IMPORT ENTITYS
+
+void		ft_rtlstadd_back(t_rt_list **lst, t_rt_list *new);
+int			verify_entity(char *line, int init, int size);
+
+bool		create_entity(char *entity, int type);
+bool		create_ambient(char *entity);
+bool		create_camera(char *entity);
+bool		create_light(char *entity);
+bool		create_sphere(char *entity);
+bool		create_plane(char *entity);
+bool		create_cylinder(char *entity);
+bool		create_cone(char *entity);
+bool		create_cone_aux(char **s_ent, t_rt_list *lst);
+
+bool		create_material(char **entity, t_rt_list **lst);
+void		import_color_map(char *filename, t_mat *mat);
+void		import_normal_map(char *filename, t_mat *mat);
+void		import_bump_map(char *filename, t_mat *mat);
+
+void		link_entity(t_rt_list *n_rt_list);
+bool		verify_mandatory_ent(t_shapes_type type, unsigned char *verify_ent,
+				t_scene *scene);
+
+// IMPORT VECS
+
+bool		import_vec3_normalize(char *text, t_vec3 *vec3);
+bool		import_color(char *text, t_color *vec3);
+bool		import_vec3(char *text, t_vec3 *vec3);
+bool		verify_atoi(char *nptr);
+bool		verify_atof(char *nptr, float n_nbr);
+
+// CREATE SCENE
+
+bool		create_scene(t_scene *scene);
+bool		create_scene_aux(t_rt_list *rt_list, t_scene *scene, t_mat mat);
+t_mat		generic_material(void);
+
+#endif
