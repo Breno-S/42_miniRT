@@ -1,6 +1,6 @@
 # 42_miniRT
 
-This project has been created as part of the 42 curriculum by *brensant* and *rgomes-d*.
+*This project has been created as part of the 42 curriculum by brensant and rgomes-d*.
 
 ## Description
 
